@@ -6,17 +6,63 @@ The purpose of this chapter is to provide a discussiong into current strategies 
 \section{Antenna Array Fundamentals}
 Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
 \subsection{Array Manifold}
-As discussed in \cite{sleiman2000antenna}, and array manifold is: fuck knows.
+As discussed in \cite{sleiman2000antenna}, and array manifold is: nobody knows.
 
 \section{Overview of Direction Finding}
-A broad look at the DF techniques which exist. The most applicable of these will be examined in more details following.
+\subsection{Model}
+The model which will be discussed here is is as discussed in \cite{poisel2012electronic}.  
+
+Let there be $N$ individual signal sources, where $\vec{s}(t)$ represents the resultant signal, being
+\begin{equation}
+\vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_N(t) \end{bmatrix}
+\end{equation}
+
+Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}^\TRANSPOSE\). The signal received by this element is influenced by the element position. This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
+
+It is shown that the delay time for a signal arriving at the \(m\)th element is
+\begin{equation}
+  \tau_m(\vec{\theta}) 
+ = \tau_m( \begin{bmatrix} \phi \\ \theta \end{bmatrix} )
+  = \frac{1}{c} [ x_m\cos(\phi)\cos(\theta) + y_m\sin(\phi)\cos(\theta) + z_m\sin(\uptheta) ]
+\end{equation}
+
+Where \(\phi\) is the azimuth angle of the source and \(\theta\) is the elevation angle.
+For a 2D space we let \(\theta = 0\) and hence simplify to:
+\begin{equation}
+ \uptau_m(\phi) = \frac{1}{c} [ x_m\cos(\phi) + y_m\sin(\phi) ]
+\end{equation}
+
+The \(M \times 1\) steering matrix is
+\begin{equation}
+  \vec{a}_k(\vec{\theta}_k) = 
+  \begin{bmatrix}
+    e^{-j\omega_c \uptau_1(\phi_k)} \\
+    e^{-j\omega_c \uptau_2(\phi_k)} \\
+    ... \\
+    e^{-j\omega_c \uptau_M(\phi_k)} \\
+  \end{bmatrix}
+\end{equation}
+
+\section{Geolocation}
+Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
+
+This process is shown graphically in \autoref{fig:lit-triangulation-from-df}, where multiple DF stations ($S_{1}$ through to $S_{M}$) are used to locate the x,y,z coordinates of the target $x_{T}$. Note that this geolocation process in the figure is for airborne DF systems searching for a ground based target. However, the system could easily be simplified to a purely terrestrial process.
+
+The relevance of this note about geolocation to this work is that it is not necessary to attempt to design a system which can do geolocation natively. Rather, a DF system can be design which can later be duplicated in order to provide geolocation capabilities. 
+
+\begin{figure}[p] 
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/lit_review/triangulation_from_df.pdf}
+  \caption{Using triangulation from multiple DF stations to ascertain the geographic location of a target. Source: \cite{poisel2012electronic}}
+  \label{fig:lit-triangulation-from-df}
+\end{figure}
+
+\section{Overview of Direction Finding}
+In this section, an analysis is made of different the direction finding techniques which exist. The most applicable of these will be examined in more details following.
 Classical methods of direction finding algorithms \cite{tuncer2009classical}.
 \begin{itemize}
 	\item Beamforming: by introducing the correct phase delay to each channel of the array, the array factor can be made to be such that the signal in quesetion is added coherently by each element of the array.
 		This phase delay indicates the direction of arrival of the signal. The coherent addition of the signals allows for much higher SNR. 
 \end{itemize}
 
-\section{DF Technique x}
-
-\section{Reconfigurable Open Architecture Computing Hardware}
 
