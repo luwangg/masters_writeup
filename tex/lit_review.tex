@@ -3,45 +3,82 @@
 \section{Introduction}
 The purpose of this chapter is to provide a discussiong into current strategies and implementations of direction finding systems. An analysis of the advantages and disadvantages of the various systems will take place which will aid in the later descision of which strategy to adopt for this project
 
-\section{Antenna Array Fundamentals}
-Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
-\subsection{Array Manifold}
-As discussed in \cite{sleiman2000antenna}, and array manifold is: nobody knows.
 
 \section{Overview of Direction Finding}
 \subsection{Model}
-The model which will be discussed here is is as discussed in \cite{poisel2012electronic}.  
+The model which will be discussed here is that presented in \cite{poisel2012electronic}.  
 
 Let there be $N$ individual signal sources, where $\vec{s}(t)$ represents the resultant signal, being
 \begin{equation}
 \vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_N(t) \end{bmatrix}
 \end{equation}
 
-Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}^\TRANSPOSE\). The signal received by this element is influenced by the element position. This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
+Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}\TRANSPOSE\). The signal received by this \(i\)th element is influenced by the element position. This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
 
 It is shown that the delay time for a signal arriving at the \(m\)th element is
 \begin{equation}
   \tau_m(\vec{\theta}) 
  = \tau_m( \begin{bmatrix} \phi \\ \theta \end{bmatrix} )
-  = \frac{1}{c} [ x_m\cos(\phi)\cos(\theta) + y_m\sin(\phi)\cos(\theta) + z_m\sin(\uptheta) ]
+  = \frac{1}{c} [ x_m\cos(\phi)\cos(\theta) + y_m\sin(\phi)\cos(\theta) + z_m\sin(\theta) ]
 \end{equation}
 
 Where \(\phi\) is the azimuth angle of the source and \(\theta\) is the elevation angle.
 For a 2D space we let \(\theta = 0\) and hence simplify to:
 \begin{equation}
- \uptau_m(\phi) = \frac{1}{c} [ x_m\cos(\phi) + y_m\sin(\phi) ]
+ \tau_m(\phi) = \frac{1}{c} [ x_m\cos(\phi) + y_m\sin(\phi) ]
 \end{equation}
 
 The \(M \times 1\) steering matrix is
 \begin{equation}
   \vec{a}_k(\vec{\theta}_k) = 
   \begin{bmatrix}
-    e^{-j\omega_c \uptau_1(\phi_k)} \\
-    e^{-j\omega_c \uptau_2(\phi_k)} \\
+    e^{-j\omega_c \tau_1(\phi_k)} \\
+    e^{-j\omega_c \tau_2(\phi_k)} \\
     ... \\
-    e^{-j\omega_c \uptau_M(\phi_k)} \\
+    e^{-j\omega_c \tau_M(\phi_k)} \\
   \end{bmatrix}
 \end{equation}
+
+\section{Antenna Array Fundamentals}
+Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
+\subsection{Array Manifold}
+As discussed by \cite{sleiman2000antenna} \cite{karimi1996manifold} \cite{dacos1995estimating}. 
+As discussed in \cite{sleiman2000antenna}, and array manifold is: nobody knows.
+
+The antenna array manifold is said to be useful for direction finding systems, as signal subspace techniques such as MuSIC rely on searching for the best \(\vec{a}(p)\) for the detected signal \cite{karimi1996manifold}. 
+
+It is shown by \cite{dacos1995estimating} that the output of an array of N sensors receiving M signals in the presence of noise is
+\begin{equation}
+\vec{x}(t) = \mtx{A}(\vec{p})\vec{m}(t) + \vec{n}(t)
+\end{equation}
+Where \(\vec{x}(t)\) is the N-dimensional output of the array, \(\vec{m}(t)\) is the M-dimensional set of signals received by the array, and \(\mtx{A}(\vec{p})\) is a \(N \times M\) matrix of source position vectors (SPV). 
+A given SPV, \(\vec{a}(p_i)\), shows how the array responds to a source at location \(p_i\), where \(p_i\) is often an azimuth and elevation pair: \(p_i = (\theta_i, \phi_i)\).
+
+For the case of a terrestrial-only system (which this project will be concerned with), \(\phi\) can be set to 0, meaning that \(p_i = \theta_i\), the azimuth angle of source \(i\), typically in the range \([0, 2\pi]\). Here, a SPV can be simplified to \(\vec{a}(\theta_i)\).
+
+It is shown that if the \(N\) antennas are positioned symmetrically, the antenna array manifold is reduced from complex space \(\mathbf{C}^N\) to real space \(\mathbf{R}^N\) \cite{dacos1995estimating}.
+
+The response of the array to a source from a certain location, \((\theta, \phi)\) is:
+\begin{equation}
+\vec{a} = \vec{a}(\theta, \phi) = \vec{g}(\theta, \phi) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta,\phi) \right\}
+\end{equation}
+\cite{dacos1995estimating}.
+
+Where:
+\begin{itemize}
+  \item \(\vec{g}(\theta, \phi)\) is a \(N\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \((\theta, \phi)\). 
+  \item \(\mathbf(X)\TRANSPOSE\) is matrix containing the \(x\), \(y\) and \(z\) coordinates of each of the N elements, and
+\item \(\vec{k}(\theta, \phi)\) is the wavenumber vector given by \(\vec{k}(\theta, \phi) = \pi \begin{bmatrix} \cos\theta\cos\phi, \sin\theta\cos\phi, \sin\phi \end{bmatrix}\TRANSPOSE \). Graphically, this equates to the 
+\end{itemize}
+    
+
+    This term can be excluded if we assume omnidirectional elements. Although it is rare to deal with true omnidirectional antennas, for an antenna which is required to receive signals only in the azimuth plane, omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
+
+\begin{equation}
+\vec{a}(\theta) = \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
+\end{equation}
+
+
 
 \section{Geolocation}
 Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
