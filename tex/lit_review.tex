@@ -3,8 +3,24 @@
 \section{Introduction}
 The purpose of this chapter is to provide a discussiong into current strategies and implementations of direction finding systems. An analysis of the advantages and disadvantages of the various systems will take place which will aid in the later descision of which strategy to adopt for this project
 
+\section{Signals}
+As discussed by \cite{krim1996two}:
+
+We model the E-field of a narrow-band signal by:
+\begin{equation}
+  E(\vec{r}, t) = s(t) \exp \left\{ j(\omega t - \vec{r}\, \TRANSPOSE \vec{k}) \right\}
+\end{equation}
+
+Where:
+\begin{itemize}
+  \item \(s(t)\) is the slow (compared to the carrier) modulating signal with bandwidth \(B\)
+  \item \(\omega\) is the carrier frequency
+  \item \(\vec{r}\) is the radius vector, of form \(\begin{bmatrix} x, y, z \end{bmatrix}\)
+    \item \(\vec{k} = \alpha\omega\) which is the wave-vector where \(\alpha = \frac{1}{c}\) pointing in the direction of propagation. Note that the magnitude of the wave-vector is known as the wave-number: \(\lvert \vec{k} \rvert = k = \frac{\omega}{c} = \frac{2\pi}{\lambda}\)
+\end{itemize}
 
 \section{Overview of Direction Finding}
+
 \subsection{Model}
 The model which will be discussed here is that presented in \cite{poisel2012electronic}.  
 
@@ -13,7 +29,10 @@ Let there be $N$ individual signal sources, where $\vec{s}(t)$ represents the re
 \vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_N(t) \end{bmatrix}
 \end{equation}
 
-Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}\TRANSPOSE\). The signal received by this \(i\)th element is influenced by the element position. This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
+Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}\TRANSPOSE\). 
+The signal received by this \(i\)th element is influenced by the element position. 
+This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
+As discussed by \cite{krim1996two}, as this model contains both spacial and temporal information, it is sufficient to be able to attain spacial information about the signal. 
 
 It is shown that the delay time for a signal arriving at the \(m\)th element is
 \begin{equation}
@@ -43,7 +62,6 @@ The \(M \times 1\) steering matrix is
 Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
 \subsection{Array Manifold}
 As discussed by \cite{sleiman2000antenna} \cite{karimi1996manifold} \cite{dacos1995estimating}. 
-As discussed in \cite{sleiman2000antenna}, and array manifold is: nobody knows.
 
 The antenna array manifold is said to be useful for direction finding systems, as signal subspace techniques such as MuSIC rely on searching for the best \(\vec{a}(p)\) for the detected signal \cite{karimi1996manifold}. 
 
@@ -67,18 +85,30 @@ The response of the array to a source from a certain location, \((\theta, \phi)\
 Where:
 \begin{itemize}
   \item \(\vec{g}(\theta, \phi)\) is a \(N\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \((\theta, \phi)\). 
-  \item \(\mathbf{X}\TRANSPOSE\) is matrix containing the \(x\), \(y\) and \(z\) coordinates of each of the N elements, and
+\item \(\mathbf{X}\TRANSPOSE\) is a \((N \times 3)\) matrix containing the \(x\), \(y\) and \(z\) coordinates of each of the N elements of the form \(\begin{bmatrix} \vec{x}, \vec{y}, \vec{z} \end{bmatrix}\TRANSPOSE\)
 \item \(\vec{k}(\theta, \phi)\) is the wavenumber vector given by \(\vec{k}(\theta, \phi) = \pi \begin{bmatrix} \cos\theta\cos\phi, \sin\theta\cos\phi, \sin\phi \end{bmatrix}\TRANSPOSE \). Graphically, this equates to the 
 \end{itemize}
-    
 
-    This term can be excluded if we assume omnidirectional elements. Although it is rare to deal with true omnidirectional antennas, for an antenna which is required to receive signals only in the azimuth plane, omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
+For the purposes of this research the elements will all be located at the same elevation as we only with to locate terrestrial signals. Hence, this may be simplified to:
+\begin{equation}
+  \vec{a}(\theta) = \vec{g}(\theta) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
+\end{equation}
+    
+Here, \(\mathbf{X}\TRANSPOSE\) is now a \((N \times 2)\) matrix of the form \(\begin{bmatrix} \vec{x}, \vec{y} \end{bmatrix}\) and \(\vec{k}(\theta) = \pi[\cos(\theta), \sin(\theta)]\TRANSPOSE\).
+
+Furthermore, the \(\vec{g}\) term may be excluded if we assume omnidirectional elements. Although it is rare to deal with true omnidirectional antennas, for an antenna which is required to receive signals only in the azimuth plane, omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
 
 \begin{equation}
-\vec{a}(\theta) = \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
+  \vec{a}(\theta) = \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
 \end{equation}
 
+Or, more expressively:
+\begin{equation}
+\vec{a}(\theta) = \exp \left\{ -j \begin{bmatrix} x_1, y_1 \\ x_2, y_2 \\ .., .. \\ x_N, y_N \end{bmatrix} \begin{bmatrix} \cos(\theta) \\ \sin(\theta) \end{bmatrix} \right\}
+= \exp \left\{ -j \begin{bmatrix} x_1\cos(\theta) + y_1\sin(\theta) \\ x_2\cos(\theta) + y_2\sin(\theta)) \\ .., .. \\ x_N\cos(\theta) + y_N\sin(\theta) \end{bmatrix} \right\}
+\end{equation}
 
+Clearly, this is simply a vector of phase shifts introduced by each element in the array as a function of both the location of the element and the angle of the incident wave relative to some defined zero location and zero direction. It is said by \cite{dacos1995estimating} that this array manifold completely characterises the array. That paper goes into additional details on how the manifold may simplified for linear arrays, as well as the special properties which a manifold of a linear array possesses. This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
 \section{Geolocation}
 Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
