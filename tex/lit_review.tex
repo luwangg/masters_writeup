@@ -6,6 +6,8 @@ The purpose of this chapter is to provide a discussiong into current strategies 
 \section{Signals}
 As discussed by \cite{krim1996two}:
 
+We are interested in extracting the parameters of a signal. This is what sensor array signal processing does.
+
 We model the E-field of a narrow-band signal by:
 \begin{equation}
   E(\vec{r}, t) = s(t) \exp \left\{ j(\omega t - \vec{r}\, \TRANSPOSE \vec{k}) \right\}
@@ -15,10 +17,42 @@ Where:
 \begin{itemize}
   \item \(s(t)\) is the slow (compared to the carrier) modulating signal with bandwidth \(B\)
   \item \(\omega\) is the carrier frequency
-  \item \(\vec{r}\) is the radius vector, of form \(\begin{bmatrix} x, y, z \end{bmatrix}\)
-    \item \(\vec{k} = \alpha\omega\) which is the wave-vector where \(\alpha = \frac{1}{c}\) pointing in the direction of propagation. Note that the magnitude of the wave-vector is known as the wave-number: \(\lvert \vec{k} \rvert = k = \frac{\omega}{c} = \frac{2\pi}{\lambda}\)
+  \item \( \vec{r} \) is the radius vector, of form \( \begin{bmatrix} x, y, z, \end{bmatrix} \).
+  \item \(\vec{k} = \alpha\omega\) which is the wave-vector where \(\alpha = \frac{1}{c}\) pointing in the direction of propagation. Note that the magnitude of the wave-vector is known as the wave-number: \(\lvert \vec{k} \rvert = k = \frac{\omega}{c} = \frac{2\pi}{\lambda}\). This implies: \(\vec{k} = k(\cos\theta \sin\theta)\TRANSPOSE\) where \(\theta\) is the angle of the incident wave.
 \end{itemize}
 
+If we have a receiver with a radius vector \(\vec{r_r} = \begin{bmatrix} x_r, y_r \end{bmatrix}\TRANSPOSE\)
+
+Note that as per the narrowband assumption is is assumed that the array aperture be much less than the inverse relative bandwidth \((f/B)\)
+
+It is shown that the output of an \(L\)-element array a \(L\)-dimensional vector of the steering vector scalar multiplied by the incident signal, given by
+\begin{equation}
+  \vec{x}(t) = \vec{a}(\theta).s(t)
+\end{equation}
+
+Here, \(\vec{a}(\theta) = \begin{bmatrix} a_1(\theta), a_2(\theta), ... , a_L(\theta) \end{bmatrix}\TRANSPOSE\) which is the steering vector.
+
+  Furthermore, it is shown that the principle of superposition applies. If there are \(M\) incident signals they are simply summed together:
+\begin{equation}
+  \vec{x}(t) = \sum_{m=1}^{M} \vec{a}(\theta_m)\vec{s_m}(t)
+\end{equation}
+
+This can be re-written in a more compact form (now adding noise to the model):
+\begin{equation}
+  \vec{x}(t) = \mathbf{A}(\vec{\theta})\vec{s}(t) + \vec{n}(t)
+\end{equation}
+
+Where:
+\begin{itemize} 
+  \item we have re-written \(\sum_{m=1}^{M}\vec{a}(\theta_m)\) as a matrix of steering vectors
+\begin{equation} 
+  \mathbf{A}(\vec{\theta}) = \begin{bmatrix} \vec{a}(\theta_1), \vec{a}(\theta_2), ..., \vec{a}(\theta_M) \end{bmatrix} \\
+\end{equation}
+  \item we have re-written  \(\sum_{m=1}^{M}s_m(t)\) as a vector:
+\begin{equation}
+  \vec{s}(t) = \begin{bmatrix} s_t(t) \\ .. \\ s_M(t) \end{bmatrix}
+\end{equation}
+\end{itemize}
 \section{Overview of Direction Finding}
 
 \subsection{Model}
