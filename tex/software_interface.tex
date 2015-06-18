@@ -1,0 +1,21 @@
+\chapter{Software Interface}
+
+\section{Code Structure}
+It was necessary to write code to allow the computer to interface with the correlator running on the ROACH.
+The code had to be carefully designed in accordance with good object orientated design methodologies in order to provide a useful, well defined and easily extendible interface to other code which needs to interface with the correlator.
+As such, there was significant emphasis encapsulating logic into classes which mirrored the physical structure of the correlator in the sense of modularising the key components and writing reusable code.
+Following is a discussion of the software interface to the correlator with specific focus on the various classes and interfaces.
+
+\subsection{Control Register}
+The control register naturally lends itself to a class with interfaces to modify the different bit groups of the register in logical ways.
+A python module called software\_register was written with a single class: SoftwareRegister. This class contains a value parameter which mirrors the value programmed into the FPGA's control register. It then has the following interface methods:
+\begin{description}
+  \item[pulse\_sync] Toggles the syncronisation reset bit low to high and then high to low.
+  \item[block\_trigger ; allow\_trigger] These methods either set of clear bit the bit that controls the gate which blocks or allows the snapshot blocks being triggered by a complete accumulation. The idea is that this will be used to allow all of the snapshot blocks to be armed sequentially before they can be triggered all at once.
+  \item[reset\_accumulation\_counter] Pulses the bit which resets the counter which increments every time an accumulation completes and triggers the snap blocks. This counter lets us keep track of how many accumulations have been performed by the system.
+  \item[pulse\_overflow\_rst] Similar to the above, except this clears the latch which gets latched high whenever the FFT block overflows. This essentially allows us to 'acknowledge' that we have seen the occurrence of the overflow flag.
+  \item[select\_adc] Controls which of the four RF inputs is connected to the time domain snapshot block via a multiplexer. By multiplexing the steams, it saves the logic and BRAM of having to have four seperate snap blocks, at the expense of one multiplexer and not being able to synchronously sample the ADC streams in the time domain. This is considered an acceptable tradeoff due to the fact that the time domain snap is only designed to be used for getting an approximation of the signal strength arriving at an antenna and this does not need to be done in parallel for each antenna.
+  \item[set\_shift\_schedule] This methods takes a \SI{12}{\bit} number and sets the FFT shift schedule to that number. While this design only has a 10 stage FFT, 12 bits is kept in the register for future expansions.
+\end{description}
+
+All of the methods in this class log their actions as well as the new value of the control register when it is modified at the debug log level.
