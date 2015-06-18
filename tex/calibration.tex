@@ -1,0 +1,16 @@
+\chapter{Calibration}
+
+There are a few areas where calibration needs to take place in order to ensure that the system performs as expected. What will be discussed here is work on calibrating the ADCs and calibrating the phase of the RF chain from the antennas to the output of the correlator. This RF chain calibration will be done in two stages: 
+\begin{itemize}
+  \item firstly, the path starting at the input of the LNAs will be calibrated as this can be easily done in the lab by injecting a phase coherent tone into all LNAs simultaneously.
+  \item secondly, the entire RF beginning at the antennas will be calibrated by taking the system out into the field and transmitting tones from known positions
+\end{itemize}
+
+\section{iADC}
+The iADCs suffer from a few mismatches between the cores which should be calibrated out for optimal performance. These include:
+\begin{enumerate}
+  \item The offsets of each core should be set to 0. Each core can have its offset adjusted from -31.75 LSB to 31.75 LSB in steps of 0.25 LSB.
+  \item The gains of the cores should be made equal. The gain of each core can be adjusted from -1.5 dB to 1.5 dB in steps of 0.011 dB. 
+  \item The sampling delay between the cores should be adjusted such that the sampling time between each core is as intended. This could be a phase difference of 0 for sampling independent signals in phase, or pi/2 for I/Q sampling or pi for interleaved sampling of a single stream.
+  \item There are other parameters which can also be calibrated such as the data ready delay adjustment or the gain compensation, but these are not very relevant for this work so will be ignored. Only the analogue gain, offset and sample delay will be calibrated for this work.
+\end{enumerate}

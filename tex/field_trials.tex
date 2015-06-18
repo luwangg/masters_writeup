@@ -1,0 +1,14 @@
+\chapter{Field Trials}
+
+\section{Power supply}
+It was necessary to power the ROACH from a battery in order to allow it to be portable and taken out into the open field.
+Initially the plan was to power it from an inverter running off of a battery. Here, discuss why the inverter may be too noisy. Can this be shown from reverb chamber measurements?
+
+Instead, an ATX power supply which runs directly from a \SI{12}{\volt} battery was made available from the SKA equipment. The power supply is made by Mini-Box and its part number is PicoPSU-80-WI-32V. This can output \SI{80}{\watt} which is enough to run the ROACH. To connect it, the traditional mains-powered ATX powersupply is disconnected from the motherboard and this module is plugged into the motherboard. This is shown in (insert figure here!).
+
+Furthermore, a ROYAL 1150K battery was supplied. This is a \SI{105}{\ampere\hour} deep cycle calcium battery.
+As the ROACH draws X amps at \SI{12}{\volt}, this implies that we are discharging the battery at \(\frac{105}{X} = \frac{C}{Y}\).
+It is advised to not run down below \SI{70}{\percent} to maintain the battery lifespan. As shown by (cite battery charging), this implies that the voltage should not drop to below \SI{12.1}{\volt} when discharging at \(\frac{C}{Y}\)
+
+Testing in the lab showed that the ROACH pulled \SI{3.1}{\ampere} at \SI{12}{\volt} which is \SI{37}{\watt}. This can easily be handled by the \SI{80}{\watt} ATX power supply. 
+Testing by running the ROACH from the battery overnight. The battery started at \SI{12.6}{\volt} and had dropped to \SI{11.9}{\volt} \SI{15}{\hour} later. The purpose of this test was not to provide a comprehensive report of the capacity of the battery or the requirements of the ROACH, but simply to show that the system will easily be able to run for a few hours in the field during field trials.
