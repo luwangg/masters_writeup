@@ -1,0 +1,12 @@
+\chapter{LNA and LPF Measurements}
+As discussed in lit review, Schleher, it is necessary for an interferometry system to have its RF front end components matched. The front end of this system comprises an antenna, a cable from the antenna to a anti aliasing filter, the filter is plugged into an LNA and a cable runs from the LNA to the digitiser. 
+It's fairly strightforward to ensure phase matching between cables. Provided the cables are of the same type, their velocity factors will be equal and it is hence only necessary to ensure that they are of the same length.
+The LPFs and LNAs however may have phase mismatches due to manufacturing tolerances. 
+There are two areas of interest:
+\begin{enumerate}
+  \item Does the LPF and LNA provide sufficient attenuation above the Nyquist frequency to ensure that no aliasing occurs?
+  \item Hope closely are the phases of the sets of LPFs and LNAs matched to each other?
+\end{enumerate}
+
+\section{Anti Aliasing}
+As per (cite ADC datasheet and show graph here) the iADC is not receptive to signals above 3 GHz. Hence, it is only necessary to ensure that the LPF and LNA have sufficient attenuation from Nyquist frequency to 3 GHz. 

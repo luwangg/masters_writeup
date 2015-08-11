@@ -1,0 +1,25 @@
+\section{Direction Finding Techniques}
+
+As discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
+
+\subsection{Classes of Direction Finder Systems}
+The following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook \cite{desk1997electronic}.
+In general, classes of system include:
+\subsubsection{Scanning beam}
+This simple method, using one high gain antenna which is rotated to find the angle which corresponds to the antenna receiving the strongest signal. This method is slow, has a low probability of intercept (POI) and cannot DF transients so is not suitable for this project.
+\subsubsection{Amplitude Comparison}
+This uses an antenna array. The antennas either have gain themselves or beam forming techniques are used to create beams with gains. Amplitude comparison techniques are in general simple to implement, but provide low resolution and low accuracy compared to phase methods due to their dependence on antenna beam pattern and their sensitivity to multipath. In practice, typical amplitude comparison systems have a DF RMS accuracy between \SI{3}{\degree} and \SI{10}{\degree}.
+\subsubsection{Phase Interferometry}
+This technique is done by comparing the phase arriving at each element of an array. In general it has high complexity, may suffer from ambiguity, but can achieve comparatively high accuracy direction measurements, often between \SI{0.1}{\degree} and \SI{3}{\degree} for real systems. In comparison to amplitude systems, phase systems are more tolerant of multipath signals. The high complexity is introduced from having to carefully match the phases of the RF chains from each array element, and having to incorporate ambiguity resolution algorithms. 
+
+\section{Phase Interferometry}
+The simples phase interferometry system is a two element array. This is shown graphically in figure X. The phase difference at the output of the system is:
+\begin{equation}
+\phi = \frac{2 \pi d \sin \theta}{\lambda}
+\end{equation}
+Two notes about this simple two element array:
+\begin{enumerate}
+  \item The values of the sine function of only unique between \SI{-90}{\degree} and \SI{90}{\degree}. Hence, the output of the array is only unambiguous over a \SI{180}{\degree} field of view. A two element phased interferometry array cannot resolve this ambiguity. The best it can do is use antennas with gain to reject signals from one of its sides. 
+ \item If the element spacing is larger than \(\frac{\lambda}{2}\) the ambiguity gets worse. The unambiguous field of view is \(\theta = 2 \sin^{-1}(\frac{\pi}{2d})\).
+ \end{enumerate}
+ The solution to this ambiguity problem is to use more than two elements, thereby constructing a multiple baseline interferometer. 

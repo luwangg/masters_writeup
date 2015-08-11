@@ -6,9 +6,19 @@ The code had to be carefully designed in accordance with good object orientated 
 As such, there was significant emphasis encapsulating logic into classes which mirrored the physical structure of the correlator in the sense of modularising the key components and writing reusable code.
 Following is a discussion of the software interface to the correlator with specific focus on the various classes and interfaces.
 
+Instance of a correlator is created.
+This then includes:
+\begin{enumerate}
+  \item An instance of a ControlRegister
+  \item Multiple instances of Snapshot classes. One will be created for each snapshot block on the FPGA.
+  \item Multiple instance of the Correlation clas, one for each of the cross correlation baselines.
+\end{enumerate}
+
+The direction finder code takes an instance of a correlator which can then be used for easy access to the data from the orrelator.
+
 \subsection{Control Register}
 The control register naturally lends itself to a class with interfaces to modify the different bit groups of the register in logical ways.
-A python module called software\_register was written with a single class: SoftwareRegister. This class contains a value parameter which mirrors the value programmed into the FPGA's control register. It then has the following interface methods:
+A python module called software\_register was written with a single class: ControlRegister. This class contains a value parameter which mirrors the value programmed into the FPGA's control register. It then has the following interface methods:
 \begin{description}
   \item[pulse\_sync] Toggles the syncronisation reset bit low to high and then high to low.
   \item[block\_trigger ; allow\_trigger] These methods either set of clear bit the bit that controls the gate which blocks or allows the snapshot blocks being triggered by a complete accumulation. The idea is that this will be used to allow all of the snapshot blocks to be armed sequentially before they can be triggered all at once.

@@ -14,3 +14,14 @@ The iADCs suffer from a few mismatches between the cores which should be calibra
   \item The sampling delay between the cores should be adjusted such that the sampling time between each core is as intended. This could be a phase difference of 0 for sampling independent signals in phase, or pi/2 for I/Q sampling or pi for interleaved sampling of a single stream.
   \item There are other parameters which can also be calibrated such as the data ready delay adjustment or the gain compensation, but these are not very relevant for this work so will be ignored. Only the analogue gain, offset and sample delay will be calibrated for this work.
 \end{enumerate}
+
+The iADC can be calibrated either in interleaved or independent mode. The algorithms are the same for each except for where the data is sourced from. Interleaved calibration sources all of its data from a single RF input, then splits the data up into what was read by each core and does core calibration. Independent calibration takes one stream of data samples from one of the RF inputs and another stream for the other input. Calibration is then done on this. In independent mode, care should be taken to ensure that the signal at each port is exactly the same in terms of amplitude and phase. The calibration process attempts to force these parameters to be equal.
+
+The actual interpretation of the output of the ADC (as the ADC datasheet intends the binary number to be interpreted) is a number which oscillates between -1 and 1 depending on whether the differential voltage is slightly positive or slightly negative, even in the presence of no signal. It does not have a concept of 0. This is shown in \autoref{fig:calibration:adc_encoding}. However, the data structures of the FPGA gateware certainly do have a concept of 0. As a result, they incorrectly interpret this number as -1 to 0. This causes the signal to have a spurious DC offset. To compensate for this, the iADC is calibrated by applying a positive offset to the output number such that it is centered around 0 and hence does not have a DC offset.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{./img/calibration/adc_encoding}
+  \caption{ADC input differential voltage vs output binary number. Src: iADC datasheet}
+  \label{fig:calibration:adc_encoding}
+\end{figure}
