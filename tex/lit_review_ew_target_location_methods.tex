@@ -30,7 +30,7 @@ It is further shown by Poisel that the delay time for a signal arriving at the \
  \tau_m(\vec{\theta}) &= \tau_m ( \begin{bmatrix} \theta \\ \phi \end{bmatrix} ) \\
                        &= \frac{1}{c} [ x_m\cos(\theta)\cos(\phi) + y_m\sin(\theta)\cos(\phi) + z_m\sin(\phi) ]
 \end{align}
-This model assumes that the Source Position Vector (SPV), \(\begin{bmatrix}\theta & \phi\end{bmatrix}\TRANSPOSE\), is the same for each sensor. This is approximately true when the distance from the array to the source is much greater than the array geometry. Hence, it's often convenient and most accurate to select the center of the array as the origin. 
+This model assumes that the azimuth and elevation angle to the source, \(\begin{bmatrix}\theta & \phi\end{bmatrix}\TRANSPOSE\), is the same for each sensor. This is approximately true when the distance from the array to the source is much greater than the array geometry. Hence, it's often convenient and most accurate to select the center of the array as the origin. 
 For a 2D space we let \(\phi = 0\) and hence simplify to:
 \begin{equation}
  \tau_m(\theta) = \frac{1}{c} [ x_m\cos(\theta) + y_m\sin(\theta) ]
@@ -66,14 +66,13 @@ Often (as is the case in this project) the sensors used will be identical omnidi
   \vec{a}(\theta, \omega) = \exp \left\{ j \frac{\omega \mathbf{X} \vec{k}(\theta)}{c} \right\}
 \end{equation}
 
-Or, more expressively:
+Or, more verbose:
 \begin{align}
 \vec{a}(\theta, \omega) &= \exp \left\{ \frac{j \omega}{c} \begin{bmatrix} x_1, y_1 \\ x_2, y_2 \\ .., .. \\ x_M, y_M \end{bmatrix} \begin{bmatrix} \cos(\theta) \\ \sin(\theta) \end{bmatrix} \right\} \\
                         &= \exp \left\{ \frac{j \omega}{c} \begin{bmatrix} x_1\cos(\theta) + y_1\sin(\theta) \\ x_2\cos(\theta) + y_2\sin(\theta)) \\ .., .. \\ x_M\cos(\theta) + y_M\sin(\theta) \end{bmatrix} \right\} \\
 \end{align}
-This important result shows us that for a known array with omnidirectional antennas at arbitrary \(x)\) and \(y\) locations, receiving a narrow band signal of known frequency, the phase shift at each element is a vector which can be very easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 
 
-The vector output of the array, where each element of the vector corresponds to an antenna element is equal to the sum of the signals at that element by the principle of superposition. Algebraically:
+The vector output of the array, \(\vec{r}(t)\), where each element of the vector is the signal received by the sensor is the where each element of the vector corresponds to an antenna element is equal to the sum of the signals at that element by the principle of superposition. Algebraically:
 \begin{equation}
   \vec{r}(t) = \sum_{k=1}^{K} s_k(t)\vec{a}_k(\vec{\theta}_k) + \vec{n}(t)
 \end{equation}
@@ -84,6 +83,11 @@ Where:
   \item \(\vec{a}_k(\vec{\theta}_k)\) is the antenna array manifold, explored more shortly,
   \item \(\vec{n}(t)\) is additive noise.
 \end{itemize}
+
+Or in matrix notation:
+\begin{align}
+  \vec{r}(t) = \mathbf{A}(\vec{\theta})\vec{s}(t) + \vec{n}(t)
+\end{align}
 
 The array manifold vector is also known as source position vector or as the steering vector. It is the response of the array to a signal impinging on the array from a certain azimuth and elevation angle, \((\phi, \theta)\). The response is naturally in terms of the gain and phase shifts introduced by each sensor as a result of the beam pattern and physical separation of the sensors. It is given by:
 \cite{dacos1995estimating}.
@@ -132,3 +136,6 @@ Let there be $K$ individual signal sources, where $\vec{s}(t)$ represents the re
 \begin{equation}
 \vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_K(t) \end{bmatrix}
 \end{equation}
+
+This important result shows us that for a known array with omnidirectional antennas at arbitrary \(x)\) and \(y\) locations, receiving a narrow band signal of known frequency from a certain direction, \(\theta\), the phase shift at each element is a vector which can be easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 
+
