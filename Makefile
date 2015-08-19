@@ -31,6 +31,8 @@ all: main.pdf
 
 main.pdf: 
 	latexmk -pdf -pdflatex="pdflatex -interactive=nonstopmode" -use-make main.tex
+main.nls:
+	makeindex main.nlo -s nomencl.ist -o main.nls
 
 clean:
 	latexmk -CA
