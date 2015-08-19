@@ -10,7 +10,7 @@ As discussed in \cite{farrier1990direction}, many high-performance DF algorithms
 The following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook \cite{desk1997electronic}.
 In general, classes of system include:
 
-\subsection{Scanning beam}
+\subsection{Scanned beam}
 This is a direct amplitude technique. An antenna with gain is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of direction radio direction finding (RDF) \nomenclature{RDF}{Radio Direction Finding} and was implemented in the early 1900's. One of the first uses of this RDF device was to locate the bearing to a ship which was transmitting a signal. A loop antenna was frequently used in the early 1900's as it was a simple antenna to construct and the beam pattern has a sharp null. An example antenna and beam pattern are shown in \autoref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. If multiple signals originating from different bearings are present, the system cannot operate. While today it may be possible to put highly selective receivers on the output of the antenna, this technology did not exist when scanning beam DF systems were originally used.
 
 Note that as the beam pattern is symmetric about both the x and y axis, there are in general 4 ambiguous points. However, if the antenna can be rotated such that the signal is in the null, there is then only 2 ambiguous points, or \SI{180}{\degree} ambiguity. This can be resolved with an  additional antenna element to resolve. Note also that this is not an instantaneous DF technique as it requires time for the antenna to be rotated. Hence, this technique is not suitable for finding transients. 
@@ -20,7 +20,7 @@ Loop antennas DF systems are very sensitive to multipath errors, especially iono
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{./img/lit_review/loop_antenna}
+    \includegraphics[width=\textwidth]{lit_review/loop_antenna}
     \caption{Loop antenna used for direction finding in 1918. Src: \cite{grabau1989funkpeiltechnik}}
   \end{subfigure}
   ~
@@ -47,6 +47,23 @@ The crossed loop technique is an amplitude comparison technique. As is shown in 
   \end{subfigure}
   \caption{Crossed loop antenna and beam pattern}
   \label{fig:lit_crossed_loop_antenna}
+\end{figure}
+
+\subsection{Adcock and Watson-Watt}
+The Adcock is an improvement on the scanned beam technique and Watson-Watt is an improvement on the crossed loop. Instead of using loop antennas, these improved techniques make used of pairs of monopole or dipole antennas which when combined produce the same beam pattern as the single or crossed loop antennas. The antenna configuration of Adcock and Watson-Watt is shown in \autoref{fig:lit_adcock_and_watsonwatt}.
+Some discussion needed on how they work. What the advantages of them over loop or crossed loop. Something about ionospheric reflections I believe...
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/adcock}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/watson_watt}
+  \end{subfigure}
+  \caption{Array configurations for Adcock (left) and Watson-Watt (right). Src: \cite{poisel2008introduction}}
+  \label{fig:lit_adcock_and_watsonwatt}
 \end{figure}
 
 \subsection{Amplitude Comparison}

@@ -1,6 +1,18 @@
 \chapter{Introduction}
-%\section{Background}
-%TODO
+\section{Background}
+MeerKAT is a 64-dish radio telescope, aimed at being the precursor to the full Square Kilometer Array (SKA) \nomenclature{SKA}{Square Kilometer Array} radio telescope. 
+There telescope require a RF-quite environment in order to be able to operate. The presence of Radio Frequency Interference (RFI) \nomenclature{RFI}{Radio Frequency Interference} will at best interfere with the ability of the telescope to do science, and at worst destroy the sensitive receivers designed to cope with only very weak signals from space. 
+It is for this reason that the array is being deployed in the Karoo desert, well away from built up areas and the RF signals that go along with built up areas. 
+However, there is always the possibility that RFI will manifest. Although all equipment taken to site is tested for RFI before hand, if equipment malfunctions or is not configured correctly or shielded correctly, RFI may be introduces.
+As such, RFI management systems must be in place to aid in the detection and amelioration of RFI. 
+
+The purpose of this research is to design one of these systems: a device capable of detecting RFI sources and doing parameter estimation on them. The particular parameter of interest is the Angle of Arrival (AoA) \nomenclature{AoA}{Angle of Arrival}. The process of ascertaining the AoA of RF is known as direction finding.
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+  \centering
+  \includegraphics[width=0.4\textwidth]{introduction/meerkat_dish}
+  \caption{Meerkat disk}
+\end{wrapfigure}
 
 \section{User Requirements}
 
@@ -45,3 +57,8 @@
 
   \item The report produced should contain a theoretical analysis of the performance of the system, as well as an analysis of the performance of the prototype on site with real signals. 
 \end{enumerate}
+
+\section{Requirements Review}
+The requirements as stated by the SKA are understood and found to be acceptable. 
+
+(what else should go here?)
