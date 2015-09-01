@@ -51,26 +51,47 @@ As with the scanned beam, the crossed loop suffers from significant performance 
 \end{figure}
 
 \subsection{Adcock Array}
-The Adcock array is an improvement on the scanned beam technique and Watson-Watt is an improvement on the crossed loop. Instead of using loop antennas, these improved techniques make used of pairs of monopole or dipole antennas which when combined produce the same beam pattern as the single or crossed loop antennas. The antenna configuration of Adcock and Watson-Watt is shown in \autoref{fig:lit_adcock_and_watsonwatt}.
-As a loop antenna can be modeled by two vertical antennas on the sides and two horizontal antennas on the top and bottom of the loop, it should be clear that the loop is able to receive is not polarisation selective. While the direct beam from the signal source may be vertically polarised, the reflected beam from atmospheric reflection was also being received and corrupting the signal.
-The Adcock antenn which uses only vertical elements maintains the same beam pattern as the loop but is not sensitive to horizontally polariased radiation hence offers better performance for a DF system.
+The Adcock array was developed and patented in 1919 by British army engineer Frank Adcock \cite{gething1991radio}.
+Instead of using loop antennas, the Adcock array makes use of two orthogonally orientated (crossed) pairs of monopole or dipole antennas. Typically a North-South pair and an East-West pair are used. These antenna pairs produce the same beam pattern as the loop antennas. 
+As a loop antenna can be modeled by two vertical antennas on the sides and two horizontal antennas on the top and bottom of the loop, it should be clear that the loop is not polarisation selective. While the direct beam from the signal source may be vertically polarised, the reflected beam from atmospheric reflection was also being received and corrupting the signal output of the array.
+The Adcock array which uses only vertical elements maintains the same beam pattern as the loop but is not sensitive to horizontally polarised radiation hence offers better performance for a DF system.
+The antenna configuration of Adcock and Watson-Watt is shown in \autoref{fig:lit_adcock_array}.
+This array configuration was studied extensively in the 1930's and played a significant role in the electronic warefare of World War II \cite{gething1991radio}.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{./img/lit_review/adcock}
+  \begin{subfigure}[b]{0.25\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/adcock_model}
   \end{subfigure}
   ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{./img/lit_review/watson_watt}
+  \begin{subfigure}[b]{0.6\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/adcock_implementation}
   \end{subfigure}
-  \caption{Array configurations for Adcock (left) and Watson-Watt (right). Src: \cite{poisel2008introduction}}
-  \label{fig:lit_adcock_and_watsonwatt}
+  \caption{Left: model for adcock antenna showing N-S and E-W pairs. Right: Japanese implementation of array for 2 MHz direction finding.}
+  \label{fig:lit_adcock_array}
 \end{figure}
 
+
 \subsection{Watson-Watt Evaluation}
-With either the crossed loop, or the Adcock equivalent discussed above, the beam pattern of the one output is a cosine shape and the beam pattern of the other output is a sine shape. 
-In 1926, Robert Watson-Watt developed a method for exploiting the trigonometric properties of these functions to easily compute the angle of arrival from an array with this cos/sin property. For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel \cite{poisel2008introduction}.
+Ambiguity is one of the major difficulties which need to be overcome in direction finding systems. In the mid 1920's, Sir Robert Watson-Wat developed an improved DF system based on the Adcock array configuration. As discussed above, the beam pattern of the output of an Adcock array is one cosine shaped beam and one sine shaped beam. 
+By exploiting the trigonometric properties of these functions and adding an additional sense element for to easily compute the angle of arrival from an array with this cos/sin property. Graphically: \autoref{fig:watson-watt}.
+
+For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel \cite{poisel2008introduction}. For simulation of Watson-Watt: \cite{adcockwatsonwattrdf}.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/watson-watt-processing-analogue}
+    \caption{View showing transformer configuration to produced required difference signals. Src: \cite{poisel2008introduction}}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{./img/lit_review/watson-watt-processing-digital}
+  \caption{Abstraced view of signal chain for digital processing. Src: \cite{rhode2000introtodf}}
+  \end{subfigure}
+  \caption{Watson-Watt array processing technique using the Adcock array. Note that difference channels from crossed beams are formed}
+  \label{fig:watson-watt}
+\end{figure}
 
 \subsection{Amplitude Comparison}
 This uses an antenna array. The antennas either have gain themselves or beam forming techniques are used to create beams with gains. Amplitude comparison techniques are in general simple to implement, but provide low resolution and low accuracy compared to phase methods due to their dependence on antenna beam pattern and their sensitivity to multipath. In practice, typical amplitude comparison systems have a DF RMS accuracy between \SI{3}{\degree} and \SI{10}{\degree}.
