@@ -19,19 +19,20 @@ Note that as the beam pattern is symmetric about both the x and y axis, there ar
 Loop antennas DF systems are very sensitive to multipath errors, especially ionospheric reflection \cite{jenkins1991smallaperture}. 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{lit_review/loop_antenna}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{lit_review/loop_antenna}
     \caption{Loop antenna used for direction finding in 1918. Src: \cite{grabau1989funkpeiltechnik}}
   \end{subfigure}
   ~
-  \begin{subfigure}[b]{0.35\textwidth}
-   \includegraphics[width=\textwidth]{./img/lit_review/loop_antenna_beam}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+   \includegraphics[width=0.7\textwidth]{lit_review/loop_antenna_beam}
    \caption{Beam pattern of loop antenna or dipole. Note the sharp null. Src: \cite{jenkins1991smallaperture}}
   \end{subfigure}
   \caption{Loop antenna and beam pattern}
   \label{fig:lit_loop_antenna}
 \end{figure}
-
 
 \subsection{Crossed Loop}
 The crossed loop technique is an amplitude comparison technique. As is shown in \autoref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cos of the angle. By comparing the signal power from each antenna, it is possible to ascertain the angle of arrival (AoA) \nomenclature{AoA}{Angle of Arrival}. This system is instantanious as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other.
@@ -68,7 +69,7 @@ This array configuration was studied extensively in the 1930's and played a sign
   \begin{subfigure}[b]{0.6\textwidth}
     \includegraphics[width=\textwidth]{./img/lit_review/adcock_implementation}
   \end{subfigure}
-  \caption{Left: model for adcock antenna showing N-S and E-W pairs. Right: Japanese implementation of array for 2 MHz direction finding.}
+  \caption{Left: model for adcock antenna showing N-S and E-W pairs. Right: Japanese implementation of array for 2 MHz direction finding. Src: \cite{japanesecommunications}}
   \label{fig:lit_adcock_array}
 \end{figure}
 
@@ -77,7 +78,7 @@ This array configuration was studied extensively in the 1930's and played a sign
 Ambiguity is one of the major difficulties which need to be overcome in direction finding systems. In the mid 1920's, Sir Robert Watson-Wat developed an improved DF system based on the Adcock array configuration. As discussed above, the beam pattern of the output of an Adcock array is one cosine shaped beam and one sine shaped beam. 
 By exploiting the trigonometric properties of these functions and adding an additional sense element for to easily compute the angle of arrival from an array with this cos/sin property. Graphically: \autoref{fig:watson-watt}.
 
-For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel \cite{poisel2008introduction}. For simulation of Watson-Watt: \cite{adcockwatsonwattrdf}.
+For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel \cite{poisel2008introduction}. For a simulation of Watson-Watt algorithm as well as a discussion around an ambiguity resolution implementation using a sense antenna,see: \cite{adcockwatsonwattrdf}.
 
 \begin{figure}
   \centering
@@ -88,11 +89,57 @@ For a more detailed discussion of the mathematics behind the Watson-Watt DF algo
   ~
   \begin{subfigure}[b]{0.48\textwidth}
     \includegraphics[width=\textwidth]{./img/lit_review/watson-watt-processing-digital}
-  \caption{Abstraced view of signal chain for digital processing. Src: \cite{rhode2000introtodf}}
+    \caption{Abstraced view of signal chain for digital processing. Src: \cite{rhode2000introtodf}}
   \end{subfigure}
   \caption{Watson-Watt array processing technique using the Adcock array. Note that difference channels from crossed beams are formed}
   \label{fig:watson-watt}
 \end{figure}
+
+\subsection{Doppler}
+By the principle of Doppler shift, moving an antenna towards a signal source increases the observed frequency while moving an antenna away from a source lowers the observed frequency. 
+If an antenna is rotated around a central point (tracing out the circumference of a circle), there will be 
+The Doppler shift is given by: \cite{poisel2012electronic}
+\begin{equation}
+  \Delta f = \frac{B\omega}{c}f_c\sin(\Uppsi)
+\end{equation}
+Where \(B\) is the length of the antenna baseline, \(\omega\) is the angular velocity of the antenna, \(f_c\) is the carrier frequency of the signal source and \(\Uppsi\) is instantaneous difference between the angle towards the signal source and the angle of the rotating antenna. 
+
+As discussed by Jenkins, to DF a \SI{100}{\mega\hertz} tone with a Doppler shift of \SI{3}{\mega\hertz}, the antenna would need to be rotated with a tangential velocity of \SI{10000}{\metre\per\second} \cite{jenkins1991smallaperture}. It is not practical to rotate an antenna at such a high speed. 
+Hence, rather than physically rotating an antenna, what is done in practice is that a Doppler shift is synthesised by rapidly switching between sampling different elements of a large circular array. 
+Typically between 12 and 30 elements are used for Doppler DF arrays. 
+Show graphically in \autoref{fig:lit-review-doppler-switching} is the model for a rotating antenna around a fixed reference antenna as well as the typical implementation using antenna switching and the signal chain block diagram.
+
+As discussed by Jenkins \cite{jenkins1991smallaperture}, Doppler is not a high accuracy system due to the signal distortion introduced by switching the sampled antenna. Furthermore, Doppler DF is not suited to locating transients for two reasons:
+\begin{enumerate}
+  \item it is not an instantaneous technique due to there being some time required to switch between sampling all of the antennas. For example, a typically time required to switch between all elements of an array may be \SI{6}{\milli\second} \cite{rhode2000introtodf}. This is unsuitable for transients which may last only a few hundred nanoseconds.
+  \item it generally needs a narrow-band signal which has a well defined carrier frequency so that the Doppler shift is well defined. Impulsive transients do not have this characteristic.
+\end{enumerate}
+
+his makes it not useful for transients which can have durations down to a few hundreds of nanoseconds.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./img/lit_review/doppler-2-antenna}
+    ~ 
+    \caption{Model for Antenna 2 rotating around stationary Antenna 1 with angular velocity \(\omega\). Src: \cite{poisel2012electronic}}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.6\textwidth]{./img/lit_review/doppler-switching}
+    \caption{Practical implementation switching antennas for pseudo-Doppler DF system. Src: \cite{jenkins1991smallaperture}}
+  \end{subfigure}
+  \caption{Model for Doppler DF system}
+  \label{fig:lit-review-doppler-switching}
+\end{figure}
+
+For a more detailed discussion of the mathematics behind Doppler DF, see the Rhode \& Schwarz report \cite{rhode2000introtodf}. 
+
+\subsection{Time Difference of Arrival}
+TDOA \nomenclature{Time Difference of Arrival}{TDOA} is a DF system which is typically used for finding of impulsive sources; sources which emit a pulse that exists for a short time duration where the pulse has a clearly defined start and end. Most commonly it is used for locating pulsed radar system in the electronic warefare context.
+
 
 \subsection{Amplitude Comparison}
 This uses an antenna array. The antennas either have gain themselves or beam forming techniques are used to create beams with gains. Amplitude comparison techniques are in general simple to implement, but provide low resolution and low accuracy compared to phase methods due to their dependence on antenna beam pattern and their sensitivity to multipath. In practice, typical amplitude comparison systems have a DF RMS accuracy between \SI{3}{\degree} and \SI{10}{\degree}.
@@ -110,3 +157,6 @@ Two notes about this simple two element array:
  \item If the element spacing is larger than \(\frac{\lambda}{2}\) the ambiguity gets worse. The unambiguous field of view is \(\theta = 2 \sin^{-1}(\frac{\pi}{2d})\).
  \end{enumerate}
  The solution to this ambiguity problem is to use more than two elements, thereby constructing a multiple baseline interferometer. 
+
+\subsection{Summary}
+Amplitude based systems generally used for DF of cooperative emitters \cite{jenkins1991smallaperture}
