@@ -15,9 +15,9 @@ all: main.pdf
 # missing file reference and interactively asking you for an alternative.
 
 main.pdf: 
-	latexmk -pdf -pdflatex="pdflatex -interactive=nonstopmode" -use-make main.tex
-main.nls:
-	makeindex main.nlo -s nomencl.ist -o main.nls
+	latexmk -outdir=out -auxdir=out -pdf -interaction=nonstopmode -use-make main.tex
+out/main.nls:
+	makeindex out/main.nlo -s nomencl.ist -o out/main.nls
 
 clean:
-	latexmk -CA
+	latexmk -outdir=out -auxdir=out -c

@@ -23,6 +23,7 @@ main.pdf
 *.mtc0
 *.nav
 *.nlo
+*.nls
 *.out
 *.pdfsync
 *.ps
