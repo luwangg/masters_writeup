@@ -4,20 +4,26 @@
   \begin{center}
     \includegraphics[width=0.38\textwidth]{introduction/meerkat_dish}
   \end{center}
-  \caption{Meerkat dish}
+  \caption{Photograph of first MeerKAT dish antenna. Src: \cite{skasawebsite}}
 \end{wrapfigure}
-MeerKAT is a 64-dish radio telescope, aimed at being the precursor to the full Square Kilometer Array (SKA) \nomenclature{SKA}{Square Kilometer Array} radio telescope. 
-There telescope require a RF-quite environment in order to be able to operate. 
-The presence of Radio Frequency Interference (RFI) \nomenclature{RFI}{Radio Frequency Interference} will at best interfere with the ability of the telescope to do science, and at worst destroy the sensitive receivers designed to cope with only very weak signals from space. 
-It is for this reason that the array is being deployed in the Karoo desert, well away from built up areas and the RF signals that go along with built up areas. 
+MeerKAT is a 64-dish radio telescope, aimed at being the precursor to the full Square Kilometer Array (SKA) \nomenclature{SKA}{Square Kilometer Array} radio telescope. At the time of writing, the KeerKAT array is in the process of being rolled out, with around 6 dishes being operational at present.
+The first phase of MeerKAT will receive L-Band signals, from \SI{1.00}{\giga\hertz} to \SI{1.75}{\giga\hertz}. 
+
+Like any radio telescope, MeerKAT requires a quite RF environment in order to be able to operate. 
+The presence of Radio Frequency Interference (RFI) \nomenclature{RFI}{Radio Frequency Interference} could interfere with the ability of the telescope to do science, or even destroy the sensitive amplifiers and digitisers designed to cope with only very weak signals.
+It is for this reason that the array is being deployed in the Karoo, well away from built up areas and the RF signals that go along with built up areas. 
+
 However, there is always the possibility that RFI will manifest. 
-Although all equipment taken to site is tested for RFI before hand, if equipment malfunctions or is not configured correctly or shielded correctly, RFI may be introduces.
-As such, RFI management systems must be in place to aid in the detection and amelioration of RFI.
+Although all equipment taken to site is tested for RFI before hand, if equipment malfunctions or is not configured correctly or shielded correctly, RFI may be introduced.
+As such, RFI management systems must be in place to aid in the detection and amelioration of RFI in order to allow the telescope to function optimally.
 
-The purpose of this research is to design one of these systems: a device capable of detecting RFI sources and doing parameter estimation on them. The particular parameter of interest is the Angle of Arrival (AoA) \nomenclature{AoA}{Angle of Arrival}. The process of ascertaining the AoA of RF is known as direction finding.
-
+The purpose of this research is to design an RFI management system. 
+Specifically, a device capable of detecting RFI and performing \nomenclature{AoA}{Angle of Arrival} parameter estimation on them. 
+The process of ascertaining the AoA of RF is known as \nomenclature{DF}{Direction Finding}.
 
 \section{User Requirements}
+
+The following user requirements were drawn up by three senior engineers at SKA SA: the Director of Science and Engineering, Prof Justin Jonas, Systems Engineer for Infrastructure, Carel van der Merwe and digital backend DSP specialist, Dr Jason Manley. 
 
 \begin{enumerate}
   \item A system to perform direction finding of both impulsive and continuous wave (CW) RFI sources is to be designed.
@@ -64,4 +70,3 @@ The purpose of this research is to design one of these systems: a device capable
 \section{Requirements Review}
 The requirements as stated by the SKA are understood and found to be acceptable. 
 
-(what else should go here?)
