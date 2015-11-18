@@ -1,4 +1,4 @@
-\documentclass[a4paper]{scrreprt}
+\documentclass[a4paper]{scrbook}
 
 \usepackage{thesis_style}
 \graphicspath{{./img/}}
@@ -9,11 +9,16 @@
 
 
 \begin{document}
+\frontmatter
 \include{./tex/01-title-pages}
+\include{./tex/03-declaration}
+\include{./tex/04-acknowledgments}
+\include{./tex/05-abstract}
 \tableofcontents
 \listoffigures
 \listoftables
 \printglossaries
+\mainmatter
 \include{./tex/10-introduction}
 \include{./tex/20-lit-review}
 \include{./tex/lit_review_techniques}
