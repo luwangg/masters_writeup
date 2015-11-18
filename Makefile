@@ -15,7 +15,7 @@ all: main.pdf
 # missing file reference and interactively asking you for an alternative.
 
 main.pdf: 
-	latexmk -outdir=out -auxdir=out -pdf -interaction=nonstopmode -use-make main.tex
+	latexmk -outdir=out -auxdir=out -pdf -logfilewarninglist -file-line-error -use-make main.tex
 out/main.nls:
 	makeindex out/main.nlo -s nomencl.ist -o out/main.nls
 
