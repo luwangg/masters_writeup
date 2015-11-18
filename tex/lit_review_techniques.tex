@@ -1,5 +1,5 @@
 \section{Direction Finding Techniques}
-A Radio Direction Finder \nomenclature{RDF}{Radio Direction Finder} is a passive device able to ascertain the direction of a source of electromagnetic radiation which occurs in the RF frequency range, often defined as between \SI{3}{\kilo\hertz} and \SI{300}{\giga\hertz}. 
+A Radio Direction Finder \gls{rdf} is a passive device able to ascertain the direction of a source of electromagnetic radiation which occurs in the RF frequency range, often defined as between \SI{3}{\kilo\hertz} and \SI{300}{\giga\hertz}. 
 
 The general structure of a direction finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
 
@@ -8,11 +8,11 @@ Radio DF has been around since the start of the 1900's. Some of the first people
 (Move this later): As discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
 
 \subsection{Classes of Direction Finder Systems}
-The following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook \cite{desk1997electronic}.
+The following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook \cite{center2012electronic}.
 In general, classes of system include:
 
 \subsection{Scanned beam}
-This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of direction radio direction finding (RDF) \nomenclature{RDF}{Radio Direction Finding} and was implemented in the early 1900's. 
+This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of direction radio direction finding and was implemented in the early 1900's. 
 One of the first uses of this RDF device was to in a system developed by Marconi locate the bearing to a ship which was transmitting a signal for navigation purposes. A loop antenna was frequently used in the early 1900's as it was a simple antenna to construct and the beam pattern has a sharp null. 
 An example antenna and beam pattern are shown in \autoref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. 
 If multiple signals originating from different bearings are present, the system cannot operate. 
@@ -41,7 +41,7 @@ Loop antennas DF systems are very sensitive to multipath errors, especially iono
 \subsection{Crossed Loop}
 The crossed loop technique is an amplitude comparison technique. 
 As is shown in \autoref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cos of the angle. 
-By comparing the signal power from each antenna, it is possible to ascertain the angle of arrival (AoA) \nomenclature{AoA}{Angle of Arrival}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
+By comparing the signal power from each antenna, it is possible to ascertain the \gls{aoa}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
 For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
 As with the scanned beam, the crossed loop suffers from significant performance degradation arising from multipath, specifically ionospheric reflection. 
 In the 1930's a marine radio direction finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to RDF technology were made with the operating frequency of the systems being extended into the VHF and UHF band  and extensive RDF networks being installed \cite{jenkins1991smallaperture}.
@@ -148,7 +148,7 @@ For a more detailed discussion of the mathematics behind Doppler DF, see the Rho
 
 
 \subsection{Time Difference of Arrival}
-TDOA \nomenclature{Time Difference of Arrival}{TDOA} is a DF system which is typically used for finding of impulsive sources; sources which emit a pulse that exists for a short time duration where the pulse has a clearly defined start and end. Most commonly it is used for locating pulsed radar system in the electronic warfare context.
+\gls{tdoa} is a DF system which is typically used for finding of impulsive sources; sources which emit a pulse that exists for a short time duration where the pulse has a clearly defined start and end. Most commonly it is used for locating pulsed radar system in the electronic warfare context.
 
 For a two element array, the difference in time in the arrival of a pulse at the elements is
 \begin{equation}

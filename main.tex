@@ -2,14 +2,18 @@
 
 \usepackage{thesis_style}
 \graphicspath{{./img/}}
-\makenomenclature
+
+\setacronymstyle{long-short}
+\makeglossaries
+\loadglsentries{./tex/00-glossaries}
+
 
 \begin{document}
 \include{./tex/01-title-pages}
 \tableofcontents
 \listoffigures
 \listoftables
-\printnomenclature
+\printglossaries
 \include{./tex/05-introduction}
 \include{./tex/lit_review}
 \include{./tex/lit_review_techniques}

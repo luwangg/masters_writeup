@@ -16,8 +16,11 @@ all: main.pdf
 
 main.pdf: 
 	latexmk -outdir=out -auxdir=out -pdf -logfilewarninglist -file-line-error -use-make main.tex
-out/main.nls:
-	makeindex out/main.nlo -s nomencl.ist -o out/main.nls
+
+main.gls:
+	xindy -L english -C utf8 -I xindy -M ./out/main -t ./out/main.glg -o ./out/main.gls ./out/main.glo
 
 clean:
 	latexmk -outdir=out -auxdir=out -c
+	rm -f ./out/main.*
+	rm -f ./out/tex/*.aux
