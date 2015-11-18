@@ -1,3 +1,11 @@
+\section{Overview of Direction Finding}
+In this section, an analysis is made of different the direction finding techniques which exist. The most applicable of these will be examined in more details following.
+Classical methods of direction finding algorithms \cite{tuncer2009classical}.
+\begin{itemize}
+	\item Beamforming: by introducing the correct phase delay to each channel of the array, the array factor can be made to be such that the signal in quesetion is added coherently by each element of the array.
+		This phase delay indicates the direction of arrival of the signal. The coherent addition of the signals allows for much higher SNR. 
+\end{itemize}
+
 \section{Direction Finding Techniques}
 A Radio Direction Finder \gls{rdf} is a passive device able to ascertain the direction of a source of electromagnetic radiation which occurs in the RF frequency range, often defined as between \SI{3}{\kilo\hertz} and \SI{300}{\giga\hertz}. 
 
@@ -187,3 +195,28 @@ Notes about this simple two element array:
 \subsection{Summary}
 Amplitude based systems generally used for DF of cooperative emitters \cite{jenkins1991smallaperture}
 This uses an antenna array. The antennas either have gain themselves or beam forming techniques are used to create beams with gains. Amplitude comparison techniques are in general simple to implement, but provide low resolution and low accuracy compared to phase methods due to their dependence on antenna beam pattern and their sensitivity to multipath. In practice, typical amplitude comparison systems have a DF RMS accuracy between \SI{3}{\degree} and \SI{10}{\degree}.
+
+\section{Stuff from Schleher}
+The simplest way to do DF is scan a narrow beam antenna. The position of the antenna which produces the highest output is the AoA. The antenna can be scanned physically by rotating it or electronically by a phased array. 
+The down side of this approach is it cannot DF transients as it has a low POI. Well, POI as well as it needs time to scan around to figure out where the highest amplitude signal is.
+
+Angular accuracy is:
+\begin{equation}
+  \Delta \theta = k \theta_B / \sqrt{SNR}
+\end{equation}
+
+Interferometer systems which use phase comparison for DF have a comparatively higher angular accuracy and rapid response which is good for transient detection. However, they impose stringent requirements on the phase matching for the RF chain which requires careful design, measurement and calibration. 
+
+Selection of antenna spacing necessitates a trade off between angular accuracy and ambiguity. The further the elements are placed apart, the greater the accuracy, but the more ambiguity is introduced. It is well known that for a 2-element array, the lowest ambiguity which can be achieved is \SI{180}{\degree} which is when the elements are spaced half a wavelength apart. 
+Of course, this \(\lambda/2\) is only valid for a single frequency. As soon as a different frequency needs to be received, the antennas will appear closer together or further apart, depending on whether the new frequency is higher or lower. As such, the specing is generally set by the highest frequency needed to be received, which puts an upper bound on the amount of ambiguity in the system. 
+
+For a linear array, the array is often constructed with a long baseline (in the order of \(16\lambda\)) to provide high angular accuracy, and a short baseline \(\lambda/2\) to resolve the ambiguity introduced by the system. It must be noted that with a linear array, there is always an unresolvable \SI{180}{\degree} ambiguity, no matter how many elements are present.
+
+DF can also be done via Doppler shift which involves rapidly switching which antenna is sampled in an array to simulate rapidly rotating the antenna. When the antenna is being switched toward the signal source, the received frequency will go up. When the sampled antenna is being switched away from the source, the frequency will go down. By seeing at which stage of the switching the frequency is increasing and at which stage it is decreasing, it can be determined where the source is.
+
+TODO: insert summary table from page 384 here.
+
+Geolocation is done by measuring AoA from multiple locations and then triangulating to ascertain the true location of the source. This is outside the scope of this project. This project seeks only to design an AoA system. Not a geolocation system. 
+
+Probability of Intercept (POI) is a measure of the probability that the parameters of the EW receiving system match those of the target signal source at an instant in time. The key parameters are frequency and orientation. Frequency refers to whether the receiver is receiving on the frequency which is being transmitted. Orientation refers to whether the antennas of the receiver are pointed towards the signal source. 
+For a \SI{100}{\percent} POI, the receiver needs to be wide open (as opposed to narrow-band scanning) and have omni directional antenna coverage. This \SI{100}{\percent} POI is essential to be able to intercept transient or impulsive signals.

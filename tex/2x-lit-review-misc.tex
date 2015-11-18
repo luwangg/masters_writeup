@@ -1,0 +1,41 @@
+\section{Radiometer}
+A radiometer is a device which is able to provide a very high accuracy approximation of noise power by averaging a large number of noise samples over a long time period. Due to the high accuracy measurements it can make, it is able to detect small changes in received power. 
+It does this by achieving a high sensitivity. Sensitivity is the measure of how weak a signal and instrument is able to detect.
+
+We will define power in terms of a matched load heated to a certain temperature observed over a certain bandwidth.
+\begin{equation}
+  P = kTB
+\end{equation}
+where \(k \approxeq \SI{1.38e-23}{\joule\per\kelvin}\), the Boltzmann constant. 
+
+System temperature is a combination of noise powers from atmospheric emissions, the warm earth, the cosmic microwave background, receiver noise figure, losses in the RF chain and others. These noise sources mask the RFI signal which we are trying to locate. While typically an RFI signal below the noise floor would not be an issue, in the case of a radio astronomy reserver that signal will in all likelihood still be a problem because the noise floor of the MeerKAT array is so much lower than the RFI DF instrument. In essence, a signal which will be very loud to the telescope may be difficult for the DF system to even detect. Effort will hence need to go into ensuring that this instrument being designed will be able to see signals below its own noise floor. 
+
+As the noise at an antenna is a combination of a multitude of noise sources, the central limit theorem states that output of the antenna will be approximately a normal (Gaussian) distribution. 
+
+The noise temperature is defined as the noise power per unit bandwidth over the Boltzmann constant:
+\begin{equation}
+  T_N = \frac{P_v}{k}
+\end{equation}
+
+Assuming the power of a noise source remains constant, a single sample of the noise source has an RMS error of approximately \(\sqrt{2}T_{sys}\). However, by integrating the noise power from a certain bandwidth \(\Delta B\) over some integration time \(\tau\) the error can be significantly reduced to
+\begin{equation}
+  \sigma_{T} = \frac{\sqrt{2}T_{sys}}{\sqrt{2B\tau}} = \frac{T_{sys}}{\sqrt{B \tau}}
+\end{equation}
+Where \(\sigma_{T}\) is the RMS error in the measurement of the noise temperature, \(T\), and \(T_{sys}\) is the actual system noise temperature. Note that \(2B\tau\) is the number of samples acquired
+
+This process used in a radiometer of acertaining a high accuracy approximation of a received signal by integrating the signal over some observation period can also be used in the context of a direction finding system. For this application, a long observation period may be used to extract a weak signal which is burried in noise so that the weak signal may be processed.
+
+\begin{equation}
+  \frac{S}{N} = \frac{S}{N}\sqrt{B\tau}
+\end{equation}
+
+Tsys = Tsky + Trx where Tsky is thestuff above and Trx is Johnson noise from electronic components. Tsky can't do anything about. Trx lowered by cooling components. 
+The Trx is as a result of the Johnson-Nyquist noise. 
+
+Extension to interferometry:
+
+\(SEFD / (N(N-1))/2 \tau 2B)\)
+
+Sources: \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation}
+\url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation_Applied_to_Telescopes}
+\url{https://www.cv.nrao.edu/course/astr534/Radiometers.html}
