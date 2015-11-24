@@ -1,3 +1,42 @@
+\section{DF history or background}
+As per Small aperture radio df:
+
+The systems mentioned here will be discussed in more detail later in (some section)
+
+Over the next decade, investigation into using loop antennas was done. In 1920 the U.S set up a network of direction finders for marine navigation based on loop antennas.
+
+Poor error tolerance of loop antennas to ionospheric reflections lead to the development of the Adcock array in 1918. 
+In 1926 the Watson-Watt DF system was developed which allowed information to be presented to the user on a CRT display. 
+
+By the start of  the World War II, direction finders could operate up to 30 MHz, although they still were subject to problems caused by ionospheric reflections and multipath in general. 
+The tactical advantage which DF systems provided prompted significant development into DF during the war.
+
+\section{DF From Electronic warfare target location methods}
+
+This content comes from \cite{poisel2012electronic}. It should not be a chapter but rather be merged into the lit review.
+
+Objective to find location of non-cooperative targets. Relevant to warfare as well as RFI.
+
+Position fix can be ascertained by intersecting multiple lines of bearing (LOB). Or: AoA can be used in PF algorithms. 
+Limiting factors to LOB: noise, measurement errors, multipath reflections. 
+
+Maximum likelihood estimation: original technique used for LOB to PF. 
+Least-square error: other technique. Total LSE: more general. 
+
+Systematic errors: bias. Random errors: noise. 
+
+LSE: Find a solution to an overestimated system: more measurements than unknowns. Relies on minimising the cost function: sum of the square of the errors (difference between estimate and measurement). I could write some pretty maths here, but I actually don't understand it. 
+
+LSE is the same as maximum likelihood when noise is normally distributed.
+
+\section{Amplitude Comparison Methods from electronic target location method}
+These methods, specifically the Wattson-Watt technique are probably the most commonly used DF methods over the history of DF systems \cite{poisel2012electronic}.
+They involve comparing the amplitudes of antenna beams. These beams can either be actual beams resulting from using antennas with gain, or as in the case of Wattson-Watt the beams can be synthesised by forming sum and difference channels from broad beam antennas in an array.
+
+\section{MSE Phase Interferometery from ewtlkm}
+Should write something here...
+
+
 \section{Overview of Direction Finding}
 In this section, an analysis is made of different the direction finding techniques which exist. The most applicable of these will be examined in more details following.
 Classical methods of direction finding algorithms \cite{tuncer2009classical}.
@@ -220,3 +259,23 @@ Geolocation is done by measuring AoA from multiple locations and then triangulat
 
 Probability of Intercept (POI) is a measure of the probability that the parameters of the EW receiving system match those of the target signal source at an instant in time. The key parameters are frequency and orientation. Frequency refers to whether the receiver is receiving on the frequency which is being transmitted. Orientation refers to whether the antennas of the receiver are pointed towards the signal source. 
 For a \SI{100}{\percent} POI, the receiver needs to be wide open (as opposed to narrow-band scanning) and have omni directional antenna coverage. This \SI{100}{\percent} POI is essential to be able to intercept transient or impulsive signals.
+
+\section{Statistical Methods}
+
+As per discussion in Poisel \cite{poisel2012electronic}. 
+
+Statistical methods generally involve taking snapshots of the signals received at each sensor, \(\vec{r}(t)\) and then calculating the covariance matrix of the received data.
+It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
+
+The direction finding process involves doing eigen analysis (finding eigenvalues and eigenvectors) for the covariance matricies. 
+Two sorts of eigenvectors will be produced:
+\begin{description}
+  \item[Noise Eigenvectors] have an eigenvalue equal to the noise power.
+  \item[Signal Eigenvectors] have some property that I don't understand
+\end{description}
+
+\subsection{Subspace Methods}
+This class of methods attempts to decompose the covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
+
+\subsection{Maximum Likelihood}
+Foobar
