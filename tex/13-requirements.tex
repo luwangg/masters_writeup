@@ -10,7 +10,7 @@ The following user requirements were drawn up by three senior engineers at SKA S
       \item It should take in input from a correlator. This could either be time domain cross correlation for impulsive sources or frequency domain cross correlation for continuous sources. 
       \item It should parse a configuration file which contains information about the array configuration and information about the output from the correlator.
       \item The data from the correlator should be used to ascertain the direction of the detected signals.
-      \item The software should be designed to fit into a system which has a 100\% probability of intercept. 
+      \item The software should be designed to fit into a system which has a 100\% \gls{poi}
     \end{enumerate}
   \item The software should have the following user interface features:
     \begin{enumerate}
@@ -45,10 +45,32 @@ The following user requirements were drawn up by three senior engineers at SKA S
 \end{enumerate}
 
 \section{Requirements Review}
-It is worth noting from the user requirements that the system being designed here will not be immediately applicable to combating RFI at the MeerKAT site. The reason is that as no down converter will be used, the frequency band being digitised by this system will not be the same as the MeerKAT band. It will be up to future work to add a suitable RF front end in order to allow the system to operate in the MeerKAT band of interest. When designing the software and FPGA firmware, this should be kept in mind so that it should be trivial to reconfigure the algorithms for a different RF front end. 
+The requirements as stated by the \gls{ska} are clear and understood. Some notable implications from the requirements:
 
-Based on the fact that the emitters will be either stationary or slow moving, it should be acceptable to have integration times in the order of 1 second. 
+\begin{itemize}
+  \item The system which will be designed here will probably not be immediately applicable to combating RFI at the MeerKAT site. The reason is that this project is focused on the \gls{df} implementation, not hardware. Hence no down converter will be designed in meaning the frequency band being digitised by this system will not overlap the MeerKAT band. 
+    It will be up to future work to add a suitable \gls{rf} front end in order to allow the system to operate in the MeerKAT band of interest. However, the implication for this work is that it is essential that this system be designed such that it is trivial to reconfigure the system for a different RF front end and frequency band. 
 
-Other than these two notes, the requirements as stated by the SKA are clear and understood.
+  \item Based on the fact that the emitters will be either stationary or slow moving, it should be acceptable to have integration times in the order of 1 second. 
 
+  \item The requirement of a 100\% \gls{poi} will impose restrictions on what antenna array and receiver can be used, and this will in turn have restrictions on the specific \gls{df} algorithm which can be used. 
 
+  \item Seeing as this system is intended to be used by \gls{ska} and will require future work to make it production ready, the source code should be structured such to allow collaborative development and located somewhere accessible. Github will be used. Following is a list of code repos used in this project. 
+
+\end{itemize}
+
+\begin{table}
+  \centering
+  \begin{tabu}{c|c}
+    Description & URL \\
+    \hline
+    This document & \url{https://github.com/jgowans/masters_writeup} \\
+    Ambiguity simulation & \url{https://github.com/jgowans/phase_ambiguity} \\
+    iADC calibration & \url{https://github.com/jgowans/iADC_calibration} \\
+    Direction finder front end & \url{https://github.com/jgowans/directionFinder_web} \\
+    ROACH firmware & \url{https://github.com/jgowans/correlation_plotter} \\
+    Direction finder backend & \url{https://github.com/jgowans/directionFinder_backend} \\
+  \end{tabu}
+  \caption{Github repos for this project}
+  \label{tab:lit-review-repos}
+\end{table}
