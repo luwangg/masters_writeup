@@ -36,3 +36,4 @@ This is followed by a bram which stores and feeds back the vector to the DSP48E 
 
 The design is such that 48 bits are continuously accumulated. After the accumulation has run for a configurable number of iterations, the most significant 32 bits are sliced off and snapped. By accumulating 48 bits, no data is thrown away until the snap. Commit XXXXX makes this change to the dsp48\_bram\_vacc block in the casper library.
 
+\input{./tex/65-calibration.tex}

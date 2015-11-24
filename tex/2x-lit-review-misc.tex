@@ -1,3 +1,17 @@
+\section{Geolocation}
+Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
+
+This process is shown graphically in \autoref{fig:lit-triangulation-from-df}, where multiple DF stations ($S_{1}$ through to $S_{M}$) are used to locate the x,y,z coordinates of the target $x_{T}$. Note that this geolocation process in the figure is for airborne DF systems searching for a ground based target. However, the system could easily be simplified to a purely terrestrial process.
+
+The relevance of this note about geolocation to this work is that it is not necessary to attempt to design a system which can do geolocation natively. Rather, a DF system can be design which can later be duplicated in order to provide geolocation capabilities. 
+
+\begin{figure}[p] 
+  \centering
+  \includegraphics[width=0.6\textwidth]{./img/lit_review/triangulation_from_df.pdf}
+  \caption{Using triangulation from multiple DF stations to ascertain the geographic location of a target. Source: \cite{poisel2012electronic}}
+  \label{fig:lit-triangulation-from-df}
+\end{figure}
+
 \section{Radiometer}
 A radiometer is a device which is able to provide a very high accuracy approximation of noise power by averaging a large number of noise samples over a long time period. Due to the high accuracy measurements it can make, it is able to detect small changes in received power. 
 It does this by achieving a high sensitivity. Sensitivity is the measure of how weak a signal and instrument is able to detect.
