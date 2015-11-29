@@ -1,3 +1,34 @@
 \chapter{Simulations}
 \label{ch:simulations}
-It works like this.
+
+A simulation for the DF algorith was written in python.
+
+The structure of the software doing the simulation is similar to the structure of the software which will be implemented.
+
+In preperation for the implementation of the final DF algorithms, python packages were written: 
+directionFinder-backend has the code for an AntennaArray class which builds an array model out Antenna objects and can the calculate and returning a vector of the antenna array manifold. The phase-ambiguity package has logic for creating an AntennaArray object and then correlating the manifold vector from a reference direction to manifold vectors from all directions to find mathces and plot the results.
+
+Parameters:
+frequency range, number of frequency points, angle range, number of angle points, reference angle.
+
+This produces a 3-d plot. Typically the 3-d plot is flattened to a 2-D image with colour used for the third dimension, rather than rendinging a 3-d image. The type of data being plotted naturally lends itself to a colour plot view.
+
+
+Ideally we would like 4 dimensional vectors: frequency, reference angle, aoa, correlation. However, this is difficult to do. Hence, two simulation strategies are used: either fix reference angle and vary frequency and aoa. Or fix frequency and vary reference and aoa. They produce results with a different view: one shows the ambiguity perforamcne and a certain frequency, the other view shows the slice of the ambiguity performance over the whole frequency range. Process:
+
+\begin{enumerate}
+  \item A configuration file specifying how an antenna array is positioned in read in an an AntennaArray object is created.
+  \item For each frequency bin in the frequency range:
+  \begin{enumerate}
+    \item The array manifold is generated for a reference \gls{aoa}. Default: \SI{0}{\degree}.
+    \item For each angle in the incident angle range:
+    \begin{enumerate}
+      \item Calculate manifold.
+      \item Correlate.
+      \item Now have data point: frequency, incident angle, correlation between reference and this.
+    \end{enumerate}
+  \end{enumerate}
+  \item plot all data points
+\end{enumerate}
+
+How about: vary reference and aoa and then pick the worst and plot that. Or average?? What's most interesting. Worst. Let's see worst case performance. 
