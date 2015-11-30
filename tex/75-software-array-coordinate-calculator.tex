@@ -1,0 +1,58 @@
+\section{Array Element Coordinate Calculator}
+
+The code discussed in this section is available here:\\
+\url{https://github.com/jgowans/array-element-coordinate-calculator}.\\
+
+The software developed up until now requires as an input a list of coordinates of the antenna array being used.
+These coordinates will be used to create a model of the array.
+
+While it is trivial to measure the distance between elements of an array, it is not trivial to calculate absolute coordinates for elements. The process of trilateration can be used to ascertain the coordinates of elements by ascertaining the points of intersections of circles formed from the baselines of the array.
+This involves a fair amount of geometry and trigonometry, and while not necessarily difficult is certainly laborious.
+
+As the system developed here needs to be easily reconfigurable for different arrays, it is important that the user does not have to go through the manual process of calculating array element coordinates when a different array is used of if the array geometry is changed.
+This process should be made as simple as possible.
+For this reason, a small software package has been written which does the job of converting between the measured baselines and the coordinates of the elements.
+
+Obviously, the introduction of a coordinate system requires some assumptions, as there are infinitely many ways in which a shape can be placed onto a coordinate system. The process which the software package follows is:
+
+\begin{itemize}
+  \item Assume that element 0 of the array is at the origin, \((0, 0)\)
+  \item Assume that element 1 is at location \((d, 0)\), where \(d\) is the baseline distance measured between element 0 and element 1.
+  \item For all other elements:
+    \begin{itemize}
+      \item create a circle with centre at element 0 and radius the distance between element 0 and that element
+      \item create a circle with centre at element 1 and radius the distance between element 1 and that element
+      \item find the points corresponding to the intersection of the circles and select the point with the positive y component (there should be only one) as the location of the element
+    \end{itemize}
+  \item Now that preliminary coordinates have been calculated for each element, repeat the process a few times for all elements, selecting the centroid of the intersection points as the location of the element. This is done to try to mitigate measurement error.
+  \item Remove the offset caused by forcing element 0 to the origin. Rather place the origin in the centroid of the array.
+  \item Output the coordinates to the terminal in a format which can be copied and pasted into an array configuration file. 
+  \item Output a list of measured baselines and final baselines to indicate how close the software was able to get the calculated baselines to the measured baselines. The user can look at the percentage error to see if they want to retake measurements.
+\end{itemize}
+
+In order to do this, custom classes were written to abstract circles and points, with logic written to do geometric operations such as get the intersection of Cricle instances or find the centroid of a set of points. 
+
+\begin{lstlisting}
+def hello(name):
+    print 'Hello', name
+ 
+if __name__=='__main__':
+    hello('Me')    
+    distances = {}
+    pairs = itertools.combinations(range(0, n), 2)
+    for pair in pairs:
+        el0 = pair[0]
+        el1 = pair[1]
+        while True:    # keep trying to get valid input
+            try:
+                d = raw_input("Distance from elelemt {el0} to element {el1}:  ".format(el0 = el0, el1 = el1))
+                d = np.float64(d)   # here is where an exception could be thrown
+                assert((d > 0) or (d == -1))
+                break
+            except (TypeError, AssertionError):
+                print("Invalid input! Enter -1 for no reading taken. Re-try.")
+        key = 'd{n}{m}'.format(n = el0, m = el1)
+        distances[key] = round(d, 4)
+    return distances
+
+\end{lstlisting}

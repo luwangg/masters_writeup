@@ -25,6 +25,7 @@
 \usepackage[xindy]{glossaries}  % if needed, these must be loaded before: hyperref,babel,polyglossia,inputenc,fontenc
 \usepackage{wrapfig}
 \usepackage{tabu}
+\usepackage{listings}
 
 % include section number in equation numbering. Ie: 1.2.3 rather than 1.42
 \numberwithin{equation}{section}
@@ -34,3 +35,10 @@
 \newcommand{\mtx}[1]{\ensuremath{\mathbf{#1}}}
 
 \usepackage{scrhack}
+
+
+\definecolor{colorcodegray}{rgb}{0.5,0.5,0.5}
+\definecolor{colorkeywords}{RGB}{152,0,76}
+\definecolor{colorcomments}{RGB}{128,128,128}
+\definecolor{colorstrings}{RGB}{0,102,0}
+\definecolor{coloridentifiers}{RGB}{0,0,0}
