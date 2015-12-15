@@ -6,3 +6,23 @@ This chapter details the design and characterisation of the chain of antenna, lo
 The LNAs which are used are the ZLF-500HLN from MiniCircuits. This part operates from \SI{10}{\mega\hertz} to \SI{500}{\mega\hertz} which is ideal for the application. The gain is approximately 21 dB across this band acording to the datasheet. The input current is a maximum of \SI{110}{\milli\ampere}.
 
 \input{./tex/55-lna.tex}
+
+\section{Portable Configuration}
+The RF front end needs to be able to be taken out into the field and used while running on batteries.
+Two ZIPPY Compact \SI{1000}{\milli\ampere\hour} 3S 25C battery packs and 4 LM7815 regulators were acquired. 
+Each amplifier has its own regulator to try to reduce any electrical coupling between the regulators through their power rails.
+The battery packs output \SI{12.5}{\volt} when fully charged meaning a combined input to the \SI{15}{\volt} regulators of \SI{25}{\volt}. Hence the regulators are dropping \SI{10}{\volt} at \SI{100}{\milli\ampere} or \SI{1}{\watt}.
+The LM7815s can handle this dissipation provided a heat sink is connected, which was done.
+This power distribution circuitry was put onto veroboard.
+
+All of the amplifiers and filters and the power distrubution board were mounted to a wooden board.
+Care was taken to make sure that the low pass filters were securely and firmly attached to the board as there is a risk that the SMA connector would snap off if they they were bumped. 
+The circuit diagram for this board and the resulting hardware implementation for this RF front end are are shown in figure ??.
+
+\section{System Temperature Calculations}
+Tsys.
+Channel bandwidth = 390 kHz. 
+Noise figure: 3.9 dB. 
+LNA gain: 20 dB
+LPF insertion loss: 1 dB
+connector and cable losses: 2 dB
