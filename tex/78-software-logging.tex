@@ -1,0 +1,10 @@
+\section{Logging Infrastructure}
+Logging important in application of this size with multiple packages and a large object tree.
+Also logging will need to be made avaialbe to web user interface later so must be well structured to integrate with web app.
+Python has excellent logging facilities. Allowing logger objects to be hierarchical tree structure like objects created.
+Eg: direiction finder creates correlator creates multiple correlation objects create multiple snapshot objects which interact with the FPGA. 
+We want to know where a log message comes from. If a snap block reports a message, which snap block?
+
+Different log levels: typical end user may only want critical. For initial setup maybe info. For dev: debug. 
+
+Here, show terminal snapshot of log. Probably snap being read. Show colors. Show critical. FFT overflow?

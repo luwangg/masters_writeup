@@ -1,0 +1,46 @@
+\section{Time Domain Direction Finding}
+
+\subsection{Testing}
+Measure propagation delay of cables on VNA. Screenshot.
+Put same cables onto system and look at delay according to system. 
+Profit.
+
+\subsection{Upsampling}
+Use the word 'interpolate' somewhere...
+Can upsample. Why? Band limited signal sampled above Shannon/Nyquist sampling requirement. Hence we have all possibe information. Hence we're allowed to interpolate as much as is wanted. 
+Want to upsample to provide better resolution. Note accuracy does not go up, it's dependant on sample rate, jitter, ENOB etc. But resolution can be arbitrarily increased by upsampling.
+
+Two ways. More intuative: upsample signal then cross correlate. 
+Or cross correlate then upsample. Second is FAR more efficient computationally. 
+Time is faily linear with x then upsample. Time is very dependant on signal length with first. Assume it has to do with resample being based on FFT and FFT performing differently with different signal lengths. With x then upsample, signal lenght to be upsampled known before hand.
+Upsample then X much more expensive as it needs to upsample the full signal and then X on the huge resulting signal.
+X first does only a few steps of X, producing only a few output vectors then upsamples each of those.
+
+Resample first:
+Depending on signal length which is controlled by length of pulse, not deterministic, the FFT is \(\Omega(N\log{N})\) to \(\mathcal{O}(N^2)\). Next stage, cross correlation does a whole lot of point MACs. \(\mathcal{O}(N)\). This is dominated by the resample phase. 
+
+X first: Does \(\mathcal{O}(N)\) MACS. Result is a small output vector. Not dependant on N. Hence the resample stage becomes \(\mathcal{O}(1)\). 
+
+Perhaps look at this again for N being the amount of upsampling being done rather than signal length. Or amount of padding?
+
+Table: Variable: (sig len, upsampling, padding). Best case O. Worst case O. 
+
+A few pictures here:
+Non upsampled and upsampled correlation.
+
+\subsection{Calibration}
+Different RF chains may have different propagation delays. 
+Inject broad band signal into each baseline. Should be zero delay between each. 
+If delay is non-zero, write it to calibration file.
+For future measurements, subtract this calibration offset from measured delay. 
+
+Here: image of cross correlations of all pre-cal baselines. Single plot. Use long signals for high and narrow peak.
+
+\subsection{De-dispersion}
+We're assuming constant propogation delay across frequency. VNA shows mostly correct, but not perfectly. Also other systems have have different dispersion factors. 
+De-dispersion. 
+More difficult but: single set of coefficients would be used from both time and frequency systems. 
+Need a perfect pulse.
+Would be very useful to following systems which use the pulses for RFI classification. 
+For now: folded dipole antennas should provide minimal dispursion. 
+VNA measurements shows cables not very dispersive.
