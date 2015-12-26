@@ -1,0 +1,75 @@
+\section{Calibration}
+
+The software needs to have provision to calibrate various aspects:
+\begin{itemize}
+  \item RF front end: the LPF and LNA and cable from LNA to ROACH may have different delay or phase shift factors. Measurements in earlier chapters show not really different, but worth doing any way for future systems which may have RF front ends with more significant shifts. This can be calibrated very accurately using a known signal though the RF chain and measuring the response.
+  \item Same as above but in time domain
+  \item Antenna cables: the antennas which were purchased for this project do not have the same length cables. Table (following) shows various lengths. It would be difficult to imperically measure the phase shift caused by these cables. Rather, by knowing the velocity factor through the cable and measuring the length of the cable the difference can be deduced.
+\end{itemize}
+
+\subsection{Antenna Cable Length Compensation}
+
+
+\begin{table}
+  \centering
+  \begin{tabu}{c|c}
+    Antenna Number & Cable Length (m)\\
+    \hline
+    0 & 0.557 \\
+    1 & 0.566 \\
+    2 & 0.510 \\
+    3 & 0.590
+  \end{tabu}
+  \caption{Lengths of cables coming out of antennas}
+  \label{tab:software-antenna-cable-lengths}
+\end{table}
+
+According to the manufacturer, Magnavolt, the cables are all RG214 which has a velocity factor of 0.659. 
+
+Wrote JSON file with this information.
+
+For each baseline, software calculates difference in propagation times for each element of the baseline created by length and velocity factor. Calculates corresponding phase shift for each frequency bin based on this and then aplies this frequency shift to the cross correlation in there.
+
+Here: extract of JSON file.
+A bit of maths of what the software does?
+
+Discuss how this applies to both time and frequency domain.
+
+\subsection{RF Chain Compensation (Calibration?) in Frequency Domain}
+The LPF + LNA + Long RG58 cable from the front end to the roach introduces difference phase and time shifts. 
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{software/freq-shift-full-rf-chain}
+    % left, bottom, right, top
+    \caption{Phases before calibration}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{software/freq-shift-full-rf-chain-after-cal}
+    % left, bottom, right, top
+    \caption{After cal}
+  \end{subfigure}
+  \caption{Bar}
+\end{figure}
+
+\subsection{RF Chain Compensation in Time Domain}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{software/time-delay-through-full-rf-chain}
+    % left, bottom, right, top
+    \caption{Phases before calibration}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{software/time-delay-in-phase}
+    % left, bottom, right, top
+    \caption{THIS IS WRONG. GENERATE AND USE CALIBRATED IMAGE HERE.}
+  \end{subfigure}
+  \caption{Bar}
+\end{figure}

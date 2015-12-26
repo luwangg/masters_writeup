@@ -37,4 +37,17 @@ This is followed by a bram which stores and feeds back the vector to the DSP48E 
 
 The design is such that 48 bits are continuously accumulated. After the accumulation has run for a configurable number of iterations, the most significant 32 bits are sliced off and snapped. By accumulating 48 bits, no data is thrown away until the snap. Commit XXXXX makes this change to the dsp48\_bram\_vacc block in the casper library.
 
+\section{Compiling the design}
+This design was iterated on and compiled more than 100 times as functionality was added and experimentation was done.
+The design is very large, using over 95\% of the available logic on the Virtex 5 FPGA. This has meant that it is a difficult design to compile, often failing to meet timing requirements.
+Running at \SI{200}{\mega\hertz} means that a signal needs to get from the data source element to the data end element through any intermediate logic within \SI{5}{\nano\second}. 
+There are two components to the propogartion time of a signal inside the FPGA. First is propogation delay through logic and the second is propogation delay through routing. When the design is very large, routing delay goes up as logic gets spread further apart on the chip. When there are lots of gates which a signal has to go through, logic delay goes up. 
+
+The data signal needs to arrive at the data end element a short time before the clock signal, and it needs to remain valid for some short time after the clock edge. This first amount of time is known as setup time and the time after the edge is known as hold time. If the data propogration delay is too large, setup will not be met. If clock skew is too large, hold time will not be met.
+When timing fails, Xilinx Sysgen reports which net has failed, between which source and end elements timing has failed, which logic blocks the data line passed through, where they are physically located on the FPGA, how much of the delay was caused by logic propagation and how much routing propagation. 
+
+If the source and destination elements are far apart, timing will be dominated by routing. The designed may attempt to use tools like FloorPlanner to move the elements around on the chip to get them close together. For a design like this using about 90\% of the logic, there is almost no room to adjust and this becomes very challenging. 
+
+Solution: inserting a dummy latch in the data path so that the data will be latched in somewhere between the original source and destination elements. This is essentially increasing the latency of the pipeline. This is not a easy solution though: often for logic constrained designed, adding a latch to a wide data pipeline will make even more data paths fail timing as there is not less logic available for optimizing logic placement. It's necessary to carefully consider exactly where and why timing is failing before attempting to fix. Trying to fix timing errors is painful and slow, considering that a compile can take over 2 hours before throwing a timing error. 
+
 \input{./tex/65-calibration.tex}
