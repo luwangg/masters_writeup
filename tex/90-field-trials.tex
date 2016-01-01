@@ -52,7 +52,7 @@ Direct:
 Both attenuation and phase shift are a function of \(R\).
 
 This is simulated as the ideal, free space path.
-Then ground reflection is added. It's another path \(R\prime\)
+Then ground reflection is added. It's another path \(R^\prime\)
 This is similar but as well as being a longer path it has a ground reflection coefficient. 
 This is what's simulated with \(\rho e^{j \phi}\)
 
@@ -69,13 +69,13 @@ Where:
   \item \(\theta\) grazing angle
 \end{itemize}
 
-Now we have \(r\prime(t)\) which is the received signal as a result of the longer path length: \(R\prime\) as well as the ground reflection coefficient: \(\rho e^{j\phi}\)
+Now we have \(r^\prime(t)\) which is the received signal as a result of the longer path length: \(R^\prime\) as well as the ground reflection coefficient: \(\rho e^{j\phi}\)
 \begin{equation}
-  r\prime(t) = \rho e^{j\phi} s(t)\frac{\lambda}{4\pi R\prime} \exp\left\{ j 2 \pi \frac{R\prime}{\lambda}\right\}
+  r^\prime(t) = \rho e^{j\phi} s(t)\frac{\lambda}{4\pi R^\prime} \exp\left\{ j 2 \pi \frac{R^\prime}{\lambda}\right\}
 \end{equation}
 
-The final signal arriving is the combination: \(r(t) + r\prime(t)\).
-Note in the worst case, where \(\theta\) is very small (large distance, small elevation), \(R \approx R\prime\) and \(\rho e^{j\phi} \approx -1\). This equates to complete destructive interference and should be avoided.
+The final signal arriving is the combination: \(r(t) + r^\prime(t)\).
+Note in the worst case, where \(\theta\) is very small (large distance, small elevation), \(R \approx R^\prime\) and \(\rho e^{j\phi} \approx -1\). This equates to complete destructive interference and should be avoided.
 
 We want to know what range and elevation would produce results which suffer least from ground reflection interference. Most critically, we want the phase of combined signal to be as close as possible (within a few percent error) of the ideal case. 
 Assumptions: Tx and Rx heights are the same. The distance between RxA and RxB is \SI{1}{\meter}. This is representative of the built array. Simulate for \(h \in \left[ 0.5 , 5 \right]\) and \(R \in \left[5, 50\right]\)
@@ -87,7 +87,7 @@ Algorithm:
       \item Store this ideal amplitude and phase difference.
       \item for a given h:
         \begin{enumerate}
-          \item compute \(\theta\), the grazing angle and \(R\prime\) the longer path length
+          \item compute \(\theta\), the grazing angle and \(R^\prime\) the longer path length
           \item compute the resulting \(\rho e^{j\phi}\) from \(\theta\)
           \item compute the received signal from the reflection which is a function of the path length multiplied by the ground reflection coefficient. 
           \item add the direct and reflected.
