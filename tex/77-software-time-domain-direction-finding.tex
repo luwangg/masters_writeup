@@ -5,6 +5,17 @@ Measure propagation delay of cables on VNA. Screenshot.
 Put same cables onto system and look at delay according to system. 
 Profit.
 
+\subsection{Time Domain Correlation}
+Numpy correlate takes in two vectors, \(\vec{a}\) and \(\vec{b}\) and outputs a vector equal to the correlation of the two, \(c_{ab}\) which is implemented as:
+\begin{equation}
+  c_{ab}[k] = \sum_{n = 0}^{N-1} a[n+k] * v[n]
+\end{equation}
+
+Hence, \(a\) has to be larger. It gets zero padded. 
+If the peak occurs after the midpoint, \(a\) had to be articifically advanced to get the signals to correlate meanining it's actually delayed. Occurs AFTER \(v\). 
+Hence, a positive (past midpoint) correlation peak implies that \(a\) is delayed compared to \(v\). Negative means that \(a\) is ahead of \(v\), ie: \(a\) occurred BEFORE \(v\). Before means it's more to the left on the plot.
+
+
 \subsection{Upsampling}
 Use the word 'interpolate' somewhere...
 Can upsample. Why? Band limited signal sampled above Shannon/Nyquist sampling requirement. Hence we have all possibe information. Hence we're allowed to interpolate as much as is wanted. 
