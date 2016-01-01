@@ -1,0 +1,32 @@
+\chapter{ROACH Development}
+
+\section{Compiling}
+Compiling is rough, bro.
+PlanAhead: \url{https://github.com/casper-astro/mlib_devel/commit/a949c9d}
+Optimizing with planahead: \url{https://casper.berkeley.edu/wiki/Speed_Optimization_with_PlanAhead}
+
+\section{Vector Accumulators}
+I did make this.
+
+Convert: attempts to maintain the value but changes the binary representation. Signed vs unsigend or number of fractional bits. 
+
+Reinterpret: forces the output to a specific data type with no regard for value. Leaves the binary value untouched but changes how that binary value is interpreted. Number of fractional bits or signed vs unsigned. 
+
+DSP48E vacc deals in 48-bit signed values. Up to user to reinterpret the output to match the input. 
+
+Feeding in a tone right in the middle of a frequency bin (specifically 123.047 MHz) with a 1 second accumulation time, the VACC overflows with a tone 20 bits peak to peak.
+The vacc grows linearly and linearly with the \emph{power} of the input signal because it's accumulating the cross correlation which is a complex multiplication of amplitudes. 
+Hence at ADC full scale, the vacc will have increased by \(\frac{256}{20}^2 = 163\) times its value.
+Hence the accumulation time should be no longer than \SI{6}{\milli\second} to ensure that at maximum ADC input no overflow will occur. This corresponds to a length of 2400 accumulations.
+Because: 2K point FFT. 1K real points. 2 output points per FPGA clock cycle. Hence 512 cycles per vacc.
+\(0.006 = \frac{x}{512}\) 
+
+Each vacc takes \(1 / (200e6 / 512)\) seconds. 400 000 vaccs will hence take \(400e3 / (200e6 / 512) = 1 \)
+
+\section{Using the DRAM}
+DRAM needs to run faster than fabric. Runs at \SI{266}{\mega\hertz}. Difficult routing. DRAM design significantly harder to compile. 
+Dram stores samples: a a a a b b b b c c c c d d d d a a a a b b b b etc. 
+How to access: naive is to iterate through each element and assign it based on the index.
+Much faster to use fancy numpy. The key is the flexability of the numpy array which has a reshape method which can change the dimensions of an n-dimensional aray to any other dimensions so long as the number of elements is preserved. 
+Here: compare run time of original method vs numpy. Show numpy code.
+
