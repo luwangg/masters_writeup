@@ -7,6 +7,8 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+% suppress loadisng of subfig, which svg tries to to
+\expandafter\def\csname ver@subfig.sty\endcsname{}
 %\usepackage[colorlinks=true]{hyperref}
 \usepackage{hyperref}
 \usepackage[nameinlink]{cleveref}
@@ -28,6 +30,8 @@
 \usepackage{listings}
 \usepackage{dcolumn}
 \newcolumntype{d}[1]{D{.}{\cdot}{#1} }
+\usepackage{svg}
+\setsvg{inkscape=/usr/bin/inkscape -z -D, svgpath=img/}
 
 % include section number in equation numbering. Ie: 1.2.3 rather than 1.42
 \numberwithin{equation}{section}

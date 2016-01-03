@@ -47,9 +47,11 @@ RxB \SI{1}{\meter} futher away.
 Transmitter: \(s(t)\)
 Direct:
 \begin{equation}
-  r(t) = s(t)\frac{\lambda}{4\pi R} \exp\left\{ j 2 \pi \frac{R}{\lambda}\right\}
+  r(t) = f_a(\theta_a)f_b(\theta_b)(s(t)\frac{\lambda}{4\pi R} \exp\left\{ -j 2 \pi \frac{R}{\lambda}\right\}
 \end{equation}
+Where \(f_a(\theta_a)\) and \(f_b(\theta_b)\) are the beam patterns of antenna \(a\) and \(b\) respectively. For folded dipoles, we will assume them to be cosine beams. For this reason it makes sense to keep the Tx and Rx antennas at the same elevation as it will allow the direct beam to be in the peak of the main lobe
 Both attenuation and phase shift are a function of \(R\).
+TODO: carry on the beam pattern to the rest of the calulations. Useful thing: the grazing angle is the same theta as the beam offset angle!
 
 This is simulated as the ideal, free space path.
 Then ground reflection is added. It's another path \(R^\prime\)
@@ -71,7 +73,7 @@ Where:
 
 Now we have \(r^\prime(t)\) which is the received signal as a result of the longer path length: \(R^\prime\) as well as the ground reflection coefficient: \(\rho e^{j\phi}\)
 \begin{equation}
-  r^\prime(t) = \rho e^{j\phi} s(t)\frac{\lambda}{4\pi R^\prime} \exp\left\{ j 2 \pi \frac{R^\prime}{\lambda}\right\}
+  r^\prime(t) = \rho e^{j\phi} s(t)\frac{\lambda}{4\pi R^\prime} \exp\left\{ -j 2 \pi \frac{R^\prime}{\lambda}\right\}
 \end{equation}
 
 The final signal arriving is the combination: \(r(t) + r^\prime(t)\).
@@ -95,3 +97,31 @@ Algorithm:
         \end{enumerate}
     \end{enumerate}
 \end{enumerate}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includesvg[width=\textwidth, svgpath=./img/field-trials/]{ground-reflection-model}
+    \caption{Model being simulated. Ideal case is the phase difference between receiving elements from \(ra\) and \(rb\) paths only. Real case is phase difference due to all four paths with ground reflection coefficient \(\rho e^{j\phi}\)}
+  \end{subfigure}\\[3ex]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{field-trials/multipath-phase-shift}
+  \end{subfigure}\\[2ex]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{field-trials/multipath-amplitude-shift}
+     % left, bottom, right, top
+  \end{subfigure}
+  \caption{Simulation of change in antenna array response due to ground reflection multipath}
+\end{figure}
+
+Below \SI{3}{\meter} elevation, it looks like the phase becomes fairly uniform with distance after about \SI{25}{\meter}. Above \SI{1.5}{\meter} elevation the amplitude degradation is below \SI{5}{\decibel} so no need to be concerned.
+
+\section{Non-Flat Wavefronts}
+We have assumed flat wave fronts. This may not be true. Again, small sumulation to help decide on a suitable distance. Need to be far enough that the non-flatness of the wavefronts becomes not a problem.
+
+Model: Two antennas: one directly R away from source, one d away and l to the side. l being a baseline length. Also assumed to be 1 m. 
+Flat: phase diff should be 0.
+Non-flat: will be some shift.

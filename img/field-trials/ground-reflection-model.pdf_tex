@@ -1,0 +1,71 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'ground-reflection-model.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{436.85578445bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.2791416)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{ground-reflection-model.pdf}}%
+    \put(0.79566827,0.21920839){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{RxA}}}%
+    \put(0.92358564,0.21892807){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{RxB}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{ground-reflection-model.pdf}}%
+    \put(0.26135024,-0.00699344){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.04795054,0.22023367){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Tx}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{ground-reflection-model.pdf}}%
+    \put(0.4623395,0.0666069){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(\rho e^{j\phi}\)}}}%
+    \put(0.54615315,0.12905075){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(ra^\prime\)}}}%
+    \put(0.26231131,0.10459699){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(\theta\)}}}%
+    \put(0.66188925,0.10176805){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(rb^\prime\)}}}%
+    \put(0.46169435,0.21346701){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(ra\)}}}%
+    \put(0.46816129,0.17742678){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(rb\)}}}%
+    \put(0.48406015,0.03846345){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(d\)}}}%
+    \put(0.85352399,0.06672236){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(l\)}}}%
+    \put(0.91723678,0.06594778){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(l\)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{ground-reflection-model.pdf}}%
+    \put(0.01208532,0.14178143){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\(h\)}}}%
+  \end{picture}%
+\endgroup%
