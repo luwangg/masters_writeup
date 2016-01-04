@@ -1,4 +1,4 @@
-\documentclass[a4paper,toc=bibliography]{scrbook}
+\documentclass[a4paper,toc=bibliography,headings=small]{scrbook}
 
 \usepackage{thesis_style}
 \graphicspath{{./img/}}
@@ -6,7 +6,6 @@
 \setacronymstyle{long-short}
 \makeglossaries
 \loadglsentries{./tex/00-glossaries}
-
 
 \begin{document}
 \lstset{
@@ -44,6 +43,10 @@
 \include{./tex/80-user-interface}
 \include{./tex/90-field-trials}
 \include{./tex/a0-conclusions}
+
+\appendix
+\include{./tex/b0-appendix-roach-dev}
+
 \bibliographystyle{IEEEtran}
 \bibliography{./tex/bib}
 \end{document}

@@ -32,6 +32,14 @@
 \newcolumntype{d}[1]{D{.}{\cdot}{#1} }
 \usepackage{svg}
 \setsvg{inkscape=/usr/bin/inkscape -z -D, svgpath=img/}
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\setlength{\headheight}{13.6pt}
+\setlength{\headsep}{1ex}
+%\setlength{\topmargin}{-3em}
+%\setlength{\height}{10em}
+\usepackage{afterpage}
+\usepackage{pdflscape}
 
 % include section number in equation numbering. Ie: 1.2.3 rather than 1.42
 \numberwithin{equation}{section}
@@ -41,7 +49,6 @@
 \newcommand{\mtx}[1]{\ensuremath{\mathbf{#1}}}
 
 \usepackage{scrhack}
-
 
 \definecolor{colorcodegray}{rgb}{0.5,0.5,0.5}
 \definecolor{colorkeywords}{RGB}{152,0,76}
