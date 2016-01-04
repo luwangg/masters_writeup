@@ -1,5 +1,7 @@
 \chapter{Field Trials}
 \label{ch:field-trials}
+\setsvg{svgpath=./img/field-trials/}
+\graphicspath{{./img/field-trials/}}
 
 \section{Power supply}
 It was necessary to power the ROACH from a battery in order to allow it to be portable and taken out into the open field.
@@ -104,14 +106,14 @@ Algorithm:
     \centering
     \includesvg[width=\textwidth, svgpath=./img/field-trials/]{ground-reflection-model}
     \caption{Model being simulated. Ideal case is the phase difference between receiving elements from \(ra\) and \(rb\) paths only. Real case is phase difference due to all four paths with ground reflection coefficient \(\rho e^{j\phi}\)}
-  \end{subfigure}\\[3ex]
+  \end{subfigure}\\[2em]
   \begin{subfigure}{\textwidth}
     \centering
-    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{field-trials/multipath-phase-shift}
-  \end{subfigure}\\[2ex]
+    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{multipath-phase-shift}
+  \end{subfigure}\\[2em]
   \begin{subfigure}{\textwidth}
     \centering
-    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{field-trials/multipath-amplitude-shift}
+    \includegraphics[width=\textwidth, clip=true, trim=0 0 140 0]{multipath-amplitude-shift}
      % left, bottom, right, top
   \end{subfigure}
   \caption{Simulation of change in antenna array response due to ground reflection multipath}
@@ -125,3 +127,14 @@ We have assumed flat wave fronts. This may not be true. Again, small sumulation 
 Model: Two antennas: one directly R away from source, one d away and l to the side. l being a baseline length. Also assumed to be 1 m. 
 Flat: phase diff should be 0.
 Non-flat: will be some shift.
+\begin{figure}
+  \centering
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includesvg[width=0.7\textwidth]{curved-wavefront-model}
+  \end{subfigure}\\[2em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{curved-wavefront-error}
+  \end{subfigure}
+\end{figure}

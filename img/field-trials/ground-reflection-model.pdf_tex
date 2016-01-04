@@ -48,7 +48,7 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.2791416)%
+  \begin{picture}(1,0.23899791)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{ground-reflection-model.pdf}}%
     \put(0.79566827,0.21920839){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{RxA}}}%
     \put(0.92358564,0.21892807){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{RxB}}}%
