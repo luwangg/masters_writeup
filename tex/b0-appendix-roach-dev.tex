@@ -1,4 +1,5 @@
 \chapter{ROACH Development}
+\graphicspath{{./img/roach-dev/}}
 
 \section{Compiling}
 Compiling is rough, bro.
@@ -35,7 +36,7 @@ Here: compare run time of original method vs numpy. Show numpy code.
   \begin{figure}
   \centering
   \makebox[\textwidth][c]{
-    \includegraphics[width=1.3\paperwidth]{roach-dev/frequency-domain-path}
+    \includegraphics[width=1.3\paperwidth]{frequency-domain-path}
   }
   \caption{Signal flow through frequency domain processing chain. Two dual ADCs into 2K point FFT into cross correlator into vector accumulators into snapshots. Note how the bus widths increase from 8 to 36 to 148 to 256 bits.}
   \label{fig:roach-dev-frequency-domain-chain}

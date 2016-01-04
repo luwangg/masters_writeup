@@ -73,3 +73,20 @@ The LPF + LNA + Long RG58 cable from the front end to the roach introduces diffe
   \end{subfigure}
   \caption{Bar}
 \end{figure}
+
+\subsection{Cable length calibration}
+\begin{table}
+  \centering
+  \begin{tabu}{c|r|r}
+    Baseline & Uncompensated (ps)& Compensated (ps)\\
+    \hline
+    0x1 & 2492 & 2 \\
+    0x2 & 2489 & -2 \\
+    0x3 & 2495 & 2 \\
+    1x2 & -1 & -2 \\
+    1x3 & 1  & 0 \\
+    2x3 & 5 & 5
+  \end{tabu}
+  \caption{Step size: 1 ps}
+  \label{tab:software-cable-lenth-compensation}
+\end{table}
