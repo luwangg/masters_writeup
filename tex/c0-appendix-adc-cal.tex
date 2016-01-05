@@ -1,5 +1,6 @@
-\section{ADC Calibration}
-
+\chapter{ADC Calibration}
+\setsvg{svgpath=./img/adc-cal/}
+\graphicspath{{./img/adc-cal/}}
 There are a few areas where calibration needs to take place in order to ensure that the system performs as expected. What will be discussed here is work on calibrating the ADCs and calibrating the phase of the RF chain from the antennas to the output of the correlator. This RF chain calibration will be done in two stages: 
 \begin{itemize}
   \item firstly, the path starting at the input of the LNAs will be calibrated as this can be easily done in the lab by injecting a phase coherent tone into all LNAs simultaneously.
@@ -21,7 +22,7 @@ The actual interpretation of the output of the ADC (as the ADC datasheet intends
 
 \begin{figure}
   \centering
-  \includegraphics[width=\textwidth]{./img/firmware/adc_encoding}
+  \includegraphics[width=\textwidth]{adc_encoding}
   \caption{ADC input differential voltage vs output binary number. Src: iADC datasheet}
   \label{fig:calibration:adc_encoding}
 \end{figure}
@@ -44,17 +45,34 @@ The actual interpretation of the output of the ADC (as the ADC datasheet intends
 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[b]{0.8\textwidth}
     \centering
-    \includegraphics[clip=true, trim=20 0 60 0, width=0.95\textwidth]{firmware/freq-shift-in-phase}
+    \includegraphics[clip=true, width=0.95\textwidth]{freq-shift-in-phase}
     % left, bottom, right, top
     \caption{Phases before calibration}
   \end{subfigure}
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[b]{0.8\textwidth}
     \centering
-    \includegraphics[clip=true, trim=30 0 60 0, width=0.95\textwidth]{firmware/freq-shift-direct}
+    \includegraphics[clip=true, width=0.95\textwidth]{freq-shift-direct}
     % left, bottom, right, top
     \caption{After cal}
   \end{subfigure}
-  \caption{Bar}
+  \caption{These images are incorrect. Generate new ones.}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[clip=true, width=0.95\textwidth]{interleaved-spectrum-uncal-circled}
+    % left, bottom, right, top
+    \caption{Spectrum BEFORE calibration}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[clip=true, width=0.95\textwidth]{interleaved-spectrum-cal}
+    % left, bottom, right, top
+    \caption{Spectrum AFTER calibration}
+  \end{subfigure}
+  \caption{Comparison between spectrum of interleaved iADCs showing how intermodulation product is removed (or significantly reduced) by calibration}
 \end{figure}
