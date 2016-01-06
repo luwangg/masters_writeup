@@ -40,6 +40,13 @@
 %\setlength{\height}{10em}
 \usepackage{afterpage}
 \usepackage{pdflscape}
+\usepackage{changepage,ifthen}
+\newcommand\skiptoevenpage{%
+   \checkoddpage
+   \ifthenelse{\boolean{oddpage}}%
+      {\null\clearpage}%
+      {\null\clearpage \null \clearpage}%
+}
 
 % include section number in equation numbering. Ie: 1.2.3 rather than 1.42
 \numberwithin{equation}{section}

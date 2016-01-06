@@ -1,0 +1,121 @@
+\section{Sample Impulsive RFI}
+
+Here are some sample RFI snaps. All are time domain. y-axes are time in microseconds. Not starting at 0 because about 20us buffer. 
+\afterpage{
+  \thispagestyle{empty}
+  \begin{figure}
+    \vspace{-4em}
+    \centering
+    \begin{subfigure}{0.8\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{first-trip-yagi-antennas}
+      \caption{Compact printed FLPDA antennas}
+    \end{subfigure}
+    \begin{subfigure}{0.9\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{first-trip-omni-antennas}
+      \caption{EM-6916 Omni-directional conical antennas}
+    \end{subfigure}
+    \begin{subfigure}{0.9\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{first-trip-processing}
+      \caption{Processing collected data in real time}
+    \end{subfigure}
+    \caption{Setup for first field tests on site. Early 2014}
+  \end{figure}
+  \clearpage
+}
+
+\skiptoevenpage
+\begin{landscape}
+  \thispagestyle{empty}
+  \begin{figure}
+  \centering
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-11-23-59}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-11-56-07}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-11-58-12}
+    \end{subfigure}
+  } \\[1ex]
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-00-38}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-08-11}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-19-14}
+    \end{subfigure}
+  } \\[1ex]
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/unknown}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-08-11}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-19-14}
+    \end{subfigure}
+  } \\[1ex]
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-24-03}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-19-14-05-24}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-11-23-59.png}
+    \end{subfigure}
+  }
+  \caption{Selection of impulses collected on site with UNKNOWN origin. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
+  \label{fig:roach-dev-frequency-domain-chain}
+  \end{figure}
+\end{landscape}
+
+\begin{landscape}
+  \thispagestyle{empty}
+  \begin{figure}
+  \centering
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{1.1\textwidth}
+      \includegraphics[width=0.48\textwidth]{sample-rfi-site/bakkie-startup0}
+      \includegraphics[width=0.48\textwidth]{sample-rfi-site/bakkie-startup1}
+      \caption{Bakkie starting up}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/two-way-radio}
+      \caption{Keying the 70 MHz two way radio}
+    \end{subfigure}
+  } \\[1ex]
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/unplugging-charger}
+      \caption{Unplugging laptop charger}
+    \end{subfigure}
+    \begin{subfigure}{1.1\textwidth}
+      \includegraphics[width=0.48\textwidth]{sample-rfi-site/connecting-charger0}
+      \includegraphics[width=0.48\textwidth]{sample-rfi-site/connecting-charger1}
+      \caption{Plugging in laptop charger}
+    \end{subfigure}
+  } \\[1ex]
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{1.65\textwidth}
+      \centering
+      \includegraphics[width=0.32\textwidth]{sample-rfi-site/refrigirator0}
+      \includegraphics[width=0.32\textwidth]{sample-rfi-site/fridge1}
+      \includegraphics[width=0.32\textwidth]{sample-rfi-site/fridge2}
+      \caption{Refrigeration compressor turning on}
+    \end{subfigure}
+  }
+  \caption{Selection of impulses collected on site with KNOWN origin. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
+  \label{fig:roach-dev-frequency-domain-chain}
+  \end{figure}
+\end{landscape}
