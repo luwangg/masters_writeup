@@ -1,5 +1,7 @@
 \chapter{Firmware Design}
 \label{ch:firmware-design}
+\setsvg{svgpath=./img/firmware/}
+\graphicspath{{./img/firmware/}}
 
 Here are the steps which were done to produce the hardware for testing purposes.
 Discussion emphasis is on what I changed or modified. Blocks which were already in existance are discussed in less detail.
@@ -50,3 +52,4 @@ If the source and destination elements are far apart, timing will be dominated b
 
 Solution: inserting a dummy latch in the data path so that the data will be latched in somewhere between the original source and destination elements. This is essentially increasing the latency of the pipeline. This is not a easy solution though: often for logic constrained designed, adding a latch to a wide data pipeline will make even more data paths fail timing as there is not less logic available for optimizing logic placement. It's necessary to carefully consider exactly where and why timing is failing before attempting to fix. Trying to fix timing errors is painful and slow, considering that a compile can take over 2 hours before throwing a timing error. 
 
+\input{./tex/65-impulse-capture}

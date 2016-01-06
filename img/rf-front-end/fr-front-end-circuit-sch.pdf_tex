@@ -1,0 +1,75 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'fr-front-end-circuit-sch.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{487.38636894bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.40912774)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.71237343,0.23346497){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{20dB}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.78229668,0.18763738){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ZFL-500HLN}}}%
+    \put(0.50682171,0.17964303){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{VLF-225+}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.87581818,0.2723873){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{SMA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.42561458,0.19514564){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{SMA}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.63893609,0.3545074){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{7815}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.5986128,0.42076461){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.17268586\unitlength}\raggedright \end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.00211114,0.27366299){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ZIPPY Compact}}}%
+    \put(0.00061701,0.14301936){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ZIPPY Compact}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.74139201,0.06210947){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x 4}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{fr-front-end-circuit-sch.pdf}}%
+    \put(0.29996876,0.37286455){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{25 V}}}%
+    \put(-0.00036011,0.24413557){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1000 mAh 3S}}}%
+    \put(-0.00270496,0.11692639){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1000 mAh 3S}}}%
+  \end{picture}%
+\endgroup%

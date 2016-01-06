@@ -1,11 +1,11 @@
 \chapter{RF Front End}
 \label{ch:rf-front-end}
+\setsvg{svgpath=./img/rf-front-end/}
+\graphicspath{{./img/rf-front-end/}}
 
 This chapter details the design and characterisation of the chain of antenna, low noise amplifier (LNA), lower pass filters and cabling. The cabling is important as each RF chain needs to have exactly\footnote{Some phase difference between the RF chains can and will be calibrated out, but the calibration routine is most robust when the RF chain phases are already closely matches} the same phase delay.
 
 The LNAs which are used are the ZLF-500HLN from MiniCircuits. This part operates from \SI{10}{\mega\hertz} to \SI{500}{\mega\hertz} which is ideal for the application. The gain is approximately 21 dB across this band acording to the datasheet. The input current is a maximum of \SI{110}{\milli\ampere}.
-
-\input{./tex/55-lna.tex}
 
 \section{Portable Configuration}
 The RF front end needs to be able to be taken out into the field and used while running on batteries.
@@ -26,3 +26,27 @@ Noise figure: 3.9 dB.
 LNA gain: 20 dB
 LPF insertion loss: 1 dB
 connector and cable losses: 2 dB
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includesvg[width=\textwidth]{fr-front-end-circuit-sch}
+    \caption{Schematic}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.6\textwidth]{rf-front-end-charging}
+    \caption{The thing}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{lpf-in-holder}
+    \caption{LPF in holder}
+  \end{subfigure}
+  \caption{RF Front end design and construction}
+\end{figure}
+
+
+
+\input{./tex/55-lna.tex}

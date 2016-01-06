@@ -1,0 +1,25 @@
+\section{Impulse Capture}
+
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{impulse}
+    \caption{Periodic \SI{1}{\micro\second} impulse at half of the power of the noise}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{noise}
+    \caption{Additive Gaussian white noise}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{impulse-plus-noise}
+    \caption{Sum of impulse and noise. Impulse is not distinguishable by eye.}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{filter}
+    \caption{Output of moving sum filter. Additional noise power now clearly visible}
+  \end{subfigure}
+  \caption{Simulation of how filter can detect impulse even below noise floor.}
+\end{figure}
