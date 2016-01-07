@@ -1,5 +1,7 @@
-\chapter{Simulations}
-\label{ch:simulations}
+\chapter{Direction Finding Algorithms}
+\label{ch:df-algorithms}
+\setsvg{svgpath=./img/df-algorithms/}
+\graphicspath{{./img/df-algorithms/}}
 
 A simulation for the DF algorith was written in python.
 
@@ -32,3 +34,40 @@ Ideally we would like 4 dimensional vectors: frequency, reference angle, aoa, co
 \end{enumerate}
 
 How about: vary reference and aoa and then pick the worst and plot that. Or average?? What's most interesting. Worst. Let's see worst case performance. 
+
+\section{Frequency Domain Direction Finding}
+How it works. Get phase difference between visibilities. 
+Discuss algorithms. 
+
+\subsection{Ambiguity Simulations}
+Various ambiguity plots. 
+Also show cross section for signal at 250 MHz
+\begin{figure}
+  \centering
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 50 0]{ambiguity01}
+    % left, bottom, right, top
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 50 0]{ambiguity02}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 50 0]{ambiguity03}
+  \end{subfigure}
+  \caption{Bar}
+\end{figure}
+
+\subsection{Accuracy Simulations}
+RMS phase error vs RMS angular error.
+
+\section{Time Domain Direction Finding}
+Ambiguity not really an issue.
+Discuss upsampling. Show plots.
+Again, simulation:
+SNR vs number of correct correlation peaks.
+Table: 
+For an SNR: Do 1000 different cross correlations.RMS error in number of samples.
+Do SNR: 10, 5, 2, 1, 0.5, 0.2, 0.1
