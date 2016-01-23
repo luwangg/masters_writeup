@@ -1,0 +1,89 @@
+\chapter{Array Design and Construction}
+\setsvg{svgpath=./img/array-construction/}
+\graphicspath{{./img/array-construction/}}
+
+Although 5 would be best, limitation of 4 ADC inputs.
+We've seen that 4 circular have many lines of symetry and hence lots of ambiguities.
+Solution: deform the array to remove the ambiguities.
+Deforming is a tradeoff.
+Circular has equal accuracy from all angles. Deformed will have better performance from certain angles and worse from others.
+Also, circular means that elements are all spaced as far apart as possible. Deforming will bring the elements closer together.
+
+\section{Deforming Array}
+Want one of the baselines to be similar to a 5-element array baseline. Selected \SI{0.48}{\meter} as that will provide only a single ambiguiy up to just over \SI{300}{\mega\hertz}.
+Other baselines to be made long to allow lower coupling and higher accuracy / sensitivity
+Photos of how it was deformed.
+Plots from the coordinate generator. Explanation of how coordinate generator works.
+
+\section{Circular vs Deformed Ambiguities}
+Plot both the fixed angle, varing frequency and the fixed frequency varying angle plots.
+
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 53 0]{4-element-circular-ambiguity-over-frequency}
+    \caption{Foo}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 53 0]{4-element-circular-ambiguity-vs-phi}
+    \caption{Foo}
+  \end{subfigure}
+  \caption{Foobar}
+\end{figure}
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 53 0]{4-element-deformed-ambiguity-over-frequency}
+    \caption{Foo}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth, clip=true, trim = 0 15 53 0]{4-element-deformed-ambiguity-vs-phi}
+    \caption{Foo}
+  \end{subfigure}
+  \caption{Foobar}
+\end{figure}
+
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-1}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-3}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-6}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-1-0}
+  \end{subfigure}
+  \caption{Foobar}
+\end{figure}
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-1}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-3}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-6}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-1-0}
+  \end{subfigure}
+  \caption{Foobar}
+\end{figure}
+
+\section{Inter-element Coupling}
+Those plots from Thomas showing that elements close to each other couple.
+

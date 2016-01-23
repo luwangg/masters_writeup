@@ -11,17 +11,19 @@ Instead, an ATX power supply which runs directly from a \SI{12}{\volt} battery w
 
 Furthermore, a ROYAL 1150K battery was supplied. This is a \SI{105}{\ampere\hour} deep cycle calcium battery.
 As the ROACH draws X amps at \SI{12}{\volt}, this implies that we are discharging the battery at \(\frac{105}{X} = \frac{C}{Y}\).
-It is advised to not run down below \SI{70}{\percent} to maintain the battery lifespan. As shown by (cite battery charging), this implies that the voltage should not drop to below \SI{12.1}{\volt} when discharging at \(\frac{C}{Y}\)
+It is advised to not run down below \SI{70}{\percent} to maintain the battery lifespan. As shown by (cite battery charging), this implies that the voltage should not drop to below \SI{12.1}{\volt} when discharging at \(\frac{C}{Y}\).
+Battery was charged at \(0.1 C = 0.1 \times 100 Ah = 10 A\) constant current until it got to \SI{13.8}{\volt} at which point it was charged constant voltage.
 
 Testing in the lab showed that the ROACH pulled \SI{3.1}{\ampere} at \SI{12}{\volt} which is \SI{37}{\watt}. This can easily be handled by the \SI{80}{\watt} ATX power supply. 
 Testing by running the ROACH from the battery overnight. The battery started at \SI{12.6}{\volt} and had dropped to \SI{11.9}{\volt} \SI{15}{\hour} later. The purpose of this test was not to provide a comprehensive report of the capacity of the battery or the requirements of the ROACH, but simply to show that the system will easily be able to run for a few hours in the field during field trials.
 
 \section{Signal Source}
-It's rated output power is \SI{5}{\watt}. 
+At its lowest power level, L1, Jason's Yaesu VX-7R HAM radio outputs \SI{17}{\dBm}.
+Move Friss calculations to here.
 
 
 \section{Narrow Band Transmitter}
-A Raspberry Pi was used. An application called fm\_transmitter allows the Pi to broadcast an FM radio station by driving one of its GPIO pins. However the carrier can be well above the usual FM band. The carrier can be up to \SI{250}{\mega\hertz}. This is exactly the tone frequency we want. The application was set to continuously transmit a silent sound file on the bootup of the Pi to produce a continuous tone. 
+A Raspberry Pi was used. An application called fm\_transmitter allows the Pi to broadcast an FM radio station by driving one of its GPIO pins. However the carrier can be well above the usual FM band. The carrier can be up to \SI{250}{\mega\hertz}. This is exactly the tone frequency we want. The application was set to continuously transmit a silent sound file on the bootup of the Pi to produce a continuous tone. NO! Tone actually 241.34. Why? Close to 250 but avoid internal 250 noise from FPGA clocks.
 
 Just driving a pin is not enough. A quarter wavelength wire \SI{0.3}{\metre} long was connected to the pin as one half of a dipole and the shielding of the USB power cable used as the other half. This should produce a fairly well defined antenna with a well defined vertical polarisation.
 
@@ -137,6 +139,21 @@ Non-flat: will be some shift.
     \centering
     \includegraphics[width=0.8\textwidth]{curved-wavefront-error}
   \end{subfigure}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \makebox[\textwidth][c]{
+    \begin{subfigure}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{spectrum-tx-off}
+    \end{subfigure}%
+    \begin{subfigure}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{spectrum-tx-on}
+    \end{subfigure}
+  }
+    \caption{Foobar}
 \end{figure}
 
 \input{./tex/95-sample-rfi}

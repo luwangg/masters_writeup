@@ -1,3 +1,8 @@
 \section{Frequency Domain Direction Finding}
 For weak, narrow band, continuous signals.
 Foo.
+
+\section{Antenna Manifolds}
+Algorithm for manifold generation.
+A 1000 point 4 element manifold takes about half a second to generate.
+Rather than regenerating each time, we use memoization where each time a new frequency gets looked at, the manifold is generated and stored in a dictionary. Then when that frequency is looked at again it's not necessary to regenerate.
