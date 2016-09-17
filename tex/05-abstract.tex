@@ -1,5 +1,12 @@
 \chapter{Abstract}
 
-Art and such.
+For radio astronomy telescopes to be able to perform observations of extremely weak signals from space, they need to operate in a radio-quiet environment. With the proliferation of electronic devices, RFI management is one of the major challenges facing radio astronomy reserves. 
 
-Foobar.
+This thesis details the design, construction and testing of a proof-of-concept system which is able to find the direction which a source of interference is coming from. The primary focus is evaluating whether the algorithms and implementation developed here are able to track real RFI sources in the field.
+
+The system which is implemented contains a number of building blocks: an antenna array and RF front end, fast ADCs feeding data into a Virtex 5 FPGA, high-throughput DSP on the FPGA, and python code on a computer doing angle of arrival estimation and system management. 
+There are two distinct revisions of the system which are taken trialled. The first is comparatively simple, used to gather initial data to guide the design of the second. The second is significantly more complete, and it is from this that the final results are acquired.
+
+This report details the design and simulation, lab testing and field trials. The
+
+The field trials demonstrated that the system was able to provide accurate tracks for a number of different RFI sources, both impulsive and narrow band. It was able to maintain a track over the full \SI{360}{\degree} field of view.
