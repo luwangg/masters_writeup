@@ -1,6 +1,19 @@
 \chapter{System Design}
 \label{ch:system-design}
+\graphicspath{{./img/system-design/}}
 
 This section will contain an abstracted view of the system, with blocks for antanna array, RF front end, digitisers, first stage DSP on ROACH, 2nd stage DSP on PC with ethernet link.
 
 A brief explanation of the design considerations for each stage of the system. Stating that each block will be designed and expanded on in the following chapters.
+
+\begin{landscape}
+  \thispagestyle{empty}
+  \begin{figure}
+    \centering
+    \makebox[\textwidth][c] {
+      \includegraphics[width=\paperwidth, clip=true, trim = 80 500 80 80]{basic-flow}
+      % left, bottom, right, top
+    }
+  \caption{Very abstract view of the flow of signals through the proposed DF system. The key function of the blocks has been noted on the diagram. }
+  \end{figure}
+\end{landscape}
