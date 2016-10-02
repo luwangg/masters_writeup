@@ -1,15 +1,48 @@
 \section{Antenna Array}
 
-Some antennas.
+Thoughts on what could go here:
+- preface: we will be comparing array configurations, but bearing in mind that for the purpose of this project we're limited to 4 elements.
+- we want something close to circular as that provides the best \SI{360}{\degree} coverage.
+- 4 element circular has bad performance (will be shown later in comparison). solution: deform.
+- deformation done somewhat arbitrarily. Limited by mounting infrastructure. Tried three of four options and selected the best performing one. There is certainly more scope for a study on the tradeoff of deformation vs equal angle performance. For now just wanted something that doesn't suffer from ambiguity too much.
+- show multi-colour vis vs df error graph
+- show individual fixed source plots
+- show fixed freq 4 vs 4 deformed plots
+- link to appendix for individually samples plots.
 
-\begin{figure}
-  \begin{subfigure}{\textwidth}
+%TODO: put the following back
+%\skiptoevenpage
+\begin{landscape}
+  \thispagestyle{empty}
+  \begin{figure}
     \centering
-    \includegraphics[width=0.85\textwidth]{antenna-array-on-roof}
-  \end{subfigure}\\[1em]
-  \begin{subfigure}{\textwidth}
+    \makebox[\textheight][c]{
+      \begin{subfigure}{0.40\paperheight}
+        \centering
+        \includegraphics[width=\textwidth]{antenna-array-on-roof}
+      \end{subfigure}  
+      \begin{subfigure}{0.40\paperheight}
+        \centering
+        \includegraphics[width=1.08\textwidth]{antenna-s11}
+      \end{subfigure}
+    }
+    \caption{Array of four FD-250 folded dipoles being measured and the result of the S11 measurements showing acceptable performance between \SI{200}{\mega\hertz} and \SI{300}{\mega\hertz}.}
+  \end{figure}
+\end{landscape}
+\thispagestyle{empty}
+\begin{landscape}
+  \begin{figure}
     \centering
-    \includegraphics[width=0.85\textwidth]{antenna-s11}
-  \end{subfigure}
-  \caption{Array of four FD-250 folded dipoles being measured and the result of the S11 measurements showing acceptable performance between \SI{200}{\mega\hertz} and \SI{300}{\mega\hertz}.}
-\end{figure}
+    \makebox[\textheight][c]{
+      \begin{subfigure}{0.35\paperheight}
+        \raggedleft
+        \includegraphics[width=\textwidth]{array-top-view}
+      \end{subfigure}  
+      \begin{subfigure}{0.45\paperheight}
+        \raggedright
+        \includegraphics[width=\textwidth]{array-coordinates}
+      \end{subfigure}
+    }
+    \caption{Top view with coordinates}
+  \end{figure}
+\end{landscape}
