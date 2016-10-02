@@ -1,0 +1,35 @@
+\section{Second deployment: Four element array}
+The final system with the four element deformed array was deployed to the UCT field.
+The DF system was placed in the center of the field. An operator walked around the field, at a radius of around \SI{35}{\meter} with a device emitting RFI as well as a GPS logger.
+The GPS logger was a mobile phone which took a timestamped GPS reading every 1 second and wrote it to a CSV file on the phone. 
+The position of the DF system was also logged. By having the coordinates of the DF system as well as the position of the person carrying the RFI emitting device, we were able to ascertain the "real" angle as measured by the GPS system.
+The DF system attempted to locate the RFI emitting device and logged a timestamped angle of arrival measured output to a file on the laptop. These files could then be compared to ascertain whether the DF system's output agreed with the GPS logger's output.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.85\textwidth]{gps-tracks-all-with-measurement-zoomed-out}
+  \caption{Route taken according to GPS logger. The curve is actually a collection of timestamped lat/long pairs joined smoothly}
+  \label{fig:field-trails:gps-tracks-all}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.74\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{steve-with-setup-far-away}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.25\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{valon-on-a-stick}
+  \end{subfigure}
+  \caption{Photo of the setup, showing how the transmitter was carried around. Here you see Stephen Paine holding the transmitter mounted on a stick. The transmitter and receiving DF array are both at a hight of approximately \SI{2}{\meter}. The photo on the right is a zoomed in view of how the transmitter is mounter. The board in the middle is the Valon synthesiser. The shield of the USB cable going down to the battery back and the wire coming out of the SMA port pointing upwards act as a dipole. The wires are approximately quarter wavelength.}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.8\textwidth}
+    \includegraphics[angle=-90,width=\textwidth]{steve-with-setup-close-up}
+  \end{subfigure}
+  \caption{Setup focused on receiver and front end. On the left from top to bottom: antenna array, SMA cables into RF front end, SMA into ROACH (shiny box under the laptop). Roach running directly off of \SI{12}{\volt} battery in the red and black box. Blue inverter for charting laptop between tests. Grey box on the left is R\&S spectrum analyser for checking the power level coming out of the LNAs before connecting to ROACH ADCs.  On the right is a zoom in of the RF front end located in top of the tripod under the antenna array.}
+\end{figure}
