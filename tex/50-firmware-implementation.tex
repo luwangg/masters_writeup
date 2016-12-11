@@ -52,7 +52,7 @@ If the source and destination elements are far apart, timing will be dominated b
 
 Solution: inserting a dummy latch in the data path so that the data will be latched in somewhere between the original source and destination elements. This is essentially increasing the latency of the pipeline. This is not a easy solution though: often for logic constrained designed, adding a latch to a wide data pipeline will make even more data paths fail timing as there is not less logic available for optimizing logic placement. It's necessary to carefully consider exactly where and why timing is failing before attempting to fix. Trying to fix timing errors is painful and slow, considering that a compile can take over 2 hours before throwing a timing error. 
 
-\input{./tex/62-firmware-frequency-correlations}
-\input{./tex/65-impulse-capture}
-\input{./tex/67-simulations}
-\input{./tex/68-firmware-performance-measurements}
+\input{./tex/52-firmware-frequency-correlations}
+\input{./tex/55-impulse-capture}
+\input{./tex/57-simulations}
+\input{./tex/58-firmware-performance-measurements}
