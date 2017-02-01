@@ -2,9 +2,19 @@
 \label{ch:system-design}
 \graphicspath{{./img/system-design/}}
 
-This section will contain an abstracted view of the system, with blocks for antanna array, RF front end, digitisers, first stage DSP on ROACH, 2nd stage DSP on PC with ethernet link.
+In this section the block level system design will be done. 
+The design is done based on the user requirements specified in \Cref{ch:introduction} as well as the data and background gathered in \Cref{ch:lit-review}.
 
-A brief explanation of the design considerations for each stage of the system. Stating that each block will be designed and expanded on in the following chapters.
+\begin{description}
+  \item [Antenna Array] The antenna is the entry point for the RFI signals into the DF system. The user requirements state that a \SI{360}{\degree} field of view is necessary. Hence, a circular array will be used. The arrays needs to be useful in direction finding both narrow band and impulsive signals. This implies that a trade-off will have to be made in terms of element spacing when designing the array. If the element spacing is too large, the array will experience high amounts of phase ambiguity and perform poorly at narrow band DF. If the element spacing is too small the time difference for impulsive signals will be difficult to measure. The elements should be non-dispersive to facilitate keeping the structure of the impulsive signals. The number of elements to be used in the array will be explored later.
+  \item [RF Front End] The front end will contain anti-aliasing filters and low noise amplifiers. For this project, a simple front end will be used. There will be no mixing or switching: the base band signal will be low pass filtered and amplified. The specifications of the filters and amplifiers will be specified based on the operating frequency band of the array and the sampling frequency of the ADCs. There will need to be an independent, identical RF chain for each element of the array.
+  \item [ROACH] The ROACH board will have the main functions of doing analogue to digital conversion and the high-speed digital signal processing. The ROACH consists of multiple ADC cards and a Virtex 5 FPGA. All of the RF inputs will be digitsed independantly, but at exactly the same sample frequency and in phase. Exactly what DSP will be done on the digitised signals by the Virtex FPGA will be explored later, but the purpose is to do whatever real-time processing is needed on the raw ADC samples and to reduce the data rate to only signals of interest which can be sent to the computer and processed there.
+  \item [Computer] The computer will receive input from the ROACH over ethernet and do further DSP, specifically the final angle of arrival estimation. The computer needs to be able to log all of the data for future analysis and display the results of the direction finding to the user real-time in the field.
+\end{description}
+
+A block diagram view of what's been described here is shown in \cref{fig:system-design:signal-flow}.
+
+With these blocks available, the remainder of this chapter goes into selecting an appropriate direction finding algorithm which meets the user requirements and refining what will be done in the first and second stage of DSP. Some additional requirements for the other blocks that arise from the selected algorithm are noted.
 
 \begin{landscape}
   \thispagestyle{empty}
@@ -14,19 +24,26 @@ A brief explanation of the design considerations for each stage of the system. S
       \includegraphics[width=\paperwidth, clip=true, trim = 80 500 80 80]{basic-flow}
       % left, bottom, right, top
     }
-  \caption{Very abstract view of the flow of signals through the proposed DF system. The key function of the blocks has been noted on the diagram. }
+  \caption{Block diagram view of the flow of signals through the proposed direction finding system. The key function of the blocks has been noted on the diagram. }
+  \label{fig:system-design:signal-flow}
   \end{figure}
 \end{landscape}
 
 \section{Direction Finding Algorithms}
 
-Here we select what DF algorithm to use.
+Here we select the direction finding algorithm which will be used and detail how it will be implemented on the system. A simulation of the algorithm and the system in operation is written in python and the output of this simulation is shown here, demonstrating that the algorithm is capable of carrying out the task.
+\\
 
-A simulation for the DF algorith was written in python.
+There are two cases that the algorithm needs to deal with: weak narrow band signals and strong impulsive ones. The narrow band case naturally lends itself to frequency domain analysis, since the information about narrow band continuous signals is easily expressed in the frequency domain. The impulsive signals, however, are more naturally dealt with in the time domain as they are clearly bounded in time, existing only for a short duration, while being spread all over the frequency domain. 
 
-The structure of the software doing the simulation is similar to the structure of the software which will be implemented.
+As such, the selected algorithm contains two distinct parts: a phase interferometry component designed to direction find weak (below the noise floor) narrow band signals, and time difference of arrival part designed to locate strong (noticeable when plotted) short duration impulsive RFI.
 
-In preperation for the implementation of the final DF algorithms, python packages were written: 
+\subsection{Phase Interferometry}
+Phase Interferometry direction finding of narrow band signals will be done by phase comparison of the signal of interest as seen by each antenna in the array. The technique of phase interferometry has been extensively explored in the literature review so will not be explained here again, suffice to remind the reader of the fundamental principal: 
+
+The first step is to get the received signals into the frequency domain. This requires high throughput, real-time Fourier transforms. Fortunately the ROACH is well suited to this, as FFTs are one of its main applications. The next step is phase comparison. Once in the frequency domain, phase comparison is a matter of subtracting the phase of one element from another for each pair of elements in use. As it is necessary to see below the noise floor, a single FFT and phase comparison is not sufficient. If only one were taken the result would be dominated by noise and produce an incorrect result. The solution here is to do accumulation. We can consider each phase different measurement to be a small real signal component plus a large random and evenly distributed component from the noise. By summing multiple of these phase difference readings many times, the signal component will add coherently while the noise component will average to zero. 
+
+In preparation for the implementation of the final DF algorithms, the following python python packages were written: 
 directionFinder-backend has the code for an AntennaArray class which builds an array model out Antenna objects and can the calculate and returning a vector of the antenna array manifold. The phase-ambiguity package has logic for creating an AntennaArray object and then correlating the manifold vector from a reference direction to manifold vectors from all directions to find mathces and plot the results.
 
 Parameters:
