@@ -1,18 +1,16 @@
 \section{Report Outline}
-Following this, \cref{ch:lit-review} will discuss existing literature which will serve as the foundation for the system being designed here. The literature examined will focus on direction finding fundamentals and a comparison of algorithms to aid the selection of a suitable DF system for this research. It will examine DF for both continuous narrow band signals and impulsive signals. It will explore detection algorithms for impulsive sources, as well as calibration techniques and error calculations.
+This, Chapter 1, has contained the problem statement and user requirements of the system which needs to be designed an implemented. 
 
-\Cref{ch:system-design} contains the high level system design, showing what blocks need to be designed and how they will be linked together in order to build a complete system.
+Next, in \Cref{ch:lit-review}, the existing literature around DF systems will be explored. This will serve as the foundation for the system being designed here. The exploration will focus on direction finding fundamentals and a comparison of algorithms. It will examine DF for both continuous narrow band signals and impulsive signals. It will explore detection algorithms for impulsive sources, as well as calibration techniques and error calculations. The outcome of this chapter should be sufficient information to make informed system design decision.
 
-\Cref{ch:simulations} develops some simulation techniques and shows the results of the simulations based on the design discussions in Chapter x
+\Cref{ch:system-design} contains the high level system design, showing what blocks need to be designed and how they will be linked together in order to build a complete system. Here, the system is broken into three main components: the RF front end, the ROACH digitiser and DSP engine, and computer software for final AoA computation and logging. Additionally, the exactly DF algorithm being used by the system will be defined and simulations of its performance run.
 
-\Cref{ch:rf-front-end} is a brief chapter, detailing the implementation of the basic RF front end. And results of this.
+\Cref{ch:rf-front-end} is a brief chapter, detailing the implementation of the RF front end. It discusses designing and building the 4-element antenna array, as well as assembling and measuring a board of low noise amplifiers and filters.
 
-\Cref{ch:firmware-design} discusses the implementation of the FPGA firmware to do data acquisition and the first stage of DSP. And results of this.
+\Cref{ch:firmware-design} discusses the implementation of the FPGA firmware to do data acquisition and the first stage of DSP. The focus is on designing the FPGA sub-system in simulink and demonstrating it being functional both in simulink simulations and, more importantly, running on hardware and processing real signals in the lab.
 
-\Cref{ch:software-design} details the implementation of the PC code for the direction finding algorithms. And results of this.
+\Cref{ch:software-design} details python code which implements the direction finding algorithms. It requires interfacing the computer with the ROACH to read out data, creating a model of the antenna array, and estimating the AoA based on the received data and the array model. It also has to handle calibration, logging, and showing signal plots to give the operator insight into the signals being received.
 
-\Cref{ch:user-interface} details implementing the user interface for controlling the instrument and viewing its output.
+\Cref{ch:field-trials} reports on the field trials of the DF system. There are two field trials sessions: one early in the project with a very basic system, to get a feel for the types of RFI data. Another with the final system doing real DF measurements and checking the accuracy of the system.
 
-\Cref{ch:field-trials} details field trials of the instrument and the results of the trials.
-
-\Cref{ch:conclusions} contains conclusions and further work. 
+\Cref{ch:conclusions} contains conclusions indicating what has been achieved in the project and comments on the system which has been implemented. Also, scope for future work is looked at.

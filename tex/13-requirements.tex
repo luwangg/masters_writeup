@@ -1,9 +1,8 @@
 \section{User Requirements}
 
-The following user requirements were drawn up by three senior engineers at SKA SA: the Director of Science and Engineering, Prof Justin Jonas, Systems Engineer for Infrastructure, Carel van der Merwe and digital backend DSP specialist, Dr Jason Manley. 
-
+The following user requirements for the system that needs to be designed and build were drawn up by three senior engineers at SKA SA: the Director of Science and Engineering, Prof Justin Jonas, Systems Engineer for Infrastructure, Carel van der Merwe and digital backend DSP specialist, Dr Jason Manley. 
 \begin{enumerate}
-  \item A system to perform direction finding of both impulsive and continuous wave (CW) RFI sources is to be designed.
+  \item A system to perform direction finding of both impulsive and narrow band continuous wave RFI sources is to be designed.
   \item They key deliverables of this project are a software package and a thesis report.
   \item The software package should have the following functions:
     \begin{enumerate}
@@ -14,9 +13,9 @@ The following user requirements were drawn up by three senior engineers at SKA S
     \end{enumerate}
   \item The software should have the following user interface features:
     \begin{enumerate}
-      \item The user should connect to it via a web interface.
-      \item A streaming waterfall plot of frequency vs amplitude should be displayed to the user to serve as monitoring of the RFI environment.
-      \item The user should be able to select a band of interest from the waterfall plot.
+      \item The user should be able to interact with it on a computer while it's running and modify it's operation.
+      \item A spectrogram plot frequency vs amplitude should be displayed to the user to serve as monitoring of the RFI environment.
+      \item The user should be able to select a band of interest from the spectrum.
       \item The direction finding should then be computed for the signal in that band.
       \item The result of the DF should be presented to the user. An investigation must be done into the best way to present this information to the user.
       \item Where appropriate, additional meta information should be displayed to the user, such as measurement accuracy or signal strength.
@@ -24,7 +23,7 @@ The following user requirements were drawn up by three senior engineers at SKA S
   \item The system should be designed to find terrestrial RFI sources.
   \item The system should be designed to be location independent. It could either be deployed to a fixed location or as a mobile device deployed on a vehicle.
   \item This project should be able to interface easily with other systems requiring its data. Specifically, it should be designed to interface with and pass its data on to an allied project which is doing classification of RFI.
-  \item The system should be real-time, where real-time is defined as having a latency in the order of a few seconds from receiving signals to displaying results to the user. 
+  \item The system should be real-time, where real-time is defined as having a latency in the order of a few seconds from receiving signals to displaying results to the user, as opposed to needing to post-process the data after taking measurements.
   \item The hardware and software used should be in line with what is used at MeerKAT. This implies the ROACH platform for hardware, Python for back end software and JavaScript for front end software.  
   \item This system must operate in the context of the MeerKAT site, implying the following:
   \begin{enumerate}
@@ -59,7 +58,7 @@ The requirements as stated by the \gls{ska} are clear and understood. Some notab
 
 \end{itemize}
 
-\begin{table}
+\begin{table}[h!]
   \centering
   \begin{tabu}{c|c}
     Description & URL \\
