@@ -53,3 +53,85 @@ Extension to interferometry:
 Sources: \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation}
 \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation_Applied_to_Telescopes}
 \url{https://www.cv.nrao.edu/course/astr534/Radiometers.html}
+
+\section{Suspect I should delete}
+\subsection{Signals}
+The \(M \times 1\) steering matrix is
+\begin{equation}
+  \vec{a}_k(\vec{\theta}_k) = 
+  \begin{bmatrix}
+    e^{-j\omega_c \tau_1(\phi_k)} \\
+    e^{-j\omega_c \tau_2(\phi_k)} \\
+    ... \\
+    e^{-j\omega_c \tau_M(\phi_k)} \\
+  \end{bmatrix}
+\end{equation}
+
+Let there be $N$ individual signal sources, where $\vec{s}(t)$ represents the resultant signal, being
+\begin{equation}
+\vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_N(t) \end{bmatrix}
+\end{equation}
+As discussed by \cite{krim1996two}:
+
+We are interested in extracting a parameter of a signal. Specifically, the parameter of interest is \gls{aoa}. This is what sensor array signal processing does.
+
+We model the E-field of a narrow-band signal by:
+\begin{equation}
+  E(\vec{r}, t) = s(t) \exp \left\{ j(\omega t - \vec{r}\, \TRANSPOSE \vec{k}) \right\}
+\end{equation}
+
+Where:
+\begin{itemize}
+  \item \(s(t)\) is the slow (compared to the carrier) modulating signal with bandwidth \(B\). This would be a constant for a signal that is a pure tone.
+  \item \(\omega\) is the carrier frequency
+  \item \( \vec{r} \) is the radius vector, of form \( \begin{bmatrix} x, y, z, \end{bmatrix} \).
+  \item \(\vec{k} = \alpha\omega\) which is the wave-vector where \(\alpha = \frac{1}{c}\) pointing in the direction of propagation. Note that the magnitude of the wave-vector is known as the wave-number: \(\lvert \vec{k} \rvert = k = \frac{\omega}{c} = \frac{2\pi}{\lambda}\). This implies: \(\vec{k} = k(\cos\theta \sin\theta)\TRANSPOSE\) where \(\theta\) is the angle of the incident wave.
+\end{itemize}
+
+If we have a receiver with a radius vector \(\vec{r_r} = \begin{bmatrix} x_r, y_r \end{bmatrix}\TRANSPOSE\)
+
+Note that as per the narrowband assumption is is assumed that the array aperture be much less than the inverse relative bandwidth \((f/B)\)
+
+It is shown that the output of an \(L\)-element array a \(L\)-dimensional vector of the steering vector scalar multiplied by the incident signal, given by
+\begin{equation}
+  \vec{x}(t) = \vec{a}(\theta).s(t)
+\end{equation}
+
+Here, \(\vec{a}(\theta) = \begin{bmatrix} a_1(\theta), a_2(\theta), ... , a_L(\theta) \end{bmatrix}\TRANSPOSE\) which is the steering vector.
+
+  Furthermore, it is shown that the principle of superposition applies. If there are \(M\) incident signals they are simply summed together:
+\begin{equation}
+  \vec{x}(t) = \sum_{m=1}^{M} \vec{a}(\theta_m)\vec{s_m}(t)
+\end{equation}
+
+This can be re-written in a more compact form (now adding noise to the model):
+\begin{equation}
+  \vec{x}(t) = \mathbf{A}(\vec{\theta})\vec{s}(t) + \vec{n}(t)
+\end{equation}
+
+Where:
+\begin{itemize} 
+  \item we have re-written \(\sum_{m=1}^{M}\vec{a}(\theta_m)\) as a matrix of steering vectors
+\begin{equation} 
+  \mathbf{A}(\vec{\theta}) = \begin{bmatrix} \vec{a}(\theta_1), \vec{a}(\theta_2), ..., \vec{a}(\theta_M) \end{bmatrix} \\
+\end{equation}
+  \item we have re-written  \(\sum_{m=1}^{M}s_m(t)\) as a vector:
+\begin{equation}
+  \vec{s}(t) = \begin{bmatrix} s_t(t) \\ .. \\ s_M(t) \end{bmatrix}
+\end{equation}
+\end{itemize}
+
+As discussed by \cite{sleiman2000antenna} \cite{karimi1996manifold} \cite{dacos1995estimating}. 
+
+The antenna array manifold is said to be useful for direction finding systems, as signal subspace techniques such as MuSIC rely on searching for the best \(\vec{a}(p)\) for the detected signal \cite{karimi1996manifold}. 
+
+It is shown by \cite{dacos1995estimating} that the output of an array of N sensors receiving M signals in the presence of noise is
+\begin{equation}
+\vec{x}(t) = \mtx{A}(\vec{p})\vec{m}(t) + \vec{n}(t)
+\end{equation}
+Where \(\vec{x}(t)\) is the N-dimensional output of the array, \(\vec{m}(t)\) is the M-dimensional set of signals received by the array, and \(\mtx{A}(\vec{p})\) is a \(N \times M\) matrix of source position vectors (SPV). 
+A given SPV, \(\vec{a}(p_i)\), shows how the array responds to a source at location \(p_i\), where \(p_i\) is often an azimuth and elevation pair: \(p_i = (\theta_i, \phi_i)\).
+
+For the case of a terrestrial-only system (which this project will be concerned with), \(\phi\) can be set to 0, meaning that \(p_i = \theta_i\), the azimuth angle of source \(i\), typically in the range \([0, 2\pi]\). Here, a SPV can be simplified to \(\vec{a}(\theta_i)\).
+
+It is shown that if the \(N\) antennas are positioned symmetrically, the antenna array manifold is reduced from complex space \(\mathbf{C}^N\) to real space \(\mathbf{R}^N\) \cite{dacos1995estimating}.

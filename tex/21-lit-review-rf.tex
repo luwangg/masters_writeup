@@ -1,133 +1,54 @@
-\subsection{Radio Frequency Signals and Antennas}
-Some RF fundamentls used for modelling.
-\section{Signals}
-As discussed by \cite{krim1996two}:
+\section{Antennas Arrays}
+Before going into the specifics of DF techniques, some fundamental principles of RF signals and antenna arrays will be explored. This is required to understand how the DF techniques work, and will also be used to model the array and signal propagation when designing simulations.
+\\
 
-We are interested in extracting the parameters of a signal. This is what sensor array signal processing does.
+Starting with a single antenna receiving the signal from a source, where the position of the element is \(\vec{x} = \begin{bmatrix}x & y & z \end{bmatrix}\TRANSPOSE\). 
+This received signal can be represented as \(\vec{s}(t, \vec{x})\), showing that the signal at an element is a function of the position of the element.
+As this model contains both spacial and temporal information, it is sufficient to be able to attain spacial information about the signal\cite{krim1996two}.
 
-We model the E-field of a narrow-band signal by:
+The time delay for a signal arriving at the element is
 \begin{equation}
-  E(\vec{r}, t) = s(t) \exp \left\{ j(\omega t - \vec{r}\, \TRANSPOSE \vec{k}) \right\}
+  \tau(\vec{\theta}) 
+ = \tau( \begin{bmatrix} \phi \\ \theta \end{bmatrix} )
+ = \frac{1}{c} \left( x\cos(\theta)\cos(\phi) + y\sin(\theta)\cos(\phi) + z\sin(\phi) \right)
+\end{equation}
+
+Where \(\vec{\theta}\) is a source position vector, consisting of both, \(\theta\) the azimuth angle of the source and \(\phi\) is the elevation angle.
+For a 2D space (with which this project is concerned) we let \(\phi= 0\), \(z = 0\) and hence simplify the time delay model to:
+\begin{equation}
+  \tau(\theta) = \frac{1}{c} \left( x\cos(\theta) + y\sin(\theta) \right)
+\end{equation}
+
+Naturally, the equivalent phase shift from the source to the element, \(\phi(\theta)\) is
+
+\begin{equation}
+  \phi(\theta) = \omega\tau(\theta) = \frac{1}{\lambda} [ x\cos(\theta) + y\sin(\theta) ]
+\end{equation}
+
+That time/phase difference refers to a single element. 
+Array processing, however, requires modeling the output of the entire array. 
+A highly useful way of expressing the output of an array is via the antenna array manifold vector, also known as the steering vector or source-position vector. 
+The manifold vector has one complex term for each element in the array. 
+The complex term refers to the relative amplitude and phase output of the element. 
+As shown above, the time/phase response is a function of the position of the element. 
+The amplitude is as a result of the gain of the antenna in the direction of arrival of the signal. 
+
+Assuming we now have an array of \(M\) elements, the array manifold vector for a signal source propagating from angle \(\theta\) is: \cite{dacos1995estimating}
+
+\begin{equation}
+\vec{a}(\theta) = \vec{g}(\theta) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
 \end{equation}
 
 Where:
 \begin{itemize}
-  \item \(s(t)\) is the slow (compared to the carrier) modulating signal with bandwidth \(B\)
-  \item \(\omega\) is the carrier frequency
-  \item \( \vec{r} \) is the radius vector, of form \( \begin{bmatrix} x, y, z, \end{bmatrix} \).
-  \item \(\vec{k} = \alpha\omega\) which is the wave-vector where \(\alpha = \frac{1}{c}\) pointing in the direction of propagation. Note that the magnitude of the wave-vector is known as the wave-number: \(\lvert \vec{k} \rvert = k = \frac{\omega}{c} = \frac{2\pi}{\lambda}\). This implies: \(\vec{k} = k(\cos\theta \sin\theta)\TRANSPOSE\) where \(\theta\) is the angle of the incident wave.
+  \item \(\vec{g}(\theta)\) is a \(M\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \(\theta\). 
+\item \(\mathbf{X}\TRANSPOSE\) is a \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the N elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\)
+\item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to the 
 \end{itemize}
 
-If we have a receiver with a radius vector \(\vec{r_r} = \begin{bmatrix} x_r, y_r \end{bmatrix}\TRANSPOSE\)
+Typically all of the above vectors and matricies have terms for \(x\), \(y\) and \(z\) location components as well as terms for the elevation angle, but for the purpose of this research the elements will all be located at the same elevation as we only with to locate terrestrial signals. Hence, the equations have all been simplified here.
 
-Note that as per the narrowband assumption is is assumed that the array aperture be much less than the inverse relative bandwidth \((f/B)\)
-
-It is shown that the output of an \(L\)-element array a \(L\)-dimensional vector of the steering vector scalar multiplied by the incident signal, given by
-\begin{equation}
-  \vec{x}(t) = \vec{a}(\theta).s(t)
-\end{equation}
-
-Here, \(\vec{a}(\theta) = \begin{bmatrix} a_1(\theta), a_2(\theta), ... , a_L(\theta) \end{bmatrix}\TRANSPOSE\) which is the steering vector.
-
-  Furthermore, it is shown that the principle of superposition applies. If there are \(M\) incident signals they are simply summed together:
-\begin{equation}
-  \vec{x}(t) = \sum_{m=1}^{M} \vec{a}(\theta_m)\vec{s_m}(t)
-\end{equation}
-
-This can be re-written in a more compact form (now adding noise to the model):
-\begin{equation}
-  \vec{x}(t) = \mathbf{A}(\vec{\theta})\vec{s}(t) + \vec{n}(t)
-\end{equation}
-
-Where:
-\begin{itemize} 
-  \item we have re-written \(\sum_{m=1}^{M}\vec{a}(\theta_m)\) as a matrix of steering vectors
-\begin{equation} 
-  \mathbf{A}(\vec{\theta}) = \begin{bmatrix} \vec{a}(\theta_1), \vec{a}(\theta_2), ..., \vec{a}(\theta_M) \end{bmatrix} \\
-\end{equation}
-  \item we have re-written  \(\sum_{m=1}^{M}s_m(t)\) as a vector:
-\begin{equation}
-  \vec{s}(t) = \begin{bmatrix} s_t(t) \\ .. \\ s_M(t) \end{bmatrix}
-\end{equation}
-\end{itemize}
-\section{Overview of Direction Finding}
-
-\subsection{Model}
-The model which will be discussed here is that presented in \cite{poisel2012electronic}.  
-
-Let there be $N$ individual signal sources, where $\vec{s}(t)$ represents the resultant signal, being
-\begin{equation}
-\vec{s}(t) = \begin{bmatrix} s_{1}(t) & s_{2}(t) & s_3(t) & ... & s_N(t) \end{bmatrix}
-\end{equation}
-
-Now let there be an array of $M$ antenna elements receiving the signals, where the position of of the \(i\)th element is \(\vec{x}_{i} = \begin{bmatrix}x_i & y_i & z_i \end{bmatrix}\TRANSPOSE\). 
-The signal received by this \(i\)th element is influenced by the element position. 
-This can be represented as \(\vec{s}_i(t, \vec{x}_i)\), showing that the signal at an element is a function of the position of the element.
-As discussed by \cite{krim1996two}, as this model contains both spacial and temporal information, it is sufficient to be able to attain spacial information about the signal. 
-
-It is shown that the delay time for a signal arriving at the \(m\)th element is
-\begin{equation}
-  \tau_m(\vec{\theta}) 
- = \tau_m( \begin{bmatrix} \phi \\ \theta \end{bmatrix} )
-  = \frac{1}{c} [ x_m\cos(\phi)\cos(\theta) + y_m\sin(\phi)\cos(\theta) + z_m\sin(\theta) ]
-\end{equation}
-
-Where \(\phi\) is the azimuth angle of the source and \(\theta\) is the elevation angle.
-For a 2D space we let \(\theta = 0\) and hence simplify to:
-\begin{equation}
- \tau_m(\phi) = \frac{1}{c} [ x_m\cos(\phi) + y_m\sin(\phi) ]
-\end{equation}
-
-The \(M \times 1\) steering matrix is
-\begin{equation}
-  \vec{a}_k(\vec{\theta}_k) = 
-  \begin{bmatrix}
-    e^{-j\omega_c \tau_1(\phi_k)} \\
-    e^{-j\omega_c \tau_2(\phi_k)} \\
-    ... \\
-    e^{-j\omega_c \tau_M(\phi_k)} \\
-  \end{bmatrix}
-\end{equation}
-
-\section{Antenna Array Fundamentals}
-Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
-\subsection{Array Manifold}
-As discussed by \cite{sleiman2000antenna} \cite{karimi1996manifold} \cite{dacos1995estimating}. 
-
-The antenna array manifold is said to be useful for direction finding systems, as signal subspace techniques such as MuSIC rely on searching for the best \(\vec{a}(p)\) for the detected signal \cite{karimi1996manifold}. 
-
-It is shown by \cite{dacos1995estimating} that the output of an array of N sensors receiving M signals in the presence of noise is
-\begin{equation}
-\vec{x}(t) = \mtx{A}(\vec{p})\vec{m}(t) + \vec{n}(t)
-\end{equation}
-Where \(\vec{x}(t)\) is the N-dimensional output of the array, \(\vec{m}(t)\) is the M-dimensional set of signals received by the array, and \(\mtx{A}(\vec{p})\) is a \(N \times M\) matrix of source position vectors (SPV). 
-A given SPV, \(\vec{a}(p_i)\), shows how the array responds to a source at location \(p_i\), where \(p_i\) is often an azimuth and elevation pair: \(p_i = (\theta_i, \phi_i)\).
-
-For the case of a terrestrial-only system (which this project will be concerned with), \(\phi\) can be set to 0, meaning that \(p_i = \theta_i\), the azimuth angle of source \(i\), typically in the range \([0, 2\pi]\). Here, a SPV can be simplified to \(\vec{a}(\theta_i)\).
-
-It is shown that if the \(N\) antennas are positioned symmetrically, the antenna array manifold is reduced from complex space \(\mathbf{C}^N\) to real space \(\mathbf{R}^N\) \cite{dacos1995estimating}.
-
-The response of the array to a source from a certain location, \((\theta, \phi)\) is:
-\begin{equation}
-\vec{a}(\theta, \phi) = \vec{g}(\theta, \phi) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta,\phi) \right\}
-\end{equation}
-\cite{dacos1995estimating}.
-
-Where:
-\begin{itemize}
-  \item \(\vec{g}(\theta, \phi)\) is a \(N\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \((\theta, \phi)\). 
-\item \(\mathbf{X}\TRANSPOSE\) is a \((N \times 3)\) matrix containing the \(x\), \(y\) and \(z\) coordinates of each of the N elements of the form \(\begin{bmatrix} \vec{x}, \vec{y}, \vec{z} \end{bmatrix}\TRANSPOSE\)
-\item \(\vec{k}(\theta, \phi)\) is the wavenumber vector given by \(\vec{k}(\theta, \phi) = \pi \begin{bmatrix} \cos\theta\cos\phi, \sin\theta\cos\phi, \sin\phi \end{bmatrix}\TRANSPOSE \). Graphically, this equates to the 
-\end{itemize}
-
-For the purposes of this research the elements will all be located at the same elevation as we only with to locate terrestrial signals. Hence, this may be simplified to:
-\begin{equation}
-  \vec{a}(\theta) = \vec{g}(\theta) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
-\end{equation}
-    
-Here, \(\mathbf{X}\TRANSPOSE\) is now a \((N \times 2)\) matrix of the form \(\begin{bmatrix} \vec{x}, \vec{y} \end{bmatrix}\) and \(\vec{k}(\theta) = \pi[\cos(\theta), \sin(\theta)]\TRANSPOSE\).
-
-Furthermore, the \(\vec{g}\) term may be excluded if we assume omnidirectional elements. Although it is rare to deal with true omnidirectional antennas, for an antenna which is required to receive signals only in the azimuth plane, omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
+Furthermore, the \(\vec{g}(\theta)\) term may be excluded if we assume omnidirectional elements. Although it is rare to deal with true 3D omnidirectional antennas, if the antenna is required to receive signals only in the azimuth plane, 2D omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
 
 \begin{equation}
   \vec{a}(\theta) = \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
@@ -141,6 +62,15 @@ Or, more expressively:
 
 Clearly, this is simply a vector of phase shifts introduced by each element in the array as a function of both the location of the element and the angle of the incident wave relative to some defined zero location and zero direction. It is said by \cite{dacos1995estimating} that this array manifold completely characterises the array. That paper goes into additional details on how the manifold may simplified for linear arrays, as well as the special properties which a manifold of a linear array possesses. This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
+
+\section{Overview of Direction Finding}
+
+\subsection{Model}
+The model which will be discussed here is that presented in \cite{poisel2012electronic}.  
+
+\section{Antenna Array Fundamentals}
+Here should be a discussion about how why arrays are necessary for DF. Then a discussion about some of the characteristics of an array.
+\subsection{Array Manifold}
 \section{Model from electronic warfare target location method}
 
 The model which will be discussed here is that presented in \cite{poisel2012electronic}.  
