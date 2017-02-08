@@ -1,3 +1,15 @@
+\section{Direction Finding Techniques}
+A direction finder is a passive device able to ascertain the angle of arrival of a source of electromagnetic radiation.
+The objective of direction finding is generally to find the location of non-cooperative emitters\cite{poisel2012electronic}.
+This is one of the fundamental activities of electronic defense, as well as RFI hunting.
+The general structure of a direction finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
+Simple direction finding systems were used as early as the start of the \nth{20} century and have been continually evolving since then along with developments in communications and electronic warfare systems.
+
+DF techniques are generally based on either amplitude comparison, time/phase comparison or statistical methods\cite{tuncer2009classical}. 
+Various implementations of these classes of DF will now be explored.
+
+Much of following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook\cite{center2012electronic}.
+
 \section{DF history or background}
 As per Small aperture radio df:
 
@@ -11,12 +23,6 @@ In 1926 the Watson-Watt DF system was developed which allowed information to be 
 By the start of  the World War II, direction finders could operate up to 30 MHz, although they still were subject to problems caused by ionospheric reflections and multipath in general. 
 The tactical advantage which DF systems provided prompted significant development into DF during the war.
 
-\section{DF From Electronic warfare target location methods}
-
-This content comes from \cite{poisel2012electronic}. It should not be a chapter but rather be merged into the lit review.
-
-Objective to find location of non-cooperative targets. Relevant to warfare as well as RFI.
-
 Position fix can be ascertained by intersecting multiple lines of bearing (LOB). Or: AoA can be used in PF algorithms. 
 Limiting factors to LOB: noise, measurement errors, multipath reflections. 
 
@@ -29,39 +35,13 @@ LSE: Find a solution to an overestimated system: more measurements than unknowns
 
 LSE is the same as maximum likelihood when noise is normally distributed.
 
-\section{Amplitude Comparison Methods from electronic target location method}
-These methods, specifically the Wattson-Watt technique are probably the most commonly used DF methods over the history of DF systems \cite{poisel2012electronic}.
-They involve comparing the amplitudes of antenna beams. These beams can either be actual beams resulting from using antennas with gain, or as in the case of Wattson-Watt the beams can be synthesised by forming sum and difference channels from broad beam antennas in an array.
+discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
 
-\section{MSE Phase Interferometery from ewtlkm}
-Should write something here...
-
-
-\section{Overview of Direction Finding}
-In this section, an analysis is made of different the direction finding techniques which exist. The most applicable of these will be examined in more details following.
-Classical methods of direction finding algorithms \cite{tuncer2009classical}.
-\begin{itemize}
-	\item Beamforming: by introducing the correct phase delay to each channel of the array, the array factor can be made to be such that the signal in quesetion is added coherently by each element of the array.
-		This phase delay indicates the direction of arrival of the signal. The coherent addition of the signals allows for much higher SNR. 
-\end{itemize}
-
-\section{Direction Finding Techniques}
-A Radio Direction Finder \gls{rdf} is a passive device able to ascertain the direction of a source of electromagnetic radiation which occurs in the RF frequency range, often defined as between \SI{3}{\kilo\hertz} and \SI{300}{\giga\hertz}. 
-
-The general structure of a direction finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
-
-Radio DF has been around since the start of the 1900's. Some of the first people to work on DF  systems were Marconi and Brown. One of the first systems developed by them was a device to locate the bearing from shore to a ship which was broadcasting a signal. Their device was used by manually rotated a two-element array with half-wavelength spacing to and monitoring the amplitude of the output of the antenna.
-
-(Move this later): As discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
-
-\subsection{Classes of Direction Finder Systems}
-The following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook \cite{center2012electronic}.
-In general, classes of system include:
 
 \subsection{Scanned beam}
 This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of direction radio direction finding and was implemented in the early 1900's. 
-One of the first uses of this RDF device was to in a system developed by Marconi locate the bearing to a ship which was transmitting a signal for navigation purposes. A loop antenna was frequently used in the early 1900's as it was a simple antenna to construct and the beam pattern has a sharp null. 
-An example antenna and beam pattern are shown in \cref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. 
+One of the first uses of this DF technique was in a system developed by Marconi to locate the bearing to a ship which was transmitting a signal for navigation purposes\cite{jenkins1991smallaperture}. A loop antenna was frequently used in the early 1900's as it was a simple antenna to construct and the beam pattern has a sharp null. 
+An example antenna and beam pattern are shown in \Cref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. 
 If multiple signals originating from different bearings are present, the system cannot operate. 
 While today it may be possible to put highly selective receivers on the output of the antenna, this technology did not exist when scanning beam DF systems were originally used.
 
@@ -87,11 +67,11 @@ Loop antennas DF systems are very sensitive to multipath errors, especially iono
 
 \subsection{Crossed Loop}
 The crossed loop technique is an amplitude comparison technique. 
-As is shown in \cref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cos of the angle. 
+As is shown in \Cref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cos of the angle. 
 By comparing the signal power from each antenna, it is possible to ascertain the \gls{aoa}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
 For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
 As with the scanned beam, the crossed loop suffers from significant performance degradation arising from multipath, specifically ionospheric reflection. 
-In the 1930's a marine radio direction finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to RDF technology were made with the operating frequency of the systems being extended into the VHF and UHF band  and extensive RDF networks being installed \cite{jenkins1991smallaperture}.
+In the 1930's a marine radio direction finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to DF technology were made with the operating frequency of the systems being extended into the VHF and UHF band  and extensive DF networks being installed\cite{jenkins1991smallaperture}.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
@@ -112,7 +92,7 @@ The Adcock array was developed and patented in 1919 by British army engineer Fra
 Instead of using loop antennas, the Adcock array makes use of two orthogonally orientated (crossed) pairs of monopole or dipole antennas. Typically a North-South pair and an East-West pair are used. These antenna pairs produce the same beam pattern as the loop antennas. 
 As a loop antenna can be modeled by two vertical antennas on the sides and two horizontal antennas on the top and bottom of the loop, it should be clear that the loop is not polarisation selective. While the direct beam from the signal source may be vertically polarised, the reflected beam from atmospheric reflection was also being received and corrupting the signal output of the array.
 The Adcock array which uses only vertical elements maintains the same beam pattern as the loop but is not sensitive to horizontally polarised radiation hence offers better performance for a DF system.
-The antenna configuration of Adcock and Watson-Watt is shown in \cref{fig:lit_adcock_array}.
+The antenna configuration of Adcock and Watson-Watt is shown in \Cref{fig:lit_adcock_array}.
 This array configuration was studied extensively in the 1930's and played a significant role in the electronic warefare of World War II \cite{gething1991radio}.
 
 \begin{figure}
@@ -130,13 +110,17 @@ This array configuration was studied extensively in the 1930's and played a sign
 
 
 \subsection{Watson-Watt Evaluation}
+This amplitude comparison technique is probably the most commonly used DF technique over the history of DF systems\cite{poisel2012electronic}.
+
 Ambiguity and multipath are one of the major difficulties which need to be overcome in direction finding systems. 
-In the mid 1920s, Sir Robert Watson-Wat developed an improved DF system based on the Adcock array configuration. This is an amplitude comparison technique. 
+In the mid 1920s, Sir Robert Watson-Wat developed an improved DF system based on the Adcock array configuration. 
 As discussed above, the beam pattern of the output of an Adcock array is one cosine shaped beam and one sine shaped beam. By exploiting the trigonometric properties of these functions and adding an additional sense element, Watson-Watt developed a method to compute the angle of arrival from an array with this cos/sin property. 
 This evaluation technique showed significant improvement in rejection of ionospheric reflections and made ambiguity resolution easier.
+In the case of Wattson-Watt, the beams are synthesised by forming sum and difference channels from broad beam antennas in an array.
 
-The mathematics around this technique will not be explored in detail here, but a graphical view of the antenna and receiver structure can be seen in \cref{fig:watson-watt}.
-For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel \cite{poisel2008introduction}. For a simulation of Watson-Watt algorithm as well as a discussion around an ambiguity resolution implementation using a sense antenna see: \cite{adcockwatsonwattrdf}.
+The mathematics around this technique will not be explored in detail here, but a graphical view of the antenna and receiver structure can be seen in \Cref{fig:watson-watt}.
+For a more detailed discussion of the mathematics behind the Watson-Watt DF algorithm, see Poisel\cite{poisel2008introduction}.
+For a simulation of Watson-Watt algorithm as well as a discussion around an ambiguity resolution implementation using a sense antenna see Pellejero\cite{adcockwatsonwattrdf}.
 
 \begin{figure}
   \centering
@@ -160,13 +144,13 @@ The Doppler shift is given by: \cite{poisel2012electronic}
 \begin{equation}
   \Delta f = \frac{B\omega}{c}f_c\sin(\Uppsi)
 \end{equation}
-Where \(B\) is the length of the antenna baseline, \(\omega\) is the angular velocity of the antenna, \(f_c\) is the carrier frequency of the signal source and \(\Uppsi\) is instantaneous difference between the angle towards the signal source and the angle of the rotating antenna (this is shown graphically in \cref{fig:lit-review-doppler-switching}. By rotating one antenna around a reference antenna and measuring the received signal frequency difference, the Doppler shift can be measured and with the above equation the AoA calculated.
+Where \(B\) is the length of the antenna baseline, \(\omega\) is the angular velocity of the antenna, \(f_c\) is the carrier frequency of the signal source and \(\Uppsi\) is instantaneous difference between the angle towards the signal source and the angle of the rotating antenna (this is shown graphically in \Cref{fig:lit-review-doppler-switching}). By rotating one antenna around a reference antenna and measuring the received signal frequency difference, the Doppler shift can be measured and with the above equation the AoA calculated.
 
-However, As discussed by Jenkins, to DF a \SI{100}{\mega\hertz} tone with a Doppler shift of \SI{3}{\mega\hertz}, the antenna would need to be rotated with a tangential velocity of \SI{10000}{\metre\per\second} \cite{jenkins1991smallaperture}. 
+However, to DF a \SI{100}{\mega\hertz} tone with a Doppler shift of \SI{3}{\mega\hertz}, the antenna would need to be rotated with a tangential velocity of 10000 m/s\cite{jenkins1991smallaperture}. 
 It is not practical to rotate an antenna at such a high speed. 
 Hence, rather than physically rotating an antenna, what is done in practice is that a Doppler shift is synthesised by rapidly switching between sampling different elements of a large circular array. 
 Typically between 12 and 30 elements are used for Doppler DF arrays. 
-Also graphically in \cref{fig:lit-review-doppler-switching} is this typical implementation of a Doppler DF system using antenna switching.
+Also graphically in \Cref{fig:lit-review-doppler-switching} is this typical implementation of a Doppler DF system using antenna switching.
 
 As discussed by Jenkins \cite{jenkins1991smallaperture}, Doppler is not a high accuracy system due to the signal distortion introduced by switching the sampled antenna. Furthermore, Doppler DF is not suited to locating transients for two reasons:
 \begin{enumerate}
@@ -197,7 +181,7 @@ For a more detailed discussion of the mathematics behind Doppler DF, see the Rho
 \subsection{Time Difference of Arrival}
 \gls{tdoa} is a DF system which is typically used for finding of impulsive sources; sources which emit a pulse that exists for a short time duration where the pulse has a clearly defined start and end. Most commonly it is used for locating pulsed radar system in the electronic warfare context.
 
-For a two element array, the difference in time in the arrival of a pulse at the elements is
+For a two element array, the difference in time, \(\delta t\) in the arrival of a pulse at the elements is
 \begin{equation}
   \delta t = \frac{d \cos \theta}{c}
 \end{equation}
@@ -211,7 +195,7 @@ In general, it is a high complexity technique and may suffer from ambiguity, but
 In comparison to amplitude systems, phase systems are more tolerant of multipath signals. 
 The high complexity is introduced from having to carefully match the phases of the RF chains from each array element, and having to incorporate ambiguity resolution algorithms. Also, doing real-time high accuracy phase measurements of the signals at multiple antennas is often computationally complex. 
 
-The simples phase interferometry system is a two element array. This is shown graphically in \cref{fig:lit-two-element-phase} where \(d\) is the element spacing, \(\lambda\) is the wavelength and \(\theta\) is the AoA or difference between the boresight and wavevector.
+The simples phase interferometry system is a two element array. This is shown graphically in \Cref{fig:lit-two-element-phase} where \(d\) is the element spacing, \(\lambda\) is the wavelength and \(\theta\) is the AoA or difference between the boresight and wavevector.
 The phase difference at the output of the system is calculated as follows:
 \begin{equation}
 \phi = \frac{2 \pi d \sin \theta}{\lambda}
