@@ -1,16 +1,7 @@
 \section{Geolocation}
 Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
 
-This process is shown graphically in \cref{fig:lit-triangulation-from-df}, where multiple DF stations ($S_{1}$ through to $S_{M}$) are used to locate the x,y,z coordinates of the target $x_{T}$. Note that this geolocation process in the figure is for airborne DF systems searching for a ground based target. However, the system could easily be simplified to a purely terrestrial process.
-
 The relevance of this note about geolocation to this work is that it is not necessary to attempt to design a system which can do geolocation natively. Rather, a DF system can be design which can later be duplicated in order to provide geolocation capabilities. 
-
-\begin{figure}[p] 
-  \centering
-  \includegraphics[width=0.6\textwidth]{./img/lit_review/triangulation_from_df.pdf}
-  \caption{Using triangulation from multiple DF stations to ascertain the geographic location of a target. Source: \cite{poisel2012electronic}}
-  \label{fig:lit-triangulation-from-df}
-\end{figure}
 
 \section{Radiometer}
 A radiometer is a device which is able to provide a very high accuracy approximation of noise power by averaging a large number of noise samples over a long time period. Due to the high accuracy measurements it can make, it is able to detect small changes in received power. 
@@ -37,22 +28,30 @@ Assuming the power of a noise source remains constant, a single sample of the no
 \end{equation}
 Where \(\sigma_{T}\) is the RMS error in the measurement of the noise temperature, \(T\), and \(T_{sys}\) is the actual system noise temperature. Note that \(2B\tau\) is the number of samples acquired
 
-This process used in a radiometer of acertaining a high accuracy approximation of a received signal by integrating the signal over some observation period can also be used in the context of a direction finding system. For this application, a long observation period may be used to extract a weak signal which is burried in noise so that the weak signal may be processed.
+This process used in a radiometer of ascertaining a high accuracy approximation of a received signal by integrating the signal over some observation period can also be used in the context of a direction finding system. For this application, a long observation period may be used to extract a weak signal which is burried in noise so that the weak signal may be processed.
 
 \begin{equation}
-  \frac{S}{N} = \frac{S}{N}\sqrt{B\tau}
+  \left( \frac{S}{N} \right)_{\text{OUTPUT}} = \left( \frac{S}{N} \right)_{\text{INPUT}}\sqrt{B\tau}
 \end{equation}
-
-Tsys = Tsky + Trx where Tsky is thestuff above and Trx is Johnson noise from electronic components. Tsky can't do anything about. Trx lowered by cooling components. 
-The Trx is as a result of the Johnson-Nyquist noise. 
-
-Extension to interferometry:
-
-\(SEFD / (N(N-1))/2 \tau 2B)\)
 
 Sources: \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation}
 \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation_Applied_to_Telescopes}
 \url{https://www.cv.nrao.edu/course/astr534/Radiometers.html}
+
+\section{Want to keep some of this but not sure where to put it}
+Position fix can be ascertained by intersecting multiple lines of bearing (LOB). Or: AoA can be used in PF algorithms. 
+Limiting factors to LOB: noise, measurement errors, multipath reflections. 
+
+Maximum likelihood estimation: original technique used for LOB to PF. 
+Least-square error: other technique. Total LSE: more general. 
+
+Systematic errors: bias. Random errors: noise. 
+
+LSE: Find a solution to an overestimated system: more measurements than unknowns. Relies on minimising the cost function: sum of the square of the errors (difference between estimate and measurement). I could write some pretty maths here, but I actually don't understand it. 
+
+LSE is the same as maximum likelihood when noise is normally distributed.
+
+discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
 
 \section{Suspect I should delete}
 \subsection{Signals}

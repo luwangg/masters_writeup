@@ -11,42 +11,14 @@ Various implementations of these classes of DF will now be explored.
 
 Much of following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook\cite{center2012electronic}.
 
-\section{DF history or background}
-As per Small aperture radio df:
-
-The systems mentioned here will be discussed in more detail later in (some section)
-
-Over the next decade, investigation into using loop antennas was done. In 1920 the U.S set up a network of direction finders for marine navigation based on loop antennas.
-
-Poor error tolerance of loop antennas to ionospheric reflections lead to the development of the Adcock array in 1918. 
-In 1926 the Watson-Watt DF system was developed which allowed information to be presented to the user on a CRT display. 
-
-By the start of  the World War II, direction finders could operate up to 30 MHz, although they still were subject to problems caused by ionospheric reflections and multipath in general. 
-The tactical advantage which DF systems provided prompted significant development into DF during the war.
-
-Position fix can be ascertained by intersecting multiple lines of bearing (LOB). Or: AoA can be used in PF algorithms. 
-Limiting factors to LOB: noise, measurement errors, multipath reflections. 
-
-Maximum likelihood estimation: original technique used for LOB to PF. 
-Least-square error: other technique. Total LSE: more general. 
-
-Systematic errors: bias. Random errors: noise. 
-
-LSE: Find a solution to an overestimated system: more measurements than unknowns. Relies on minimising the cost function: sum of the square of the errors (difference between estimate and measurement). I could write some pretty maths here, but I actually don't understand it. 
-
-LSE is the same as maximum likelihood when noise is normally distributed.
-
-discussed in \cite{farrier1990direction}, many high-performance DF algorithms which have been proposed over the years have had stringent requirements for array geometry or signal environment. The requirement for this project is for the system to be versatile and reconfigurable, so no such restrictions on array geometry or signal environment or modeling accuracy must exist. 
-
-
 \subsection{Scanned beam}
 This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of direction radio direction finding and was implemented in the early 1900's. 
-One of the first uses of this DF technique was in a system developed by Marconi to locate the bearing to a ship which was transmitting a signal for navigation purposes\cite{jenkins1991smallaperture}. A loop antenna was frequently used in the early 1900's as it was a simple antenna to construct and the beam pattern has a sharp null. 
+One of the first uses of this DF technique was in a system developed by Marconi to locate the bearing to a ship which was transmitting a signal for navigation purposes\cite{jenkins1991smallaperture}. A loop antenna was frequently used as it was a simple antenna to construct and the beam pattern has a sharp null. 
 An example antenna and beam pattern are shown in \Cref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. 
 If multiple signals originating from different bearings are present, the system cannot operate. 
 While today it may be possible to put highly selective receivers on the output of the antenna, this technology did not exist when scanning beam DF systems were originally used.
 
-Note that as the beam pattern is symmetric about both the x and y axis, there are in general 4 ambiguous points. However, if the antenna can be rotated such that the signal is in the null, there is then only 2 ambiguous points, or \SI{180}{\degree} ambiguity. This can be resolved with an  additional antenna element to resolve. Note also that this is not an instantaneous DF technique as it requires time for the antenna to be rotated. Hence, this technique is not suitable for finding transients. 
+Note that as the beam pattern is symmetric about both the \(x\) and \(y\) axis, there are in general 4 ambiguous points. However, if the antenna can be rotated such that the signal is in the null, there is then only 2 ambiguous points, or \SI{180}{\degree} ambiguity. This ambiguity can be resolved with an  additional antenna element. Note also that this is not an instantaneous DF technique as it requires time for the antenna to be rotated. Hence, this technique is not suitable for finding transients. 
 
 Loop antennas DF systems are very sensitive to multipath errors, especially ionospheric reflection \cite{jenkins1991smallaperture}. 
 \begin{figure}
@@ -72,7 +44,7 @@ As is shown in \Cref{fig:lit_crossed_loop_antenna}, using two loop antennas perp
 By comparing the signal power from each antenna, it is possible to ascertain the \gls{aoa}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
 For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
 As with the scanned beam, the crossed loop suffers from significant performance degradation arising from multipath, specifically ionospheric reflection. 
-In the 1930's a marine radio direction finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to DF technology were made with the operating frequency of the systems being extended into the VHF and UHF band  and extensive DF networks being installed\cite{jenkins1991smallaperture}.
+In the 1930's a marine radio direction finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to DF technology were made with the operating frequency of the systems being extended into the VHF and UHF band  and extensive DF networks being installed\cite{jenkins1991smallaperture}. The tactical advantage which DF systems provided prompted significant development into DF during the war.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
@@ -94,7 +66,7 @@ Instead of using loop antennas, the Adcock array makes use of two orthogonally o
 As a loop antenna can be modeled by two vertical antennas on the sides and two horizontal antennas on the top and bottom of the loop, it should be clear that the loop is not polarisation selective. While the direct beam from the signal source may be vertically polarised, the reflected beam from atmospheric reflection was also being received and corrupting the signal output of the array.
 The Adcock array which uses only vertical elements maintains the same beam pattern as the loop but is not sensitive to horizontally polarised radiation hence offers better performance for a DF system.
 The antenna configuration of Adcock and Watson-Watt is shown in \Cref{fig:lit_adcock_array}.
-This array configuration was studied extensively in the 1930's and played a significant role in the electronic warefare of World War II \cite{gething1991radio}.
+This array configuration was studied extensively in the 1930's and played a significant role in the electronic warefare of World War II \cite{gething1991radio}. One of the advantages of it at the time was that the output it provided allowed it to directly drive a CRT display, giving the user real-time visibility into what the system was receiving\cite{jenkins1991smallaperture}. 
 
 \begin{figure}
   \centering
@@ -151,7 +123,7 @@ However, to DF a \SI{100}{\mega\hertz} tone with a Doppler shift of \SI{3}{\mega
 It is not practical to rotate an antenna at such a high speed. 
 Hence, rather than physically rotating an antenna, what is done in practice is that a Doppler shift is synthesised by rapidly switching between sampling different elements of a large circular array. 
 Typically between 12 and 30 elements are used for Doppler DF arrays. 
-Also graphically in \Cref{fig:lit-review-doppler-switching} is this typical implementation of a Doppler DF system using antenna switching.
+\Cref{fig:lit-review-doppler-switching} shows a typical implementation of a Doppler DF system using antenna switching.
 
 As discussed by Jenkins \cite{jenkins1991smallaperture}, Doppler is not a high accuracy system due to the signal distortion introduced by switching the sampled antenna. Furthermore, Doppler DF is not suited to locating transients for two reasons:
 \begin{enumerate}
@@ -188,15 +160,16 @@ For a two element array, the difference in time, \(\delta t\) in the arrival of 
 \end{equation}
 Where \(d\) is the element spacing, \(\theta\) is the AoA and \(c\) is the speed of light.
 
-This technique requires the ability to measure the start of a pulse very accurately, or alternatively to be able to measure the difference very accurately through cross correlation. Additionally, it requires a comparatively large SNR. The primary advantage of it are that it is independent of frequency and does not suffer from ambiguity problems\cite{jenkins1991smallaperture}.
+This technique requires the ability to measure the start of a pulse very accurately, or alternatively to be able to measure the difference very accurately through cross correlation. Additionally, it requires a comparatively large SNR. The primary advantage of it are that it is independent of frequency and does not suffer from ambiguity when receiving impulsive signals\cite{jenkins1991smallaperture}.
 
 \subsection{Phase Interferometry}
 This technique is done by comparing the phase arriving at each element of an array.
-In general, it is a high complexity technique and may suffer from ambiguity, but it can achieve comparatively high accuracy direction measurements, often between \SI{0.1}{\degree} and \SI{3}{\degree} for real systems\cite{center2012electronic}.
+In general, it is a higher complexity technique and may suffer from ambiguity, but it can achieve comparatively high accuracy direction measurements, often between \SI{0.1}{\degree} and \SI{3}{\degree} for real systems\cite{center2012electronic}.
 In comparison to amplitude systems, phase systems are more tolerant of multipath signals. 
-The high complexity is introduced from having to carefully match the phases of the RF chains from each array element, and having to incorporate ambiguity resolution algorithms. Also, doing real-time high accuracy phase measurements of the signals at multiple antennas is often computationally complex. 
+The high complexity is introduced due to needing to perform real-time high accuracy phase measurements of the signals at multiple antennas and having to incorporate ambiguity resolution algorithms.
+Also, they often impose stringent requirements on the phase matching for the RF chain which requires careful design, measurement and calibration\cite{schleher1999electronic}.
 
-The simples phase interferometry system is a two element array. This is shown graphically in \Cref{fig:lit-two-element-phase} where \(d\) is the element spacing, \(\lambda\) is the wavelength and \(\theta\) is the AoA or difference between the boresight and wavevector.
+The simplest phase interferometry system is a two element array. This is shown graphically in \Cref{fig:lit-two-element-phase} where \(d\) is the element spacing, \(\lambda\) is the wavelength and \(\theta\) is the AoA or difference between the boresight and wavevector.
 The phase difference at the output of the system is calculated as follows:
 \begin{equation}
 \phi = \frac{2 \pi d \sin \theta}{\lambda}
@@ -205,9 +178,9 @@ Notes about this simple two element array:
 \begin{enumerate}
   \item The values of the sine function of only unique between \SI{-90}{\degree} and \SI{90}{\degree}. Hence, the output of the array is only unambiguous over this \SI{180}{\degree} field of view. A two element phased interferometry array cannot resolve this ambiguity. The best it can do is use antennas with gain to reject signals from outside of its field of view.
   \item If the element spacing is larger than \(\frac{\lambda}{2}\) (as shown in the figure) the ambiguity gets worse. The unambiguous field of view for a 2-element array is: \(\theta_{FOV} = 2 \sin^{-1}(\frac{\pi}{2d})\). Clearly, as \(d\) gets larger \(\theta_{FOV}\) gets smaller. 
-  \item Although ambiguity gets worse with a larger spacing, angular accuracy improves. This is because the system has a percentage RMS error and when the FOV is shrunk, the error in degrees (which is a percentage of the FOV) also decreases. Hence, there is a trade-off between ambiguity and accuracy. This is an important note!
- \end{enumerate}
- The solution to this ambiguity problem is to use more than two elements, thereby constructing a multiple baseline interferometer. 
+  \item Although ambiguity gets worse with a larger spacing, angular accuracy improves. This is because the system has a percentage RMS error and when the FOV is shrunk, the error in degrees (which is a percentage of the FOV) also decreases. Hence, there is a trade-off between ambiguity and accuracy.
+\end{enumerate}
+The solution to this ambiguity problem is to use more than two elements, thereby constructing a multiple baseline interferometer. 
 
 \begin{figure}
    \centering
@@ -224,47 +197,8 @@ There are generally three subclasses of phase interferometry systems\cite{jenkin
 \end{description}
 Should the antenna array contain more that two elements, the system either needs to switch between pairs of antennas if it wants to maintain a simple two-input receiver, or it needs a more advanced receiver to sample all antennas simultaneously. The Fourier transform method is the easiest to extend to having more antenna inputs, as the computation is done in the digital domain. Having all antennas processed by the receiver simultaneously allows for a faster system as no switching is required and also provides better performance as it can average multiple inputs at once. However, more inputs requires more computation and algorithmic complexity.
 
-\subsection{Summary}
-Amplitude based systems generally used for DF of cooperative emitters \cite{jenkins1991smallaperture}
-This uses an antenna array. The antennas either have gain themselves or beam forming techniques are used to create beams with gains. Amplitude comparison techniques are in general simple to implement, but provide low resolution and low accuracy compared to phase methods due to their dependence on antenna beam pattern and their sensitivity to multipath. In practice, typical amplitude comparison systems have a DF RMS accuracy between \SI{3}{\degree} and \SI{10}{\degree}.
-
-\section{Stuff from Schleher}
-The simplest way to do DF is scan a narrow beam antenna. The position of the antenna which produces the highest output is the AoA. The antenna can be scanned physically by rotating it or electronically by a phased array. 
-The down side of this approach is it cannot DF transients as it has a low POI. Well, POI as well as it needs time to scan around to figure out where the highest amplitude signal is.
-
-Angular accuracy is:
-\begin{equation}
-  \Delta \theta = k \theta_B / \sqrt{SNR}
-\end{equation}
-
-Interferometer systems which use phase comparison for DF have a comparatively higher angular accuracy and rapid response which is good for transient detection. However, they impose stringent requirements on the phase matching for the RF chain which requires careful design, measurement and calibration. 
-
-Selection of antenna spacing necessitates a trade off between angular accuracy and ambiguity. The further the elements are placed apart, the greater the accuracy, but the more ambiguity is introduced. It is well known that for a 2-element array, the lowest ambiguity which can be achieved is \SI{180}{\degree} which is when the elements are spaced half a wavelength apart. 
-Of course, this \(\lambda/2\) is only valid for a single frequency. As soon as a different frequency needs to be received, the antennas will appear closer together or further apart, depending on whether the new frequency is higher or lower. As such, the specing is generally set by the highest frequency needed to be received, which puts an upper bound on the amount of ambiguity in the system. 
-
-For a linear array, the array is often constructed with a long baseline (in the order of \(16\lambda\)) to provide high angular accuracy, and a short baseline \(\lambda/2\) to resolve the ambiguity introduced by the system. It must be noted that with a linear array, there is always an unresolvable \SI{180}{\degree} ambiguity, no matter how many elements are present.
-
-DF can also be done via Doppler shift which involves rapidly switching which antenna is sampled in an array to simulate rapidly rotating the antenna. When the antenna is being switched toward the signal source, the received frequency will go up. When the sampled antenna is being switched away from the source, the frequency will go down. By seeing at which stage of the switching the frequency is increasing and at which stage it is decreasing, it can be determined where the source is.
-
-TODO: insert summary table from page 384 here.
-
-Geolocation is done by measuring AoA from multiple locations and then triangulating to ascertain the true location of the source. This is outside the scope of this project. This project seeks only to design an AoA system. Not a geolocation system. 
-
-Probability of Intercept (POI) is a measure of the probability that the parameters of the EW receiving system match those of the target signal source at an instant in time. The key parameters are frequency and orientation. Frequency refers to whether the receiver is receiving on the frequency which is being transmitted. Orientation refers to whether the antennas of the receiver are pointed towards the signal source. 
-For a \SI{100}{\percent} POI, the receiver needs to be wide open (as opposed to narrow-band scanning) and have omni directional antenna coverage. This \SI{100}{\percent} POI is essential to be able to intercept transient or impulsive signals.
-
-\section{Statistical Methods}
-
-
-The direction finding process involves doing eigen analysis (finding eigenvalues and eigenvectors) for the covariance matricies. 
-Two sorts of eigenvectors will be produced:
-\begin{description}
-  \item[Noise Eigenvectors] have an eigenvalue equal to the noise power.
-  \item[Signal Eigenvectors] have some property that I don't understand
-\end{description}
-
 \section{Subspace and Statistical Techniques}
-This class of techniques attempts to decompose the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
+This class of techniques attempts to perform eigen analysis, decomposing the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
 Statistical methods generally involve taking snapshots of the signals received at each sensor, \(\vec{r}(t)\) and then calculating the covariance matrix of the received data\cite{poisel2012electronic}.
 
 The advantage of working with multiple subspaces for each signal is that it allows direction finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
@@ -274,9 +208,7 @@ It can be shown that the covariance matrix is diagonal for incoherent sources, n
 Examples of these techniques include\cite{van2004detection}:
 \begin{itemize}
   \item Spectral MuSiC (Multiple Signal Classification) which gets multiple signal snapshots to produce an estimated spectral matrix, \(\hat{\mathbf{S}}_{\mathbf{x}}\) and requires knowing the antenna array manifold vector. It can be applied to arbitrary arrays and performs best when the received signals are uncorrelated. The technique does not work when receiving multiple coherent signals.
-    \begin{itemize}
-      \item Root MuSic, which is a form of MuSiC allowing simplified polynomial equations provided linear arrays are used, and requires a lower antenna SNR than Spectral MuSiC.
-    \end{itemize}
+  \item Root MuSiC, which is a special form of MuSiC allowing simplified polynomial equations provided linear arrays are used, and requires a lower antenna SNR than Spectral MuSiC.
   \item Least Squares and Total Least Squares ESPRIT (Estimation of Signal Parameter via Rotational Invariance Techniques) which constructs identical subarrays from uniform linear arrays, exploiting shift invariance properties of the array. It can be shown that the signal subspace eigenvectors are linear combinations of the array manifold vector. The RMS error for these techniques can be very close to the Cramer-Rao bound for estimation error\cite{van2004detection}.
 \end{itemize}
 These subspace techniques typically requires knowledge of the number of unique signals, \(D\), being received as they depend on being able to construct \(D\) subspaces. Seeing as coherent signals degrade performance, they suffer from multipath interference.
