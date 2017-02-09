@@ -1,15 +1,15 @@
 \section{Report Outline}
 This, Chapter 1, has contained the problem statement and user requirements of the system which needs to be designed an implemented. 
 
-Next, in \Cref{ch:lit-review}, the existing literature around DF systems will be explored. This will serve as the foundation for the system being designed here. The exploration will focus on direction finding fundamentals and a comparison of algorithms. It will examine DF for both continuous narrow band signals and impulsive signals. It will explore detection algorithms for impulsive sources, as well as calibration techniques and error calculations. The outcome of this chapter should be sufficient information to make informed system design decision.
+Next in \Cref{ch:lit-review}, the existing literature around DF systems will be explored. This will serve as the foundation for the system being designed here. The exploration will focus on direction finding fundamentals and a comparison of algorithms. It will examine DF for both continuous narrow band signals and impulsive signals. It will explore detection algorithms for impulsive sources, as well as calibration techniques and error calculations. The outcome of this chapter should be sufficient information to make informed system design decision.
 
 \Cref{ch:system-design} contains the high level system design, showing what blocks need to be designed and how they will be linked together in order to build a complete system. Here, the system is broken into three main components: the RF front end, the ROACH digitiser and DSP engine, and computer software for final AoA computation and logging. Additionally, the exactly DF algorithm being used by the system will be defined and simulations of its performance run.
 
 \Cref{ch:rf-front-end} is a brief chapter, detailing the implementation of the RF front end. It discusses designing and building the 4-element antenna array, as well as assembling and measuring a board of low noise amplifiers and filters.
 
-\Cref{ch:firmware-design} discusses the implementation of the FPGA firmware to do data acquisition and the first stage of DSP. The focus is on designing the FPGA sub-system in simulink and demonstrating it being functional both in simulink simulations and, more importantly, running on hardware and processing real signals in the lab.
+\Cref{ch:firmware-design} discusses the implementation of the FPGA firmware to do data acquisition and the first stage of DSP. The focus is on designing the FPGA sub-system in simulink and demonstrating it being functional both in simulink simulations and, most importantly, running on hardware and processing real signals in the lab.
 
-\Cref{ch:software-design} details python code which implements the direction finding algorithms. It requires interfacing the computer with the ROACH to read out data, creating a model of the antenna array, and estimating the AoA based on the received data and the array model. It also has to handle calibration, logging, and showing signal plots to give the operator insight into the signals being received.
+\Cref{ch:software-design} details Python code which implements the direction finding algorithms. It requires interfacing the computer with the ROACH to read out data, creating a model of the antenna array, and estimating the AoA based on the received data and the array model. It also has to handle calibration, logging, and showing signal plots to give the operator insight into the signals being received.
 
 \Cref{ch:field-trials} reports on the field trials of the DF system. There are two field trials sessions: one early in the project with a very basic system, to get a feel for the types of RFI data. Another with the final system doing real DF measurements and checking the accuracy of the system.
 

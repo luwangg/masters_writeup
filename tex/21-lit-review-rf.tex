@@ -1,7 +1,7 @@
 \section{Antennas Arrays}
 
-Starting with a single antenna receiving the signal from a source, where the position of the element is \(\vec{x} = \begin{bmatrix}x & y & z \end{bmatrix}\TRANSPOSE\). 
-This received signal can be represented as \(\vec{s}(t, \vec{x})\), showing that the signal at an element is a function of the position of the element.
+Starting with a single antenna receiving a signal from a source, where the position of the element is \(\vec{x} = \begin{bmatrix}x & y & z \end{bmatrix}\TRANSPOSE\). 
+If the transmitted signal is \(s(t)\) then the received signal can be represented as \(s(t, \vec{x})\), showing that the signal at an element is a function of the position of the element.
 As this model contains both spacial and temporal information, it is sufficient to be able to attain spacial information about the signal\cite{krim1996two}.
 
 The time delay for a signal arriving at the element is \cite{poisel2012electronic}
@@ -40,7 +40,7 @@ Assuming we now have an array of \(M\) elements, the array manifold vector for a
 Where:
 \begin{itemize}
   \item \(\vec{g}(\theta)\) is a \(M\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \(\theta\). 
-\item \(\mathbf{X}\TRANSPOSE\) is a \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the N elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates use here will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
+\item \(\mathbf{X}\TRANSPOSE\) is a \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates use here will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
 \item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to a vector pointing in the direction of the source. The model assumes that the direction from is the same from each element to the source. This is approximately true when the distance from the array to the source is much greater than the array size.
 \end{itemize}
 
@@ -54,8 +54,8 @@ Furthermore, the \(\vec{g}(\theta)\) term may be excluded if we assume omnidirec
 
 Or, more expressively:
 \begin{equation}
-\vec{a}(\theta) = \exp \left\{ -j \begin{bmatrix} x_1 & y_1 \\ x_2 & y_2 \\ .., .. \\ x_N & y_N \end{bmatrix} \begin{bmatrix} \cos(\theta) \\ \sin(\theta) \end{bmatrix} \right\}
-= \exp \left\{ -j \begin{bmatrix} x_1\cos(\theta) + y_1\sin(\theta) \\ x_2\cos(\theta) + y_2\sin(\theta)) \\ .. \\ x_N\cos(\theta) + y_N\sin(\theta) \end{bmatrix} \right\}
+\vec{a}(\theta) = \exp \left\{ -j \begin{bmatrix} x_1 & y_1 \\ x_2 & y_2 \\ .., .. \\ x_M & y_M \end{bmatrix} \begin{bmatrix} \cos(\theta) \\ \sin(\theta) \end{bmatrix} \right\}
+= \exp \left\{ -j \begin{bmatrix} x_1\cos(\theta) + y_1\sin(\theta) \\ x_2\cos(\theta) + y_2\sin(\theta)) \\ .. \\ x_M\cos(\theta) + y_M\sin(\theta) \end{bmatrix} \right\}
 \end{equation}
 
 Clearly, this is simply a vector of phase shifts introduced by each element in the array as a function of both the location of the element and the angle of the incident wave relative to some defined zero location and zero direction. 
@@ -65,4 +65,4 @@ This array manifold completely characterises the array\cite{dacos1995estimating}
 There are additional details on the manifold may simplified for linear arrays, as well as the special properties which a manifold of a linear array possesses. 
 This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
-This important takeaway from the array manifold is it shows that for a known array with omnidirectional antennas at arbitrary \(x)\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 
+This important takeaway from the array manifold is it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 

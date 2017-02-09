@@ -1,9 +1,10 @@
 \section{Direction Finding Techniques}
 A direction finder is a passive device able to ascertain the angle of arrival of a source of electromagnetic radiation.
 The objective of direction finding is generally to find the location of non-cooperative emitters\cite{poisel2012electronic}.
-This is one of the fundamental activities of electronic defense, as well as RFI hunting.
+This is one of the fundamental activities of electronic defense as well as RFI hunting.
 The general structure of a direction finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
 Simple direction finding systems were used as early as the start of the \nth{20} century and have been continually evolving since then along with developments in communications and electronic warfare systems.
+Direction finding systems have applications in a variety of applications, ranging from radar, sonar, surveillance, radio astronomy and even medical. Finding an optimal parameter estimator for angle of arrival is difficult and hence lots of research has been done into the topic over the last few decades\cite{van2004detection}.
 
 DF techniques are generally based on either amplitude comparison, time/phase comparison or statistical methods\cite{tuncer2009classical}. 
 Various implementations of these classes of DF will now be explored.
@@ -187,11 +188,11 @@ For a two element array, the difference in time, \(\delta t\) in the arrival of 
 \end{equation}
 Where \(d\) is the element spacing, \(\theta\) is the AoA and \(c\) is the speed of light.
 
-This technique requires the ability to measure the start of a pulse very accurately, or alternatively to be able to measure the difference very accurately through cross correlation. 
+This technique requires the ability to measure the start of a pulse very accurately, or alternatively to be able to measure the difference very accurately through cross correlation. Additionally, it requires a comparatively large SNR. The primary advantage of it are that it is independent of frequency and does not suffer from ambiguity problems\cite{jenkins1991smallaperture}.
 
 \subsection{Phase Interferometry}
 This technique is done by comparing the phase arriving at each element of an array.
-In general, it is a high complexity technique and may suffer from ambiguity, but it can achieve comparatively high accuracy direction measurements, often between \SI{0.1}{\degree} and \SI{3}{\degree} for real systems. 
+In general, it is a high complexity technique and may suffer from ambiguity, but it can achieve comparatively high accuracy direction measurements, often between \SI{0.1}{\degree} and \SI{3}{\degree} for real systems\cite{center2012electronic}.
 In comparison to amplitude systems, phase systems are more tolerant of multipath signals. 
 The high complexity is introduced from having to carefully match the phases of the RF chains from each array element, and having to incorporate ambiguity resolution algorithms. Also, doing real-time high accuracy phase measurements of the signals at multiple antennas is often computationally complex. 
 
@@ -214,6 +215,14 @@ Notes about this simple two element array:
    \caption{Two-element phase interferometry. Note that as the element spacing (d) is more than half a wavelength there is ambiguity.}
    \label{fig:lit-two-element-phase}
 \end{figure}
+
+There are generally three subclasses of phase interferometry systems\cite{jenkins1991smallaperture}:
+\begin{description}
+  \item [Continuous phase measurement:] A single receiver takes in all of the antenna signals and compares the instantaneous phase of the signals, typically using analogue multipliers. It's fast and relatively simple for two antennas, but becomes complex as the number of elements increases and hence typically has a limited field of view, is susceptible to interference and is not very accurate.
+  \item [Phase scanning correlation:] Here, a phase shifter and correlator are used. The phase shifter is varied until the correlator produces a peak output. Again, this is simple for two antennas but becomes complex when multiple phase shifters need to be varied. It is also slow as the phase shift needs to be swept to find the peak correlator output.
+  \item [Fourier transform method:] The received signals are digitised and converted to frequency domain, where phase difference measurements are easily taken. As this is a digital technique, spectral processing can be done providing 20 dB to 30 dB of additional sensitivity over the other techniques. Also, working with digital signals in the frequency domain means that phase errors in the signal path can easily be compensated for and adjacent frequency signals can be ignored.
+\end{description}
+Should the antenna array contain more that two elements, the system either needs to switch between pairs of antennas if it wants to maintain a simple two-input receiver, or it needs a more advanced receiver to sample all antennas simultaneously. The Fourier transform method is the easiest to extend to having more antenna inputs, as the computation is done in the digital domain. Having all antennas processed by the receiver simultaneously allows for a faster system as no switching is required and also provides better performance as it can average multiple inputs at once. However, more inputs requires more computation and algorithmic complexity.
 
 \subsection{Summary}
 Amplitude based systems generally used for DF of cooperative emitters \cite{jenkins1991smallaperture}
@@ -246,10 +255,6 @@ For a \SI{100}{\percent} POI, the receiver needs to be wide open (as opposed to 
 
 \section{Statistical Methods}
 
-As per discussion in Poisel \cite{poisel2012electronic}. 
-
-Statistical methods generally involve taking snapshots of the signals received at each sensor, \(\vec{r}(t)\) and then calculating the covariance matrix of the received data.
-It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
 
 The direction finding process involves doing eigen analysis (finding eigenvalues and eigenvectors) for the covariance matricies. 
 Two sorts of eigenvectors will be produced:
@@ -258,8 +263,20 @@ Two sorts of eigenvectors will be produced:
   \item[Signal Eigenvectors] have some property that I don't understand
 \end{description}
 
-\subsection{Subspace Methods}
-This class of methods attempts to decompose the covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
+\section{Subspace and Statistical Techniques}
+This class of techniques attempts to decompose the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
+Statistical methods generally involve taking snapshots of the signals received at each sensor, \(\vec{r}(t)\) and then calculating the covariance matrix of the received data\cite{poisel2012electronic}.
 
-\subsection{Maximum Likelihood}
-Foobar
+The advantage of working with multiple subspaces for each signal is that it allows direction finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
+
+It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
+
+Examples of these techniques include\cite{van2004detection}:
+\begin{itemize}
+  \item Spectral MuSiC (Multiple Signal Classification) which gets multiple signal snapshots to produce an estimated spectral matrix, \(\hat{\mathbf{S}}_{\mathbf{x}}\) and requires knowing the antenna array manifold vector. It can be applied to arbitrary arrays and performs best when the received signals are uncorrelated. The technique does not work when receiving multiple coherent signals.
+    \begin{itemize}
+      \item Root MuSic, which is a form of MuSiC allowing simplified polynomial equations provided linear arrays are used, and requires a lower antenna SNR than Spectral MuSiC.
+    \end{itemize}
+  \item Least Squares and Total Least Squares ESPRIT (Estimation of Signal Parameter via Rotational Invariance Techniques) which constructs identical subarrays from uniform linear arrays, exploiting shift invariance properties of the array. It can be shown that the signal subspace eigenvectors are linear combinations of the array manifold vector. The RMS error for these techniques can be very close to the Cramer-Rao bound for estimation error\cite{van2004detection}.
+\end{itemize}
+These subspace techniques typically requires knowledge of the number of unique signals, \(D\), being received as they depend on being able to construct \(D\) subspaces. Seeing as coherent signals degrade performance, they suffer from multipath interference.
