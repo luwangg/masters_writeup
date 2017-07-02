@@ -94,9 +94,9 @@ The simulation is for an signal arriving from \SI{0}{\degree}, and comparing how
   \item In general, the more elements you have, the lower the ambiguity. This is due to more baselines being able to resolve ambiguity.
 \end{enumerate}
 
-\begin{figure}
+\begin{figure}[H]
   \centering
-  \begin{subfigure}{\textwidth}
+  \begin{subfigure}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth, clip=true, trim = 10 15 53 0]{ambiguity03}
     % left, bottom, right, top
@@ -111,10 +111,10 @@ The simulation is for an signal arriving from \SI{0}{\degree}, and comparing how
   \end{subfigure}
   \caption{Ambiguity plots for various antenna array sizes with reference signal arriving at \SI{0}{\degree}.}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
   \ContinuedFloat
   \centering
-  \begin{subfigure}{\textwidth}
+  \begin{subfigure}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth, clip=true, trim = 10 15 53 0]{ambiguity06}
     % left, bottom, right, top
@@ -130,12 +130,34 @@ The simulation is for an signal arriving from \SI{0}{\degree}, and comparing how
   \caption{(cont'd) Ambiguity plots for various antenna array sizes with reference signal arriving at \SI{0}{\degree}.}
 \end{figure}
 
-\subsection{Accumulation Gain Simulation Results}
+\subsubsection{Accumulation Gain Simulation Results}
+
+The other performance criteria of the frequency domain system is the ability to see weak signals below the noise floor. The contention is that by accumulating many datapoints, the noise component will sum to zero while the signal component will sum coherently.
+
+To verify this, the simulation package was extended to add coherent noise at configurable SNR levels. Datapoints were generated and added, measuring the phase error after each datapoint. The result is show in \Cref{fig:system-design-integration-vs-error}. This demonstrates that the more datapoints are accumulated the lower the error. It also shows that the higher the SNR, the faster the error drops off.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{integration-vs-error-combined-5}
-  \caption{Foobar caption}
+  \caption{Number of accumulations vs output SNR for various input SNR levels}
+  \label{fig:system-design-integration-vs-error}
 \end{figure}
 
+This figure also demonstrates why it is difficult to quantify the performance of a DF system with a single "accuracy" number: the error is dependant on many factors, such as number of antenna elements, RFI signal strength and observation length.
 
+\subsection{Time Domain Simulations}
+The time domain system does not need either ambiguity or accumulations length measurements. The reason is that it does not suffer from ambiguity, and accumulation is not done for impulsive signals. What it does do, however, is upsampling. Quick simulation of Fourier method upsampling is done here to show how it works in principal. The Fourier method, also known as interpolation involves taking the Fourier transform of the received impulsive signal, zero pad the DTFT with a \(N \times M\) zeros where \(N\) is the length of the observed signal and \(M\) is the number of interpolated data points required, then inverse Fourier transform the signal back to the time domain. It is legal to zero pad a Frequency domain signal provided the received signal does not have any out-of-band or aliased components. This can be ensured with good analogue filtering.
+
+It is worth noting that this interpolation can be done either on the raw signals or equivalently on the output of the cross correlation. This is important as there will be significantly less computation involved in interpolating the output of the cross correlation than the raw time domain signals. The reason is that correlation is only done over a small window of the raw signal, not over the whole signal.\\
+
+An example is shown in \Cref{fig:system-design-raw-vs-upsampled-timedomain}. Here, the red signal with few datapoints is the original output of the time domain cross correlation. There is a clear peak data point in red, however the data point to the left is higher, implying that the real, continuous signal's peak is probably more to the left of the observed peak. When an upsampling is done and plotted in blue, the peak of the interpolated signal is more what would be expected.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{time-domain-cross-raw-vs-upped}
+  \caption{Original cross correlation output with upsampled version overlaid. The upsampled version has a more accurate peak}
+  \label{fig:system-design-raw-vs-upsampled-timedomain}
+\end{figure}
+
+\section{Summary}
+This chapter has shown how a system with a circular antenna array, an RF front end, digitisers and DSP can be used to DF both narrow band and impulsive DF. It's been shown how antenna geometry impacts ambiguity performance, how accumulation can allow us to see below the noise floor, and how interpolation can be used to increase resolution of a band limited signal.
