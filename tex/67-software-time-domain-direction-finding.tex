@@ -21,6 +21,8 @@ Use the word 'interpolate' somewhere...
 Can upsample. Why? Band limited signal sampled above Shannon/Nyquist sampling requirement. Hence we have all possibe information. Hence we're allowed to interpolate as much as is wanted. 
 Want to upsample to provide better resolution. Note accuracy does not go up, it's dependant on sample rate, jitter, ENOB etc. But resolution can be arbitrarily increased by upsampling.
 
+Upsampling of large signals can consume lots of CPU cycles and slow down the DF system. However we can exploit the properly that upsampling of the raw time domain signals has the same effect as upsampling the output of the time domain cross correlation. Impulses of even a few microseconds will be tens of thousands of ADC samples which can be expensive to upsample. However the time domain cross correlation output will be much shorter as it's limited to only the correlation interval of interest which corresponds to the number of samples it takes for a signal to propagate from one antenna to the other. Typically only a few samples.
+
 Two ways. More intuative: upsample signal then cross correlate. 
 Or cross correlate then upsample. Second is FAR more efficient computationally. 
 Time is faily linear with x then upsample. Time is very dependant on signal length with first. Assume it has to do with resample being based on FFT and FFT performing differently with different signal lengths. With x then upsample, signal lenght to be upsampled known before hand.
