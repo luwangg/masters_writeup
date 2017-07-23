@@ -1,64 +1,52 @@
 \section{Antenna Array}
 
+As shown in the simulations, it's preferable to use an odd number of elements in the circular array as the phase ambiguity is reduced when there are no lines of symmetry. However, there is a constraint in the hardware that's being used for this project: there are a total of four simultaneous ADC inputs. Rather than going down to three elements, all four inputs will be used but the circular array will be deformed in order to remove the lines of symmetry. The amount of deformation will be trade off between deviating too far from a circle and hence having performance that is not the same in all directions, or being too close to a circle and hence suffering from ambiguity. This project does not go into depth on array deformation strategies; the array design is proof of concept and the deformation we can do is limited by the mounting hardware. A few array geometries were tried and the one that performed best in ambiguity simulation.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{antenna-array-on-roof}
+  \includegraphics[width=0.59\textwidth]{antenna-s11}
+  \caption{Array of four FD-250 folded dipoles being measured and the result of the S11 measurements showing acceptable performance between \SI{200}{\mega\hertz} and \SI{300}{\mega\hertz}.}
+  \label{fig:rf-front-end:antenna-array-s11}
+\end{figure}
+
+Four FD250 folded dipole antennas with a center frequency of \SI{250}{\mega\hertz} were sourced. This centre frequency was picked as it's around the middle of the \SI{400}{\mega\hertz} ADC usable bandwidth. The antennas were mounted in a deformed circle. Measurements were taken and acceptable S11 performance in the band of interest was observed; see \Cref{fig:rf-front-end:antenna-array-s11}.
+
+In order to be able model the array in simulations and field trials, it was necessary to get coordinates for each element. A Python program was written which takes is input measurements of all of the baselines and does a least square errors calculation to estimate the coordinates of each element. A top down view of the real array as well as a plot of the elements produced by the script is show in \Cref{fig:rf-front-end:array-coordinates}.
 Thoughts on what could go here:
-- preface: we will be comparing array configurations, but bearing in mind that for the purpose of this project we're limited to 4 elements.
-- we want something close to circular as that provides the best \SI{360}{\degree} coverage.
-- 4 element circular has bad performance (will be shown later in comparison). solution: deform.
-- deformation done somewhat arbitrarily. Limited by mounting infrastructure. Tried three of four options and selected the best performing one. There is certainly more scope for a study on the tradeoff of deformation vs equal angle performance. For now just wanted something that doesn't suffer from ambiguity too much.
 - show multi-colour vis vs df error graph
 - show individual fixed source plots
 - show fixed freq 4 vs 4 deformed plots
 - link to appendix for individually samples plots.
 
 %TODO: put the following back
-%\skiptoevenpage
-\begin{landscape}
-  \thispagestyle{empty}
-  \begin{figure}
-    \centering
-    \makebox[\textheight][c]{
-      \begin{subfigure}{0.40\paperheight}
-        \centering
-        \includegraphics[width=\textwidth]{antenna-array-on-roof}
-      \end{subfigure}  
-      \begin{subfigure}{0.40\paperheight}
-        \centering
-        \includegraphics[width=1.08\textwidth]{antenna-s11}
-      \end{subfigure}
-    }
-    \caption{Array of four FD-250 folded dipoles being measured and the result of the S11 measurements showing acceptable performance between \SI{200}{\mega\hertz} and \SI{300}{\mega\hertz}.}
-  \end{figure}
-\end{landscape}
-\thispagestyle{empty}
-\begin{landscape}
-  \begin{figure}
-    \centering
-    \makebox[\textheight][c]{
-      \begin{subfigure}{0.35\paperheight}
-        \raggedleft
-        \includegraphics[width=\textwidth]{array-top-view}
-      \end{subfigure}  
-      \begin{subfigure}{0.45\paperheight}
-        \raggedright
-        \includegraphics[width=\textwidth]{array-coordinates}
-      \end{subfigure}
-    }
-    \caption{Top view with coordinates}
-  \end{figure}
-\end{landscape}
+\begin{figure}
+  \includegraphics[width=0.4\textwidth]{array-top-view}
+  \includegraphics[width=0.59\textwidth]{array-coordinates}
+  \caption{Top view with coordinates}
+  \label{fig:rf-front-end:array-coordinates}
+\end{figure}
 
 \begin{figure}
   \centering
   \begin{subfigure}{\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth, clip=true, trim = 0 14 50 0]{4}
+    \includegraphics[width=0.90\textwidth, clip=true, trim = 0 14 50 0]{4}
     % left, bottom, right, top
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth, clip=true, trim = 0 14 50 0]{4-deformed}
+    \includegraphics[width=0.90\textwidth, clip=true, trim = 0 14 50 0]{4-deformed}
   \end{subfigure}
   \caption{Ambiguity plots for various antenna array sizes with reference signal arriving at \SI{0}{\degree} showing improved ambiguity after array deformation.}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth, clip=true, trim = 0 0 60 0]{4-element-circular-ambiguity-vs-phi}\\2em
+  \includegraphics[width=0.7\textwidth, clip = true, trim = 0 0 0 0]{4-element-deformed-ambiguity-vs-phi}
+  % left, bottom, right, top
+  \caption{Some caption here}
 \end{figure}
 
 RMS phase error vs RMS angular error. MOVE THIS TO FRONT-END SECTION.

@@ -1,11 +1,15 @@
-\chapter{RF Front End}
+\chapter{Antenna Array and RF Front End}
 \label{ch:rf-front-end}
 \setsvg{svgpath=./img/rf-front-end/}
 \graphicspath{{./img/rf-front-end/}}
 
-This chapter details the design and characterisation of the chain of antenna, low noise amplifier (LNA), lower pass filters and cabling. The cabling is important as each RF chain needs to have exactly\footnote{Some phase difference between the RF chains can and will be calibrated out, but the calibration routine is most robust when the RF chain phases are already closely matches} the same phase delay.
+This chapter details the design and characterisation of the antennas and RF front end; the first sub-system in the direction finder. The RF front end consists of low noise amplifiers (LNA), lower pass filters, and cabling. As discussed in the previous chapters, the aspects of the array which needs to be optimised for are:
+\begin{itemize}
+  \item Minimize the phase difference the RF path for each antenna. The DF algorithm is based on phase/time difference measurements and hence path mismatches will result in errors. Some phase difference can be calibrated out but the calibration routine will be most robust when the initial error is low.
+  \item The spacing of the elements in the circular array needs to trade off between too large an element spacing and too small a spacing. Too large will result in phase ambiguity, to small will result in coupling between the elements as well as difficulty in measure time difference. The compromise is to make the array as large as possible before phase ambiguity becomes a problem.
+\end{itemize}
 
-
+The Chapter will first discuss the design and construction of the antenna array, then move on to the RF front end. Finally, characterisation of the amplitude and phase performance of the RF front end will then be done. 
 
 \input{./tex/42-antenna-array}
 \input{./tex/45-lna}
