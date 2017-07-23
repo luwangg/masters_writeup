@@ -40,7 +40,7 @@ Loop antennas DF systems are very sensitive to multipath errors, especially iono
 
 \subsection{Crossed Loop}
 The crossed loop technique is an amplitude comparison technique. 
-As is shown in \Cref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cos of the angle. 
+As is shown in \Cref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cosine of the angle. 
 By comparing the signal power from each antenna, it is possible to ascertain the \gls{aoa}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
 For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
 As with the scanned beam, the crossed loop suffers from significant performance degradation arising from multipath, specifically ionospheric reflection. 
@@ -106,7 +106,7 @@ For a simulation of Watson-Watt algorithm as well as a discussion around an ambi
     \includegraphics[width=\textwidth]{./img/lit_review/watson-watt-processing-digital}
     \caption{Abstraced view of signal chain for digital processing. Src: \cite{rhode2000introtodf}}
   \end{subfigure}
-  \caption{Watson-Watt array processing technique using the Adcock array. Note that difference channels from crossed beams are formed}
+  \caption{Watson-Watt array processing technique using the Adcock array. Note that difference channels from crossed beams are formed.}
   \label{fig:watson-watt}
 \end{figure}
 
@@ -127,7 +127,7 @@ Typically between 12 and 30 elements are used for Doppler DF arrays.
 
 As discussed by Jenkins \cite{jenkins1991smallaperture}, Doppler is not a high accuracy system due to the signal distortion introduced by switching the sampled antenna. Furthermore, Doppler DF is not suited to locating transients for two reasons:
 \begin{enumerate}
-  \item it is not an instantaneous technique due to there being some time required to switch between sampling all of the antennas. For example, a typically time required to switch between all elements of an array may be \SI{6}{\milli\second} \cite{rhode2000introtodf}. This is unsuitable for transients which may last only a few hundred nanoseconds.
+  \item it is not an instantaneous technique due to there being some time required to switch between sampling all of the antennas. A typical time required to switch between all elements of an array may be \SI{6}{\milli\second} \cite{rhode2000introtodf}. This is unsuitable for transients which may last only a few hundred nanoseconds.
   \item it generally needs a narrow-band signal which has a well defined carrier frequency so that the Doppler shift is well defined. Impulsive transients do not have this characteristic.
 \end{enumerate}
 
@@ -203,7 +203,7 @@ Statistical methods generally involve taking snapshots of the signals received a
 
 The advantage of working with multiple subspaces for each signal is that it allows direction finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
 
-It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
+It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and, non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
 
 Examples of these techniques include\cite{van2004detection}:
 \begin{itemize}

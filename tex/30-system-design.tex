@@ -39,7 +39,7 @@ The computer will receive input from the ROACH and do further DSP. Specifically,
 \section{Direction Finding Algorithms}
 With the above blocks available, this section goes into selecting an appropriate direction finding algorithm which meets the user requirements and refining what will be done in the first and second stage of DSP. Some additional requirements for the other blocks that arise from the selected algorithm are noted. 
 
-This section details how the selected finding algorithm will be implemented on the system. Following will be a simulation of the algorithm and the system in operation is written in python and the output of this simulation is shown here, demonstrating that the algorithm is capable of carrying out the task.\\
+This section details how the selected direction finding algorithm will be implemented on the system. Following will be a simulation of the algorithm and the system in operation written in python. The output of this simulation is shown here, demonstrating that the algorithm is capable of carrying out the task.\\
 
 There are two cases that the algorithm needs to deal with: weak narrow band signals and strong impulsive ones. The narrow band case naturally lends itself to frequency domain analysis, since the information about narrow band continuous signals is easily expressed in the frequency domain. The impulsive signals, however, are more naturally dealt with in the time domain as they are clearly bounded in time, existing only for a short duration, while being spread all over the frequency domain. 
 
@@ -83,7 +83,7 @@ The phase ambiguity simulator takes in parameters of frequency range, number of 
 This produces a 3-d plot with axes for AoA, comparison angle and RMS error. Typically the 3-d plot is flattened to a 2-D image with colour used for the third dimension, rather than rendering a 3-d image. The type of data being plotted naturally lends itself to a colour plot view.
 
 
-Ideally we would like 4 dimensional vectors: frequency, reference angle, aoa, correlation. However, this is difficult to do. Hence, two simulation strategies are used: either fix reference angle and vary frequency and AoA. Or fix frequency and vary reference and AoA. They produce results with a different view: one shows the ambiguity performance and a certain frequency, the other view shows the slice of the ambiguity performance over the whole frequency range. Process:
+Ideally we would like 4 dimensional vectors: frequency, reference angle, aoa, correlation. However, this is difficult to do. Hence, two simulation strategies are used: either fix reference angle and vary frequency and AoA. Or fix frequency and vary reference and AoA. They produce results with a different view: one shows the ambiguity performance and a certain frequency, the other view shows the slice of the ambiguity performance over the whole frequency range.
 
 \subsubsection{Ambiguity Simulation Results}
 The following plots are of array ambiguity for antenna arrays ranging from 3 to 9 elements. As the number of elements increases the array radius is increased linearly to ensure element spacing is maintained.
