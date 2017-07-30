@@ -1,8 +1,8 @@
-\section{Antennas Arrays}
+\section{Antenna Arrays}
 
 Starting with a single antenna receiving a signal from a source, where the position of the element is \(\vec{x} = \begin{bmatrix}x & y & z \end{bmatrix}\TRANSPOSE\). 
 If the transmitted signal is \(s(t)\) then the received signal can be represented as \(s(t, \vec{x})\), showing that the signal at an element is a function of the position of the element.
-As this model contains both spacial and temporal information, it is sufficient to be able to attain spacial information about the signal\cite{krim1996two}.
+As this model contains both spacial and temporal information, it is sufficient to be able to attain desired spacial information about the signal\cite{krim1996two}.
 
 The time delay for a signal arriving at the element is \cite{poisel2012electronic}
 \begin{equation}
@@ -23,10 +23,10 @@ Naturally, the equivalent phase shift from the source to the element, \(\phi(\th
   \phi(\theta) = \omega\tau(\theta) = \frac{1}{\lambda} \left( x\cos(\theta) + y\sin(\theta) \right)
 \end{equation}
 
-That time/phase difference refers to a single element. 
+That time/phase difference refers to that of a single element. 
 Array processing, however, requires modeling the output of the entire array. 
 A highly useful way of expressing the output of an array is via the antenna array manifold vector, also known as the steering vector or source-position vector. 
-The manifold vector has one complex term for each element in the array. 
+The manifold vector consists of one complex term for each element in the array. 
 The complex term refers to the relative amplitude and phase output of the element. 
 As shown above, the time/phase response is a function of the position of the element. 
 The amplitude is as a result of the gain of the antenna in the direction of arrival of the signal. 
@@ -39,12 +39,12 @@ Assuming we now have an array of \(M\) elements, the array manifold vector for a
 
 Where:
 \begin{itemize}
-  \item \(\vec{g}(\theta)\) is a \(M\)-dimensional vector of complex number being the gain and phase response  of each element in the direction \(\theta\). 
-\item \(\mathbf{X}\TRANSPOSE\) is a \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates use here will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
-\item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to a vector pointing in the direction of the source. The model assumes that the direction from is the same from each element to the source. This is approximately true when the distance from the array to the source is much greater than the array size.
+  \item \(\vec{g}(\theta)\) is an \(M\)-dimensional vector of complex number expressing the gain and phase response  of each element in the direction \(\theta\). 
+\item \(\mathbf{X}\TRANSPOSE\) is an \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates usedhere will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
+\item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to a vector pointing in the direction of the source. The model assumes that the direction is the same from each element to the source. This is approximately true when the distance from the array to the source is much greater than the array size.
 \end{itemize}
 
-Typically all of the above vectors and matricies have terms for \(x\), \(y\) and \(z\) location components as well as terms for the elevation angle, but for the purpose of this research the elements will all be located at the same elevation as we only with to locate terrestrial signals. Hence, the equations have all been simplified here.
+Typically all of the above vectors and matricies have terms for \(x\), \(y\) and \(z\) location components as well as terms for the elevation angle, but for the purpose of this research the elements will all be located at the same elevation as we only intend to locate terrestrial signals. Hence, the equations have all been simplified here.
 
 Furthermore, the \(\vec{g}(\theta)\) term may be excluded if we assume omnidirectional elements. Although it is rare to deal with true 3D omnidirectional antennas, if the antenna is required to receive signals only in the azimuth plane, 2D omnidirectional antennas such as dipoles might very well be used in practice. This hence simplifies to:
 
@@ -62,7 +62,7 @@ Clearly, this is simply a vector of phase shifts introduced by each element in t
 Varying source direction corresponds to producing a curve in \(\mathbf{C}^M\) space. 
 A point on that curve corresponds to how the array will respond to a signal from that direction.
 This array manifold completely characterises the array\cite{dacos1995estimating}. 
-There are additional details on the manifold may simplified for linear arrays, as well as the special properties which a manifold of a linear array possesses. 
+For linear arrays there are additional details that allow simplification of the manifold vector as well as special properties possessed by the manifold of linear arrays.
 This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
 This important takeaway from the array manifold is it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 

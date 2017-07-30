@@ -1,24 +1,24 @@
 \section{User Requirements}
 
-The following user requirements for the system that needs to be designed and built were drawn up by three senior engineers at SKA SA: the Director of Science and Engineering, Prof Justin Jonas, Systems Engineer for Infrastructure, Carel van der Merwe and digital backend DSP specialist, Dr Jason Manley. 
+The following user requirements for the system to be designed and built were drawn up by three senior engineers at SKA SA: the Director of Science and Engineering, Prof Justin Jonas, Systems Engineer for Infrastructure, Carel van der Merwe and digital backend DSP specialist, Dr Jason Manley:
 \begin{enumerate}
   \item A system to perform direction finding of both impulsive and narrow band continuous wave RFI sources is to be designed.
-  \item They key deliverables of this project are a software package and a thesis report.
+  \item Key deliverables of this project are a software package and a thesis report.
   \item The software package should have the following functions:
     \begin{enumerate}
-      \item It should take in input from a correlator. This could either be time domain cross correlation for impulsive sources or frequency domain cross correlation for continuous sources. 
+      \item It should take in input from a correlator. This could either be time domain cross-correlation for impulsive sources or frequency domain cross-correlation for continuous sources. 
       \item It should parse a configuration file which contains information about the array configuration and information about the output from the correlator.
-      \item The data from the correlator should be used to ascertain the direction of the detected signals.
+      \item The data from the correlator should be used to ascertain the direction of detected signals.
       \item The software should be designed to fit into a system which has a 100\% \gls{poi}
     \end{enumerate}
   \item The software should have the following user interface features:
     \begin{enumerate}
-      \item The user should be able to interact with it on a computer while it's running and modify it's operation.
+      \item The user should be able both to interact with it on a computer while it's running and to modify it's operation.
       \item A spectrogram plot frequency vs amplitude should be displayed to the user to serve as monitoring of the RFI environment.
       \item The user should be able to select a band of interest from the spectrum.
       \item The direction finding should then be computed for the signal in that band.
       \item The result of the DF should be presented to the user. An investigation must be done into the best way to present this information to the user.
-      \item Where appropriate, additional meta information should be displayed to the user, such as measurement accuracy or signal strength.
+      \item Where appropriate, additional meta-information should be displayed to the user, such as measurement accuracy or signal strength.
     \end{enumerate}
   \item The system should be designed to find terrestrial RFI sources.
   \item The system should be designed to be location independent. It could either be deployed to a fixed location or as a mobile device deployed on a vehicle.
@@ -31,12 +31,12 @@ The following user requirements for the system that needs to be designed and bui
       \item The sources of the emissions will be relatively slow moving, up to the maximum speed of a vehicle on a dirt road; \SI[per-mode=symbol]{60}{\kilo\metre\per\hour}.
   \end{enumerate}
 
-  \item Once the software has been completed, its performance on real life data should be quantified in the following way:
+  \item Once the software has been completed, its performance on real-life data should be quantified in the following way:
     \begin{enumerate}
-      \item A prototype-stage 4-element antenna array should be connected to a \SI{400}{\mega\hertz} baseband digitiser and correlator.
+      \item A prototype 4-element antenna array should be connected to a \SI{400}{\mega\hertz} baseband digitiser and correlator.
       \item The correlator need not be real time for the demonstration.
       \item As the goal of this project is not to develop a hardware system, there is no specific requirement on receiver sensitivity or noise figure. Whatever the best available hardware is should be used for the antennas, front end and digitiser. 
-      \item The performance of the hardware used should be analysed. 
+      \item The performance of the hardware used should then be analysed. 
     \end{enumerate}
   \item Mitigation of the effects of performance degradation due to multipath is outside of the scope of this work.
 
@@ -47,14 +47,14 @@ The following user requirements for the system that needs to be designed and bui
 The requirements as stated by the \gls{ska} are clear and understood. Some notable implications from the requirements:
 
 \begin{itemize}
-  \item The system which will be designed here will probably not be immediately applicable to combating RFI at the MeerKAT site. The reason is that this project is focused on the \gls{df} implementation, not hardware. Hence no down converter will be designed in meaning the frequency band being digitised by this system will not overlap the MeerKAT band. 
+  \item The system which will be designed here will probably not be immediately applicable to combating RFI at the MeerKAT site. The reason is that this project is focused on the \gls{df} implementation, not hardware. Hence no down converter will be designed and consequently the frequency band being digitised by this system will not overlap the MeerKAT band. 
     It will be up to future work to add a suitable \gls{rf} front end in order to allow the system to operate in the MeerKAT band of interest. However, the implication for this work is that it is essential that this system be designed such that it is trivial to reconfigure the system for a different RF front end and frequency band. 
 
   \item Based on the fact that the emitters will be either stationary or slow moving, it should be acceptable to have integration times in the order of 1 second. 
 
   \item The requirement of a 100\% \gls{poi} will impose restrictions on what antenna array and receiver can be used, and this will in turn have restrictions on the specific \gls{df} algorithm which can be used. 
 
-  \item Seeing as this system is intended to be used by \gls{ska} and will require future work to make it production ready, the source code should be structured such to allow collaborative development and located somewhere accessible. Github will be used. Following is a list of code repos used in this project. 
+  \item Seeing as this system is intended to be used by \gls{ska} and will require future work to make it production ready, the source code should be structured to allow collaborative development and for it to be located somewhere accessible. Github will be used. Following is a list of code repos used in this project:
 
 \end{itemize}
 
