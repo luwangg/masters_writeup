@@ -1,18 +1,18 @@
 \section{Direction Finding Techniques}
 A direction finder is a passive device able to ascertain the angle of arrival of a source of electromagnetic radiation.
-The objective of direction finding is generally to find the location of non-cooperative emitters\cite{poisel2012electronic}.
+The objective of direction-finding is generally to find the location of non-cooperative emitters\cite{poisel2012electronic}.
 This is one of the fundamental activities of electronic defense as well as RFI hunting.
-The general structure of a direction finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
-Simple direction finding systems were used as early as the start of the \nth{20} century and have been continually evolving since then along with developments in communications and electronic warfare systems.
-Direction finding systems have applications in a variety of disciplines ranging from radar, sonar, surveillance, radio astronomy and even medical. Finding an optimal parameter estimator for angle of arrival is difficult and hence lots of research has been done into the topic over the last few decades\cite{van2004detection}.
+The general structure of a direction-finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
+Simple direction-finding systems were used as early as the start of the \nth{20} century and have been continually evolving since then along with developments in communications and electronic warfare systems.
+Direction finding systems have applications in a variety of disciplines ranging from radar, sonar, surveillance, radio astronomy and even medical. An optimal parameter estimator for angle of arrival is difficult to design and hence lots of research has been done into the topic over the last few decades\cite{van2004detection}.
 
 DF techniques are generally based on either amplitude comparison, time/phase comparison or statistical methods\cite{tuncer2009classical}. 
 Various implementations of these classes of DF will now be explored.
 
-Much of following overview of types of direction finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook\cite{center2012electronic}.
+Much of following overview of types of direction-finding systems is based on discussions in the Electronic Warfare and Radar Systems Engineering Handbook\cite{center2012electronic}.
 
 \subsection{Scanned beam}
-This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of radio direction finding and was implemented in the early 1900's. 
+This is a direct amplitude technique. An antenna with gain (non-uniform beam) is rotated and this causes the power output of the antenna to vary with rotation angle. This is the earliest form of radio direction-finding and was implemented in the early 1900's. 
 One of the first uses of this DF technique was in a system developed by Marconi to locate the bearing to a ship which was transmitting a signal for navigation purposes\cite{jenkins1991smallaperture}. A loop antenna was frequently used as it was a simple antenna to construct and the beam pattern has a sharp null. 
 An example antenna and beam pattern are shown in \Cref{fig:lit_loop_antenna}. As the change in antenna output power per degree rotated is highest around the null, the antenna was often aligned such that the signal of interest was in the null. 
 If multiple signals originating from different bearings are present, the system cannot operate. 
@@ -26,7 +26,7 @@ Loop antenna DF systems are very sensitive to multipath errors, especially ionos
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=0.8\textwidth]{lit_review/loop_antenna}
-    \caption{Loop antenna used for direction finding in 1918. Src: \cite{grabau1989funkpeiltechnik}}
+    \caption{Loop antenna used for direction-finding in 1918. Src: \cite{grabau1989funkpeiltechnik}}
   \end{subfigure}
   ~
   \begin{subfigure}[b]{0.48\textwidth}
@@ -77,7 +77,7 @@ This array configuration was studied extensively in the 1930's and played a sign
   \begin{subfigure}[b]{0.6\textwidth}
     \includegraphics[width=\textwidth]{./img/lit_review/adcock_implementation}
   \end{subfigure}
-  \caption{Left: Model for Adcock antenna showing N-S and E-W pairs. Right: Japanese implementation of array for 2 MHz direction finding. Src: \cite{japanesecommunications}}
+  \caption{Left: Model for Adcock antenna showing N-S and E-W pairs. Right: Japanese implementation of array for 2 MHz direction-finding. Src: \cite{japanesecommunications}}
   \label{fig:lit_adcock_array}
 \end{figure}
 
@@ -85,7 +85,7 @@ This array configuration was studied extensively in the 1930's and played a sign
 \subsection{Watson-Watt Evaluation}
 This amplitude comparison technique is probably the most commonly used DF technique over the history of DF systems\cite{poisel2012electronic}.
 
-Ambiguity and multipath are one of the major difficulties which need to be overcome in direction finding systems. 
+Ambiguity and multipath are one of the major difficulties which need to be overcome in direction-finding systems. 
 In the mid 1920s, Sir Robert Watson-Watt developed an improved DF system based on the Adcock array configuration. 
 As discussed above, the beam pattern of the output of an Adcock array is one cosine shaped beam and one sine shaped beam. By exploiting the trigonometric properties of these functions and adding an additional sense element, Watson-Watt developed a method to compute the angle of arrival from an array with this cos/sin property. 
 This evaluation technique showed significant improvement in rejection of ionospheric reflections and made ambiguity resolution easier.
@@ -200,7 +200,7 @@ Should the antenna array contain more than two elements, the system either needs
 This class of techniques attempts to perform eigen analysis, decomposing the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
 Statistical methods generally involve taking snapshots of the signals received at each sensor, \(\vec{r}(t)\) and then calculating the covariance matrix of the received data\cite{poisel2012electronic}.
 
-The advantage of working with multiple subspaces for each signal is that it allows direction finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
+The advantage of working with multiple subspaces for each signal is that it allows direction-finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
 
 It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources and, non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
 

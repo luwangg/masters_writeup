@@ -23,7 +23,7 @@ Naturally, the equivalent phase shift from the source to the element, \(\phi(\th
   \phi(\theta) = \omega\tau(\theta) = \frac{1}{\lambda} \left( x\cos(\theta) + y\sin(\theta) \right)
 \end{equation}
 
-That time/phase difference refers to that of a single element. 
+The observed time/phase difference refers to that of a single element. 
 Array processing, however, requires modeling the output of the entire array. 
 A highly useful way of expressing the output of an array is via the antenna array manifold vector, also known as the steering vector or source-position vector. 
 The manifold vector consists of one complex term for each element in the array. 
@@ -40,7 +40,7 @@ Assuming we now have an array of \(M\) elements, the array manifold vector for a
 Where:
 \begin{itemize}
   \item \(\vec{g}(\theta)\) is an \(M\)-dimensional vector of complex number expressing the gain and phase response  of each element in the direction \(\theta\). 
-\item \(\mathbf{X}\TRANSPOSE\) is an \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates usedhere will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
+\item \(\mathbf{X}\TRANSPOSE\) is an \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates used here will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
 \item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to a vector pointing in the direction of the source. The model assumes that the direction is the same from each element to the source. This is approximately true when the distance from the array to the source is much greater than the array size.
 \end{itemize}
 
@@ -65,4 +65,4 @@ This array manifold completely characterises the array\cite{dacos1995estimating}
 For linear arrays there are additional details that allow simplification of the manifold vector as well as special properties possessed by the manifold of linear arrays.
 This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
-This important takeaway from the array manifold is it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction finding algorithm for this project will be designed. 
+This important takeaway from the array manifold is it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction-finding algorithm for this project will be designed. 
