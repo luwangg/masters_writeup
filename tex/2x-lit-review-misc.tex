@@ -1,44 +1,26 @@
 \section{Geolocation}
-Geolocation refers to the process of finding the absolute position of a target, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate a device from direction bearings \cite{poisel2012electronic}. 
+Geolocation refers to the process of finding the absolute position of a source, often in terms of a coordinate system like latitude/longitude/elevation. This information is often more useful than only knowing the direction which an emitter lies in. However, it is shown that by having multiple DF stations, the process of triangulation may be used to geolocate an emitter from the direction bearings \cite{poisel2012electronic}. 
 
-The relevance of this note about geolocation to this work is that it is not necessary to attempt to design a system which can do geolocation natively. Rather, a DF system can be design which can later be duplicated in order to provide geolocation capabilities. 
+The relevance to this work of the above note on geolocation is that it is not necessary to attempt to design a system which can do geolocation natively. Rather, a DF system can be designed which can later be deployed to multiple coordinated sites in order to provide geolocation capabilities. 
 
 \section{Radiometer}
-A radiometer is a device which is able to provide a very high accuracy approximation of noise power by averaging a large number of noise samples over a long time period. Due to the high accuracy measurements it can make, it is able to detect small changes in received power. 
-It does this by achieving a high sensitivity. Sensitivity is the measure of how weak a signal and instrument is able to detect.
+A radiometer is a device which is able to provide high accuracy approximation of signal power by averaging a large number of samples over a long time period. Due to the high sensitivity measurements it can make, it is able to detect small changes in received power\cite{nraoradiometers}. \cite{casperradiometerequation}.
 
-We will define power in terms of a matched load heated to a certain temperature observed over a certain bandwidth.
-\begin{equation}
-  P = kTB
-\end{equation}
-where \(k \approxeq \SI{1.38e-23}{\joule\per\kelvin}\), the Boltzmann constant. 
+This radiometer principal can be applied to locate signals below the noise floor. While typically an RFI signal below the noise floor would not be an issue, in the case of a radio astronomy reserve, that signal will likely still be a problem because the noise floor of the MeerKAT array is so much lower than the RFI DF instrument. In essence, a signal which will be very loud to the telescope may be difficult for the DF system to even detect. By accumulating many samples of the weak correlated RFI signal, the DF system is able to see the RFI signal below its own uncorrelated noise floor. For this application, a long observation period may be used to extract a weak signal so that it may be processed.
 
-System temperature is a combination of noise powers from atmospheric emissions, the warm earth, the cosmic microwave background, receiver noise figure, losses in the RF chain and others. These noise sources mask the RFI signal which we are trying to locate. While typically an RFI signal below the noise floor would not be an issue, in the case of a radio astronomy reserver that signal will in all likelihood still be a problem because the noise floor of the MeerKAT array is so much lower than the RFI DF instrument. In essence, a signal which will be very loud to the telescope may be difficult for the DF system to even detect. Effort will hence need to go into ensuring that this instrument being designed will be able to see signals below its own noise floor. 
-
-As the noise at an antenna is a combination of a multitude of noise sources, the central limit theorem states that output of the antenna will be approximately a normal (Gaussian) distribution. 
-
-The noise temperature is defined as the noise power per unit bandwidth over the Boltzmann constant:
-\begin{equation}
-  T_N = \frac{P_v}{k}
-\end{equation}
-
-Assuming the power of a noise source remains constant, a single sample of the noise source has an RMS error of approximately \(\sqrt{2}T_{sys}\). However, by integrating the noise power from a certain bandwidth \(\Delta B\) over some integration time \(\tau\) the error can be significantly reduced to
-\begin{equation}
-  \sigma_{T} = \frac{\sqrt{2}T_{sys}}{\sqrt{2B\tau}} = \frac{T_{sys}}{\sqrt{B \tau}}
-\end{equation}
-Where \(\sigma_{T}\) is the RMS error in the measurement of the noise temperature, \(T\), and \(T_{sys}\) is the actual system noise temperature. Note that \(2B\tau\) is the number of samples acquired
-
-This process used in a radiometer of ascertaining a high accuracy approximation of a received signal by integrating the signal over some observation period can also be used in the context of a direction finding system. For this application, a long observation period may be used to extract a weak signal which is burried in noise so that the weak signal may be processed.
+The relationship of the radiometer's Signal to Noise Ratio (SNR) input and output is: \cite{casperradiometerequation}
 
 \begin{equation}
-  \left( \frac{S}{N} \right)_{\text{OUTPUT}} = \left( \frac{S}{N} \right)_{\text{INPUT}}\sqrt{B\tau}
+  \text{SNR}_{\text{OUT}} = \text{SNR}_{\text{IN}}\sqrt{Bt}
 \end{equation}
 
-Sources: \url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation}
-\url{https://casper.berkeley.edu/astrobaki/index.php/Radiometer_Equation_Applied_to_Telescopes}
-\url{https://www.cv.nrao.edu/course/astr534/Radiometers.html}
+Where:
+\begin{itemize}
+  \item \(B\) is the bandwidth of the instrument
+  \item \(t\) is the accumulation time
+\end{itemize}
 
-TOD: put these sources as proper citations.
+The gain factor, \(\sqrt{Bt}\) make sense for an analogue system. For a digital system, this is the same as \(\sqrt{N}\) where \(N\) is the number of samples. Hence, the digital gain is proportional to the square root of the number of observed samples.
 
 \section{Summary}
-Todo: add chapter summary here!
+This chapter began with building up the antenna array manifold vector, showing how it was a useful tool in quantifying the expected time/phase shift of an arbitrary array by a signal arriving from a given direction. The chapter then proceeded to examine various existing direction finding techniques, both amplitude and phase techniques. Note was made specific characteristics of the techniques that would make them suitable or unsuitable for this system given the user requirements. Subspace DF techniques were also looked. Finally, a brief note on the process of geolocation and the radiometer principal was made.
