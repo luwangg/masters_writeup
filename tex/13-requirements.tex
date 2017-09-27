@@ -6,14 +6,14 @@ The following user requirements for the system to be designed and built were dra
   \item Key deliverables of this project are a software package and a thesis report.
   \item The software package should have the following functions:
     \begin{enumerate}
-      \item It should take in input from a correlator. This could either be time domain cross-correlation for impulsive sources or frequency domain cross-correlation for continuous sources. 
+      \item It should take input from a correlator. This could either be time domain cross-correlation for impulsive sources or frequency domain cross-correlation for continuous sources. 
       \item It should parse a configuration file which contains information about the array configuration and information about the output from the correlator.
       \item The data from the correlator should be used to ascertain the direction of detected signals.
       \item The software should be designed to fit into a system which has a 100\% \gls{poi}
     \end{enumerate}
   \item The software should have the following user interface features:
     \begin{enumerate}
-      \item The user should be able both to interact with it on a computer while it's running and to modify it's operation.
+      \item The user should be able both to interact with it on a computer while it's running and to modify its operation.
       \item A spectrogram plot frequency vs amplitude should be displayed to the user to serve as monitoring of the RFI environment.
       \item The user should be able to select a band of interest from the spectrum.
       \item The direction should then be computed for the signal in that band.
@@ -24,7 +24,7 @@ The following user requirements for the system to be designed and built were dra
   \item The system should be designed to be location independent. It could either be deployed to a fixed location or as a mobile device deployed on a vehicle.
   \item This project should be able to interface easily with other systems requiring its data. Specifically, it should be designed to interface with and pass its data on to an allied project which is doing classification of RFI.
   \item The system should be real-time, where real-time is defined as having a latency in the order of a few seconds from receiving signals to displaying results to the user, as opposed to needing to post-process the data after taking measurements.
-  \item The hardware and software used should be in line with what is used at MeerKAT. This implies the ROACH platform for hardware, Python for back end software and JavaScript for front end software.  
+  \item The hardware and software used should be in line with what is used at MeerKAT. This implies the ROACH platform for hardware, Python for backend software and JavaScript for front end software.  
   \item This system must operate in the context of the MeerKAT site, implying the following:
   \begin{enumerate}
       \item In general, the RF environment is sparse. While there will be multiple simultaneous transmitters, it can be assumed there will only be one transmitter in a channel and one source of transients at a given time.
@@ -35,7 +35,7 @@ The following user requirements for the system to be designed and built were dra
     \begin{enumerate}
       \item A prototype 4-element antenna array should be connected to a \SI{400}{\mega\hertz} baseband digitiser and correlator.
       \item The correlator need not be real time for the demonstration.
-      \item As the goal of this project is not to develop a hardware system, there is no specific requirement on receiver sensitivity or noise figure. Whatever the best available hardware is should be used for the antennas, front end and digitiser. 
+      \item As the goal of this project is not to develop a hardware system, there is no specific requirement on receiver sensitivity or noise figure. Whatever the best available hardware is should be used for antennas, front-end receiver and digitiser. 
       \item The performance of the hardware used should then be analysed. 
     \end{enumerate}
   \item Mitigation of the effects of performance degradation due to multipath is outside of the scope of this work.
