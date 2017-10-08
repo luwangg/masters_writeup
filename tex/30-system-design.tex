@@ -135,6 +135,15 @@ The simulation is for a reference signal arriving from \SI{0}{\degree}, and comp
   \caption{(cont'd) Ambiguity plots for various antenna array sizes with reference signal arriving at \SI{0}{\degree}.}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{4element-fixedbaseline}
+  \includegraphics[width=0.8\textwidth]{5element-fixedbaseline}
+  \caption{Ambiguity simulation for a 4 element (top) and 5 element (bottom) array. The simulation is for a fixed frequency / baseline length, with variables for the true angle of arrival and a comparison angle, with output showing how different a signal from the comparison angle looks to the true angle. Ambiguity gets worse when the difference goes to zero. The 5 element array has better ambiguity performance}
+  \label{fig:system-design:4-vs-5-element-fixed-baseline}
+\end{figure}
+
+
 \subsubsection{Accumulation Gain Simulation Results}
 
 The other performance criteria of the frequency domain system is the ability to see weak signals below the noise floor. The contention is that by accumulating many datapoints, the noise component will sum to zero while the signal component will sum coherently.
