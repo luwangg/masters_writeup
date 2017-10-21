@@ -146,7 +146,7 @@ Typically between 12 and 30 elements are used for Doppler DF arrays.
 As discussed by Jenkins \cite{jenkins1991smallaperture}, Doppler is not a high accuracy system due to the signal distortion introduced by switching the sampled antenna. Furthermore, Doppler DF is not suited to locating transients for two reasons:
 \begin{enumerate}
   \item it is not an instantaneous technique due to there being some time required to switch between sampling all of the antennas. A typical time required to switch between all elements of an array may be \SI{6}{\milli\second} \cite{rhode2000introtodf}. This is unsuitable for transients which may last only a few hundred nanoseconds.
-  \item it generally needs a narrow-band signal which has a well defined carrier frequency so that the Doppler shift is well defined. Impulsive transients do not have this characteristic.
+  \item it generally needs a narrowband signal which has a well defined carrier frequency so that the Doppler shift is well defined. Impulsive transients do not have this characteristic.
 \end{enumerate}
 
 For a more detailed discussion of the mathematics behind Doppler DF, see the Rhode \& Schwarz report \cite{rhode2000introtodf}. 
@@ -184,7 +184,7 @@ The solution to this ambiguity problem is to use more than two elements, thereby
 \begin{figure}
    \centering
    \includegraphics[width=0.4\textwidth]{lit_review/two_element_phase_df_model.pdf}
-   \caption{A simple two-element phase interferometer. The narrow band signal is arriving at the array at angle \(\theta\) producing observed phase difference \(\phi\). Note that as the element spacing, \(d\), is more than half a wavelength there is ambiguity.}
+   \caption{A simple two-element phase interferometer. The narrowband signal is arriving at the array at angle \(\theta\) producing observed phase difference \(\phi\). Note that as the element spacing, \(d\), is more than half a wavelength there is ambiguity.}
    \label{fig:lit-two-element-phase}
 \end{figure}
 
@@ -200,7 +200,7 @@ Should the antenna array contain more than two elements, the system either needs
 This class of techniques attempts to perform eigen analysis, decomposing the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
 Statistical methods generally involve taking snapshots of the signals received at each antenna and then calculating the covariance matrix of the received data\cite{poisel2012electronic}.
 
-The advantage of working with multiple subspaces for each signal is that it allows direction-finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrow band signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
+The advantage of working with multiple subspaces for each signal is that it allows direction-finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrowband signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
 
 It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources, and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
 

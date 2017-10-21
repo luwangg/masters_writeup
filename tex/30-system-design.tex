@@ -11,7 +11,7 @@ The DF system will consist of the following sub-systems.
 A block diagram view of what's been described here is shown in \Cref{fig:system-design:signal-flow} with some additional requirements noted.
 
 \subsection{Antenna Array}
-The antenna array will receive the RFI signals. The user requirements state that a \SI{360}{\degree} field of view is necessary. Hence, a circular array will be used. The arrays needs to be useful in direction-finding both narrow band and impulsive signals. This implies that a trade-off will have to be made in terms of element spacing when designing the array. If the element spacing is too large, the array will experience high amounts of phase ambiguity and perform poorly at narrow band DF. If the element spacing is too small the time difference for impulsive signals will be difficult to measure. The elements should be non-dispersive to facilitate keeping the structure of the impulsive signals. The number of elements to be used in the array will be explored later.
+The antenna array will receive the RFI signals. The user requirements state that a \SI{360}{\degree} field of view is necessary. Hence, a circular array will be used. The arrays needs to be useful in direction-finding both narrowband and impulsive signals. This implies that a trade-off will have to be made in terms of element spacing when designing the array. If the element spacing is too large, the array will experience high amounts of phase ambiguity and perform poorly at narrowband DF. If the element spacing is too small the time difference for impulsive signals will be difficult to measure. The elements should be non-dispersive to facilitate keeping the structure of the impulsive signals. The number of elements to be used in the array will be explored later.
 
 \subsection{Front End}
 The front end will contain anti-aliasing filters and low noise amplifiers. For this project, a simple front end will be used. There will be no mixing or switching: the base band signal will be low pass filtered and amplified. The specifications of the filters and amplifiers will be specified based on the operating frequency band of the array and the sampling frequency of the ADCs. There will need to be an independent, identical RF chain for each element of the array.
@@ -41,12 +41,12 @@ With the above blocks in place, this section goes into selecting an appropriate 
 
 This section details how the selected direction-finding algorithm will be implemented on the system. A simulation of the algorithm and the system in operation written in Python follows. The output of this simulation is shown, demonstrating that the algorithm is capable of carrying out the task.\\
 
-There are two cases that the algorithm needs to deal with: weak narrow band signals and strong impulsive ones. The narrow-band case naturally lends itself to frequency domain analysis since the information about narrow-band continuous signals is concisely expressed in the frequency domain. The impulsive signals, however, are more naturally dealt with in the time domain as they are bound in time, existing only for a short duration, while being spread all over the frequency domain. 
+There are two cases that the algorithm needs to deal with: weak narrowband signals and strong impulsive ones. The narrowband case naturally lends itself to frequency domain analysis since the information about narrowband continuous signals is concisely expressed in the frequency domain. The impulsive signals, however, are more naturally dealt with in the time domain as they are bound in time, existing only for a short duration, while being spread all over the frequency domain. 
 
-As such, the selected algorithm contains two distinct parts: a phase interferometry component designed to direction-find weak (below the noise floor) narrow-band signals, and a time difference of arrival part designed to locate short duration, strong (noticeable when plotted in the time domain) impulsive RFI.
+As such, the selected algorithm contains two distinct parts: a phase interferometry component designed to direction-find weak (below the noise floor) narrowband signals, and a time difference of arrival part designed to locate short-duration impulsive RFI that are strong enough (ie: noticeable when plotted in the time domain).
 
 \subsection{Phase Interferometry}
-Phase Interferometry direction-finding of narrow band signals will be done by phase comparison of the signal of interest as seen by each antenna in the array. The technique of phase interferometry has been extensively explored in the literature review. The process carried out by this DF system will be the following steps:
+Phase Interferometry direction-finding of narrowband signals will be done by phase comparison of the signal of interest as seen by each antenna in the array. The technique of phase interferometry has been extensively explored in the literature review. The process carried out by this DF system will be the following steps:
 \begin{enumerate}
   \item ADCs are used to sample the signal seen by each antenna exactly in phase. The ADCs need to be calibrated and have equal cable length to each antenna.
   \item The output of each ADC is streamed into a real-time FFT capable of producing Fourier transforms of the observed signals as fast as they are captured. Real-time implies that the FFTs must stream their frequency channel outputs at the same data rate as the rate which they they get in time domain data.
@@ -65,7 +65,7 @@ The key difference is that instead of the parameter of interest being the phase 
 Additionally, as the time domain cross-correlation process is computationally expensive, it will only be done when a signal is detected. This implies that an impulse detector of some sort must be present and must be able to trigger the DF process.
 
 \subsubsection{Upsampling for resolution}
-For impulsive signals for which time domain DF will be used, there is no issue of ambiguity as such signal are not periodic, unlike continuous narrow band ones are. Instead, the issue is one of resolution. In order to get accurate time difference readings, a high time-resolution snapshot of the signals must be taken. The higher the time resolution of the signal, the more cross correlation points there are and the greater the accuracy of the time domain measurement. This means pushing the ADC faster.
+For impulsive signals for which time domain DF will be used, there is no issue of ambiguity as such signal are not periodic, unlike continuous narrowband ones are. Instead, the issue is one of resolution. In order to get accurate time difference readings, a high time-resolution snapshot of the signals must be taken. The higher the time resolution of the signal, the more cross correlation points there are and the greater the accuracy of the time domain measurement. This means pushing the ADC faster.
 
 Fortunately we can use upsampling to increase the resolution of the time domain cross-correlation provided that some requirements are met, and at the expense of additional computational complexity. The computational complexity comes both from the upsampling process as well as from the increased number of data points in the cross-correlation step.
 
@@ -174,6 +174,6 @@ An example is shown in \Cref{fig:system-design-raw-vs-upsampled-timedomain}. Her
 \end{figure}
 
 \section{Summary}
-This chapter has shown how a system with a circular antenna array, an RF front end, digitisers and DSP can be used to DF both narrow band and impulsive DF. It's been shown how antenna geometry impacts ambiguity performance, how accumulation can allow us to see below the noise floor, and how interpolation can be used to increase resolution of a band limited signal.
+This chapter has shown how a system with a circular antenna array, an RF front end, digitisers and DSP can be used to DF both narrowband and impulsive DF. It's been shown how antenna geometry impacts ambiguity performance, how accumulation can allow us to see below the noise floor, and how interpolation can be used to increase resolution of a band limited signal.
 
 TODO: add more to summary.
