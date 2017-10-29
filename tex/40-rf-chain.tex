@@ -9,7 +9,10 @@ This chapter details the design and characterisation of the antennas and RF fron
   \item The spacing of the elements in the circular array needs to trade off between too large an element spacing and too small a spacing. Too large will result in phase ambiguity, to small will result in coupling between the elements as well as difficulty in measure time difference. The compromise is to make the array as large as possible before phase ambiguity becomes a problem.
 \end{itemize}
 
+The ADCs which were available for use in this project influenced the antenna and operating frequency band choice. They're explored more in Chapter 5 but will be briefly noted here as justification for the decisions taken here. The ADCs were two dual-core chips which can be configured to each sample two inputs (one RF input per core) in phase. They were clocked up to \SI{800}{\mega\hertz}. This implies 4 simultaneous inputs with a Nyquist frequency of \SI{400}{\mega\hertz}.\\
+
 The Chapter will first discuss the design and construction of the antenna array, then move on to the RF front end. Finally, characterisation of the amplitude and phase performance of the RF front end will then be done. 
+
 
 \input{./tex/42-antenna-array}
 \input{./tex/45-lna}
