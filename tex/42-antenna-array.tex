@@ -68,9 +68,53 @@ The two figures show that ambiguity has to a large extent been reduced by the de
 
 An additional measurement of the performance of the various array configurations was done by simulating how susceptible the accuracy of the angle of arrival calculation is to corrupting noise on the input phase measurement. The simulation involves getting the ideal visibility phase shift of each baseline in the array for some input angle, then corrupting all of the visibilities by some RMS error and re-running the resulting corrupted phase shifts thought the DF algorithm. The output angle is then compared with the original angle. This is done for all angles over \(2\pi\) radians and the RMS error of the output angle calculated. This is done for a range of phase error corruption from 0 to 1 radians RMS, for antenna configurations of 3, 4, 5, 6 and 7 elements as well as for the 4 element deformed configuration with has been constructed here. A script to perform this simulation was written\footnote{\url{https://github.com/jgowans/phase_ambiguity/blob/master/simulate_df_error_vs_visibility_error.py}} on top of the original simulator and array modeling package, and the results can be seen in \Cref{fig:antenna-array:configuration-vs-input-error-vs-output-error}. From the figure we observe that the even numbered array configurations (4 and 6 elements) have a non-zero error right from the start due to the points of total ambiguity which they exhibit. The 3 element array becomes corrupted by noise very quickly and increases fast due to not having as much information input as the larger arrays. The most interesting observation is that the 4 element deformed array performs only slightly worse than the 5 element array. This observation further indicates that the design decision of deforming a 4 element array rather than going for a 3 element array was a correct decision.
 
+To see exactly how the output error arises in the square array or is mitigated by the deformed array, snapshots of DF performance at specific input error values were taken. The performance of the square array is shown in \Cref{fig:rf-front-end:circular-error-snapshots} and the deformed on in \Cref{fig:rf-front-end:deformed-error-snapshots}. For angles along the x-axis, the theoretical array manifold was calculated, then corrupted with noise and fed back into the DF system to get the y-axis value. We see that the square array manifests output error earlier than the deformed one, and that the error congregates at the ambiguous points.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{visibility-error-vs-df-error}
   \caption{Susceptibility of different array sizes to input error. The line labeled \texttt{4'} is represents the deformed 4 element array that has been constructed.}
   \label{fig:antenna-array:configuration-vs-input-error-vs-output-error}
+\end{figure}
+
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-1}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-3}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-0-6}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-circular-1-0}
+  \end{subfigure}
+  \caption{Four element \emph{square} (evenly sampled circle) array's DF output vs simulated input when corrupted by increasing levels of noise. There are clear points of ambiguity which manifest right from the start and throw off the measurement.}
+  \label{fig:rf-front-end:circular-error-snapshots}
+\end{figure}
+
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-1}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-3}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-0-6}
+  \end{subfigure}\\[1em]
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[height=0.23\textheight]{df-simulation-deformed-1-0}
+  \end{subfigure}
+  \caption{Four element \emph{deformed} array's DF output vs simulated input when corrupted by increasing levels of noise. The ambiguous points have mostly been eliminated, meaning that output error manifests only after larger input error and is more evenly spread than the square array.}
+  \label{fig:rf-front-end:deformed-error-snapshots}
 \end{figure}

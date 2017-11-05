@@ -3,10 +3,27 @@
 \setsvg{svgpath=./img/firmware/}
 \graphicspath{{./img/firmware/}}
 
-Here are the steps which were done to produce the hardware for testing purposes.
-Discussion emphasis is on what I changed or modified. Blocks which were already in existance are discussed in less detail.
+This Chapter details the design, implementation and testing of the FPGA firmware. Testing involves both simulating using data path as well putting the firmware on the physical FPGA, sending input RF signals to it and analysing the output of the FPGA's DSP.
 
-\section{Software Setup}
+\section{Hardware Specifications}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{roach-photo}
+  \caption{Photo of the ROACH board and ADCs. Bottom: Two Atmel AT84AD001B dual ADC cards with SMA connectors going in to them and connected via Z-DOK to the ROACH board. Bottom right: ADC clock synthesiser feeding into power splitter which in turn clocks each ADC board in phase. Top: main ROACH board. The Virtex-5 is under the blue fan. To its left is the ROACH's DRAM module. To the right of the fan is the PowerPC with its DRAM module.}
+  \label{fig:firmware:roach-photo}
+\end{figure}
+
+As discussed in the user requirements, the FPGA processing board that should be use is the same which is used by the SKA: the Reconfigurable Open Architecture Computing Hardware (ROACH)\footnote{\url{https://casper.berkeley.edu/wiki/ROACH}} board. This board has a Xilinx Virtex-5 FPGA on it, with connectors for Z-DOK+ cards which will be used for ADCs and a DDR2 DRAM connector for high volume\footnote{Compared to the Virtex-5's on-chip storage} data storage. There is a PowerPC subsystem on the ROACH running Linux which provides a 1 Gbps Ethernet interface for programming and data readout from the memory of the FPGA. There are other blocks on the ROACH board as well, but the ones listed here will be the ones utilised in this project.
+
+There are various ADC cards compatible with the ROACH. The ones which were made available for this project are iADC cards. Each card has an Atmel/e2V AT84AD001B 8-bit dual ADC chip on it. It's designed for I/Q sampling but can be configured to sample both channels in phase; exactly what's needed here. The clock speed can be up to \SI{1}{\giga\hertz} and must be externally supplied. The ADC feeds the clock signal through to the FPGA along with the sampled data with a demux factor of 4:1 meaning that for every 4 FPGA clock cycles and 4 samples, the ADC gets one clock cycle and all 4 samples on the bus. This implies that the FPGA will run at exactly a quarter of the speed the ADC runs at, and needs to be able to handle 4 samples per channel times 4 channels every clock cycle.
+
+The clock source is a Valon 5007 dual synthesiser which is USB programmable from \SI{137}{\mega\hertz} to \SI{4400}{\mega\hertz}. Both ADCs need to be clocked exactly in phase so the Valon is fed into a Mini-Circuits ZESC2-11+ power splitter which has a phase imbalance of below \SI{0.1}{\degree}.
+
+The ROACH board with connected ADCs is shown in \Cref{fig:firmware:roach-photo}. All of the components are in a metal case for RF shielding, although the cover has been removed for the photo.
+
+
+\section{Firmware Development}
 CentOS which is the open source version of RHEL. Computer with at least \SI{8}{\giga\byte} of memory as the compile process is memory intensive. 
 Number of CPU cores is not important as the Xilinx compile process only runs single threaded.
 Xilinx SysGen 14.7.

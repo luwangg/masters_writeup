@@ -7,8 +7,7 @@ The design is done based on the user requirements specified in \Cref{ch:introduc
 Once the system is designed, some simulations are run to show whether the algorithm performs as expected and also to highlight potential problems that need to be tackled.
 
 \section{Sub-systems}
-The DF system will consist of the following sub-systems.
-A block diagram view of what's been described here is shown in \Cref{fig:system-design:signal-flow} with some additional requirements noted.
+The DF system will consist of the subsystems which are described here, as well as shown in block diagram view in \Cref{fig:system-design:signal-flow}.
 
 \subsection{Antenna Array}
 The antenna array will receive the RFI signals. The user requirements state that a \SI{360}{\degree} field of view is necessary. Hence, a circular array will be used. The arrays needs to be useful in direction-finding both narrowband and impulsive signals. This implies that a trade-off will have to be made in terms of element spacing when designing the array. If the element spacing is too large, the array will experience high amounts of phase ambiguity and perform poorly at narrowband DF. If the element spacing is too small the time difference for impulsive signals will be difficult to measure. The elements should be non-dispersive to facilitate keeping the structure of the impulsive signals. The number of elements to be used in the array will be explored later.
@@ -20,7 +19,7 @@ The front end will contain anti-aliasing filters and low noise amplifiers. For t
 The ROACH board will have the functions of doing analogue to digital conversion and the high-speed digital signal processing. The ROACH consists of a Virtex 5 FPGA and multiple ADC cards allowing all of the RF inputs will be digitsed independently. The purpose of the ROACH is to do real-time processing on the raw ADC samples, hence reducing the data rate to only signals of interest which can be sent to the computer and processed there.
 
 \subsection{Computer Software}
-The computer will receive input from the ROACH and do further DSP. Specifically, the final angle of arrival estimation. The computer needs to be able to log all of the data for future analysis and display the results of the direction-finding to the user real-time in the field.
+When the computer receives input from the ROACH it will do further DSP, specifically the final angle of arrival estimation. The computer needs to be able to log all of the data for future analysis and display the results of the direction-finding to the user real-time in the field.
 
 
 \begin{landscape}
