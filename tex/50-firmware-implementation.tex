@@ -18,48 +18,61 @@ As discussed in the user requirements, the FPGA processing board that should be 
 
 There are various ADC cards compatible with the ROACH. The ones which were made available for this project are iADC cards. Each card has an Atmel/e2V AT84AD001B 8-bit dual ADC chip on it. It's designed for I/Q sampling but can be configured to sample both channels in phase; exactly what's needed here. The clock speed can be up to \SI{1}{\giga\hertz} and must be externally supplied. The ADC feeds the clock signal through to the FPGA along with the sampled data with a demux factor of 4:1 meaning that for every 4 ADC clock cycles and 4 samples, the FPGA gets one clock cycle with all 4 samples on the ADC data bus. This implies that the FPGA will run at exactly a quarter of the speed the ADC runs at, and needs to be able to handle 4 samples per channel times 4 channels = 16 samples every clock cycle.
 
-The clock source is a Valon 5007 dual synthesiser which is USB programmable from \SI{137}{\mega\hertz} to \SI{4400}{\mega\hertz}. Both ADCs need to be clocked exactly in phase so the Valon is fed into a Mini-Circuits ZESC2-11+ power splitter which has a phase imbalance of below \SI{0.1}{\degree}.
+The clock source is a Valon 5007 dual synthesiser which is USB programmable from \SI{137}{\mega\hertz} to \SI{4400}{\mega\hertz}. Both ADCs need to be clocked exactly in phase so the Valon is fed into a Mini-Circuits ZESC2-11+ power splitter which has a low phase imbalance.
 
 The ROACH board with connected ADCs is shown in \Cref{fig:firmware:roach-photo}. All of the components are in a metal case for RF shielding, although the cover has been removed for the photo.
 
 
 \section{Firmware Development Toolchain}
-There are a few components necessary to get development for the ROACH working. They're briefly listed here and detailed more in Appendix XYZ123.\\
+There are a few components necessary to get development for the ROACH working. They're briefly listed here and detailed more in \Cref{appendix:roach-development}.\\
 
-Xilinx ISE 14.7 is needed for synthesising (compiling) HDL files to FPGA bitfiles. This proprietary tools is maintained by Xilinx and made available through the SKA. As well as this key task of compilation it also has peripheral tools for debugging and optimisation which proved useful for getting the design to meet timing. More info in Appendix XYZ123. Although it also works on Debian/Ubuntu systems, ISE is most stable and only officially supported for RHEL. As such as CentOS system was used for FPGA development work as it's mostly the same as RHEL at the binary interface level.\\
+Xilinx ISE 14.7 is needed for synthesising (compiling) HDL files to FPGA bitfiles. This proprietary tools is maintained by Xilinx and made available through the SKA. As well as this key task of compilation it also has peripheral tools for debugging and optimisation which proved useful for getting the design to meet timing. More info in \Cref{appendix:roach-development}. Although it also works on Debian/Ubuntu systems, ISE is most stable and only officially supported for RHEL. As such as CentOS system was used for FPGA development work as it's mostly the same as RHEL at the binary interface level.\\
 
 Matlab R2012B with Simulink was installed, along  with the mlib-devel plugin. The majority of the design work for ROACH done in this project is done at the block diagram level in Simulink. There is a plugin called mlib-devel which defines the Simulink interface for the Xilinx cores, as well as containing HDL code for ROACH specific hardware such as ADC cards, DRAM interface and PowerPC control bus. This naturally includes the net definitions for the components on the ROACH board.
 
-The mlib-devel plugin was originally created by the CASPER, now contributed to extensively by the SKA. It contains a multitude of highly useful DSP blocks which are built on top of the Xilinx cores which can be wired up in Simulink. These include range from relatively simple blocks like edge detectors to very complex ones like real-time FFT blocks. Additionally, blocks for interfacing with hardware like ADCs, memory an generic IO are included. It was necessary for this project to update some blocks during this project, hence a clone of this mlib-devel repo was maintained\footnote{\url{https://github.com/jgowans/mlib_devel}}.
+The mlib-devel plugin was originally created by CASPER, now contributed to extensively by the SKA. It contains a multitude of highly useful DSP blocks which are built on top of the Xilinx cores which can be wired up in Simulink. These include range from relatively simple blocks like edge detectors to very complex ones like real-time FFT blocks and polyphase filterbank blocks. Additionally, blocks for interfacing with hardware like ADCs, memory, shared registered and generic IO are included. It was necessary for this project to update some blocks during this project, hence a clone of this mlib-devel repo was created\footnote{\url{https://github.com/jgowans/mlib_devel}}.
+
 
 \section{Design}
+There are a number of subsystems developed for the FPGA which will be discussed here. Most of these subsystems required extensive development, testing and tweaking. The full design is shown in \Cref{fig:firmware:full-design}. It may be difficult to see all of the detail of the design, but the purpose of the figure is to give an indication of the structure, layout and data flow in the FPGA. The following subsections discuss the purpose of the key blocks in the design. A more detailed look at the composition and structure of the some of the blocks can be found in \Cref{appendix:roach-development}. That Appendix also discusses the challenges that were encountered during the FPGA design, and the optimisations that were done to get it working.
+
+\afterpage{%
+  \clearpage% 
+  \begin{landscape}
+    \thispagestyle{empty}
+    \begin{figure}
+      \vspace{-4em}
+      \centering
+      \makebox[\textwidth][c] {
+        \includegraphics[width=1.22\paperwidth,center]{full-design-a4-no-sim-out.pdf}%
+      }%
+      \caption{Full FPGA design containing frequency and time DSP paths and control logic.}
+      \label{fig:firmware:full-design}
+    \end{figure}
+  \end{landscape}
+}
+
+\subsection{ADCs}
+The yellow blocks on the left represent the two dual ADCs. These \(2 \times 2\) channels will be referred to as channel 0, 1, 2 and 3. Each ADC has \(2 \times 4 = 8\) 8-bit buses for the signed integer samples that are clocked in every clock cycle. As mentioned earlier the FPGA runs at a quarter of the ADC clock cycle hence the ADC presents 4 samples per clock cycle.  Also included are logic lines that indicate clipping. For simulation purposes, normal Simulink signal source blocks can be connected to the ADC, allowing the construction of arbitrarily complex input signals. The example shows a simple chirp connected. The output from the ADCs fans out to two distinct signals paths: a frequency domain path and a time domain path. These are now explored.
+
+\subsection{Frequency domain signal path}
+The frequency domain path starts with an FFT block, the first big green one,  which performs real time FFTs on the data from the ADCs. Although it's one block it does four distinct Fourier transforms under the hood, one for each of the ADC channels. It's an 11 stage FFT meaning that it does \(2^{11} = 2048\) points. It has an optimisation for real-valued signals in that it only output the positive half of the frequency spectrum to save bandwidth. The FFT has been configured to do full bit growth, meaning that every stage another bit of data is added to the bus size. This means that weak signals will be preserved as no bits are thrown away. This is at the expense of significant data growth: each channel outputs two 36-bit complex numbers every clock cycle.
+
+FFT output is fed into the second big green block, the Cross Multiplier. This does \({4 \choose 2} = 6\) cross multiplications, one for each visibility, as well as one additional for the autocorrelation of channel 0 to serve as a spectrum analyser. These are referred to as 0x0, 0x1, 0x2, 0x3, 1x2, 1x3 and 2x3. The cross multiplication involves breaking the signal up into its real and imaginary component, taking the complex conjugate of one of the signals by inverting the sign of its complex component and then doing complex multiplication. For each two signals \(A = (a + ib)\) and \(B = (c + id)\) the FPGA will do \(Z = X\overline{Y} = (ac + bd) + (bc - ad)i\). The cross multiplier does not throw any bits away meaning that the signals go from a \(2 \times 36 = 72\) bit complex numbers to 148 bits per channel.
+
+The cross correlation signals then go to the white Accumulators block. As discussed in Chapter 3, the cross correlations will be accumulated (aka: integrated) a number of times in order to allow weak signals to stand out of the noise. The accumulation length is runtime programmable via a control register which will be discussed more later. The accumulator works by using FPGA BRAM to produce a delay, and a DSP48E to add the new signal to the current one. The length of the BRAM is the number of points in the FFT spectrum, 2048. The accumulators allow signal growth from 74 bits per complex number to 96 bits. This implies a minimum of \(\approx 4\) million accumulations when the signals are full scale, although typically this can be orders of magnitude more as the system does not run with full scale input; it's too dangerous the keep the ADCs at max power.
+
+Each accumulated correlation value is wired to its own BRAM snapshot block, the array of small green blocks on the right. Once sufficient accumulations have been run, the snapshot blocks are triggered to take a snapshot of the correlation spectrums. The snapshots then record the full accumulated correlation spectrum of a channel, now 128 bits wide per frequency channel per correlation pair, to shared BRAM memory. This memory can then be read out from the FPGA via the PowerPC over Ethernet.
+
+\subsection{Time domain signal path}
+This path is comparatively simpler than the frequency domain path, seeing as the correlations are not being done on the FPGA, and seeing as accumulation is not applicable for time domain DF. 
+
+There are two main blocks for the time domain path, which are at the bottom of the FPGA design. First is the impulse detector. This takes in the raw ADC data from channel 0 and runs a rolling sum filter which provides the sum of the last \(N\) samples where \(N\) is some runtime programmable number, typically between 10 and 1000 samples. If the rolling sum goes above a runtime programmable threshold the impulse detector considers an impulse to be present. It then records the raw time domain data of all 4 channels for as long as the impulse is present, plus some additional buffer at the start and end of the pulse.  The snapshot is stored by the green block at the bottom, the off-chip DRAM module. The starting buffer is attained by feeding a delayed version of the raw signal to the DRAM interface. The DRAM module was chosen as it can store a large amount of data, allowing multiple milliseconds of raw data to be stored if desired. Typically only a few microseconds of data is necessary to store an impulsive signal. As well as triggering the snapshot, the impulse detector will also store the length of the impulse which it detected so that the computer knows much data to read out from the DRAM module when it wants the data. The DRAM data is also accessible through the PowerPC over Ethernet.
+
+\subsection{Control and Monitoring}
+Foo.
 
 
-\section{ADCs}
-The ADCs which were available for use were the CASPER iADCs. 
-These are 8-bit, dual core ADCs, where each core runs at \SI{800}{\mega\hertz}. The cores can either be interleaved to sample a single antenna at \SI{1600}{\mega\hertz} or 2 antennas at \SI{800}{\mega\hertz} each.
-
-\section{Polyphase Filter Bank}
-Consists of a polyphase FIR filter which applies a window to the input signal in order to prevent spectral leakage followed by a FFT block. FFT consumes most resources and thus some optimisations had to be done to it. 4K PFB. FFT was a real FFT block meaning it only outputs the upper half spectrum as the lower half is the same due to input signals being real. 
-
-Shifting schedule set by software. Bit growth occurs at each stage. If the output of a stage is not shifted down by 1, it risks overflowing. However, if shifting is done unnecessarily, dynamic range is reduced as lower bits are thrown away. Algorithm coded to find optimal shifting. Discuss algorithm here.
-
-\section{Cross Multiplier}
-After the FFT, each antenna combination is multiplied together, one being the original signal and one being the complex conjugate. This is somewhat equivalent to dividing the complex numbers, where the key output is that the phase difference between the two antennas is produces. Some maths here to show that this is true. 
-
-Optimisations done here: these are fairly large multiplier. Each pair of antennas requires an 18 bit multiplier for the real and imag components, for both simultanious channels. This means 4 18-bit multipliers for 10 combinations. 40 x 18-bit multipliers is a lot of hardware! 
-To mitigate this, I made a change to the complex multiplier block to allow selecting of DSP48E for multipliers. This change was committed back into the centeral code repo for all to use.
-
-Output of a 18\_17 x 18\_17 is a 37\_34. 
-
-\section{Vector Accumulator}
-The output vector (2K complex elements) is accumulated by summing each element. 
-This is accumulated to a 48 bit number, hence allowing for substantial growth. 
-This is key to getting a very good phase difference approximation as uncorrelated noise is integrated out. 
-The vector accumulator is implemented by two DSP48E blocks, one for the real and one for the imag components. 
-This is followed by a bram which stores and feeds back the vector to the DSP48E adder. 
-
-The design is such that 48 bits are continuously accumulated. After the accumulation has run for a configurable number of iterations, the most significant 32 bits are sliced off and snapped. By accumulating 48 bits, no data is thrown away until the snap. Commit XXXXX makes this change to the dsp48\_bram\_vacc block in the casper library.
 
 \section{Compiling the design}
 This design was iterated on and compiled more than 100 times as functionality was added and experimentation was done.

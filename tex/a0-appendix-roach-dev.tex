@@ -1,4 +1,5 @@
 \chapter{ROACH Development}
+\label{appendix:roach-development}
 \graphicspath{{./img/roach-dev/}}
 
 \section{Compiling}
@@ -42,3 +43,29 @@ Here: compare run time of original method vs numpy. Show numpy code.
   \label{fig:roach-dev-frequency-domain-chain}
   \end{figure}
 \end{landscape}
+
+\section{ADCs}
+The ADCs which were available for use were the CASPER iADCs. 
+These are 8-bit, dual core ADCs, where each core runs at \SI{800}{\mega\hertz}. The cores can either be interleaved to sample a single antenna at \SI{1600}{\mega\hertz} or 2 antennas at \SI{800}{\mega\hertz} each.
+
+\section{Polyphase Filter Bank}
+Consists of a polyphase FIR filter which applies a window to the input signal in order to prevent spectral leakage followed by a FFT block. FFT consumes most resources and thus some optimisations had to be done to it. 4K PFB. FFT was a real FFT block meaning it only outputs the upper half spectrum as the lower half is the same due to input signals being real. 
+
+Shifting schedule set by software. Bit growth occurs at each stage. If the output of a stage is not shifted down by 1, it risks overflowing. However, if shifting is done unnecessarily, dynamic range is reduced as lower bits are thrown away. Algorithm coded to find optimal shifting. Discuss algorithm here.
+
+\section{Cross Multiplier}
+After the FFT, each antenna combination is multiplied together, one being the original signal and one being the complex conjugate. This is somewhat equivalent to dividing the complex numbers, where the key output is that the phase difference between the two antennas is produces. Some maths here to show that this is true. 
+
+Optimisations done here: these are fairly large multiplier. Each pair of antennas requires an 18 bit multiplier for the real and imag components, for both simultanious channels. This means 4 18-bit multipliers for 10 combinations. 40 x 18-bit multipliers is a lot of hardware! 
+To mitigate this, I made a change to the complex multiplier block to allow selecting of DSP48E for multipliers. This change was committed back into the centeral code repo for all to use.
+
+Output of a 18\_17 x 18\_17 is a 37\_34. 
+
+\section{Vector Accumulator}
+The output vector (2K complex elements) is accumulated by summing each element. 
+This is accumulated to a 48 bit number, hence allowing for substantial growth. 
+This is key to getting a very good phase difference approximation as uncorrelated noise is integrated out. 
+The vector accumulator is implemented by two DSP48E blocks, one for the real and one for the imag components. 
+This is followed by a bram which stores and feeds back the vector to the DSP48E adder. 
+
+The design is such that 48 bits are continuously accumulated. After the accumulation has run for a configurable number of iterations, the most significant 32 bits are sliced off and snapped. By accumulating 48 bits, no data is thrown away until the snap. Commit XXXXX makes this change to the dsp48\_bram\_vacc block in the casper library.
