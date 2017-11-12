@@ -10,7 +10,7 @@
   \begin{subfigure}{\textwidth}
     \centering
     \includegraphics[width=0.6\textwidth]{rf-front-end-charging}
-    \caption{Board containing amplifiers and filters in the corner, batteries velcroed down on the sides, and regulators and connectors on the veroboard in the middle.}
+    \caption{Board containing amplifiers and filters in the corners, batteries velcroed down at the top and bottom, and regulators and connectors on the veroboard in the middle.}
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering
@@ -21,7 +21,7 @@
   \label{fig:rf-front-end:circuit-board}
 \end{figure}
 
-The RF front end is responsible for filtering and amplifying the signals, being the bridge between the antennas and the ADC. As discussed in Chapter 3 it is necessary for an interferometry system to have its RF front end components phase and amplitude response approximately matched.
+The RF front end, being the bridge between the antennas and the ADCs, is responsible for filtering and amplifying the signals. As discussed in Chapter 3 it is necessary for an interferometry system to have the phase and amplitude response of its RF front end components approximately matched.
 The ADCs have \SI{400}{\mega\hertz} of usable bandwidth and the antennas have a centre frequency of \SI{250}{\mega\hertz}. Hence, the filtering should cut off before \SI{400}{\mega\hertz} and the amplification should occur around \SI{250}{\mega\hertz}. 
 
 Suitable parts were purchased. The LNAs which are used are the ZLF-500HLN from MiniCircuits. This part operates from \SI{10}{\mega\hertz} to \SI{500}{\mega\hertz} which is ideal for the application. The gain is approximately 21 dB across this band according to the datasheet, drawing up to \SI{110}{\milli\ampere}.  The low pass filters (LPF) which were purchased are VLF-225+ parts from MiniCircuits having a \SI{3}{\decibel} point at \SI{350}{\mega\hertz}, which defines the usable bandwidth of the RF front end.
@@ -34,10 +34,10 @@ The LM7815s can handle this dissipation provided a heat sink is connected, which
 This power distribution circuitry was put onto veroboard.
 
 All of the amplifiers and filters and the power distribution circuit were mounted to a wooden board.
-Care was taken to make sure that the low pass filters were securely and firmly attached to the board as there is a risk that the SMA connector would be damaged if bumped while in the field.
+Care was taken to make sure that the low pass filters were securely and firmly attached to the board as there is a risk that the SMA connector could be damaged if bumped while in the field.
 The circuit diagram for this board and the resulting hardware implementation for this RF front end are are shown in \Cref{fig:rf-front-end:circuit-board}.
 
-Finally, the cables need to be carefully matched as well. Provided the cables are of the same type, their velocity factors will be equal and it is hence only necessary to ensure that they are of the same length. Most of the cables are the same length except for the cables fixed to the antennas which are different by a few tens of centimetres. The DF software needs to be able to cater for these measured length mismatches. 
+Finally, the cables need to be carefully matched as well. Provided the cables are of the same type, their velocity factors will be equal and it is hence only necessary to ensure that they are of the same length. Most of the cables are the same length except for those fixed to the antennas which are different by a few tens of centimetres. The DF software needs to be able to cater for these measured length mismatches. 
 
 The LPFs and LNAs may have phase mismatches due to manufacturing tolerances. In order to check whether the LNAs provide the expected gain and to check whether the phase matching of the RF front end is good, the whole subsystem of cables, amplifiers and filters was connected to a network analyser and S21 measurements taken. The results are shown in \Cref{fig:rf-front-end:vna-measurements}. It can be seen that the amplitude drops off rapidly at around \SI{400}{\mega\hertz} providing necessary anti aliasing. At \SI{350}{\mega\hertz} the difference between the in band signal and the aliased signal is almost \SI{-30}{\decibel} which is sufficient isolation to consider the system usable up to \SI{350}{\mega\hertz}. The phase matching is good, within a degree or two over the whole band of operation.
 
@@ -46,13 +46,13 @@ The LPFs and LNAs may have phase mismatches due to manufacturing tolerances. In 
   \begin{subfigure}{\textwidth}
     \centering
     \includegraphics[width=0.6\textwidth]{zfl500-10-3000}
-    \caption{Gain from 0 to \SI{3}{\giga\hertz} in dB. Antialisaing is sufficient. The iADC is only receptive to signals up to \SI{3}{\giga\hertz} so it's only necessary to look at filtering up to there.}
+    \caption{Gain from 0 to \SI{3}{\giga\hertz} in dB. Antialiasing is sufficient. The iADC is only receptive to signals up to \SI{3}{\giga\hertz} so it's only necessary to look at filtering up to there.}
   \end{subfigure}\\[1em]
   \begin{subfigure}{\textwidth}
     \centering
     \includegraphics[width=0.6\textwidth]{zfl500-10_500-mag-db}
     %\caption{Gain from 0 to \SI{500}{\mega\hertz} in dB. Useable seems to be up to \SI{350}{\mega\hertz}}
-    \caption{VNA measurements of S21 of RF chains showing antialising properties}
+    \caption{VNA measurements of S21 of RF chains showing antialiasing properties}
   \end{subfigure}
   \begin{subfigure}{\textwidth}
     \centering

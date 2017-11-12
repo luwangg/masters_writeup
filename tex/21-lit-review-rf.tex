@@ -6,12 +6,10 @@ As this model contains both spacial and temporal information, it is sufficient t
 
 The time delay for a signal arriving at the element is \cite{poisel2012electronic}
 \begin{equation}
-  \tau(\vec{\theta}) 
- = \tau( \begin{bmatrix} \phi \\ \theta \end{bmatrix} )
+ \tau(\phi, \theta)
  = \frac{1}{c} \left( x\cos(\theta)\cos(\phi) + y\sin(\theta)\cos(\phi) + z\sin(\phi) \right)
 \end{equation}
-
-Where \(\theta\) is the azimuth angle of the source and \(\phi\) is the elevation angle.
+where \(\theta\) is the azimuth angle of the source and \(\phi\) is the elevation angle.
 For a 2D space (with which this project is concerned) we let \(\phi= 0\), \(z = 0\) and hence simplify the time delay model to:
 \begin{equation}
   \tau(\theta) = \frac{1}{c} \left( x\cos(\theta) + y\sin(\theta) \right)
@@ -34,12 +32,12 @@ The amplitude is as a result of the gain of the antenna in the direction of arri
 Assuming we now have an array of \(M\) elements, the array manifold vector for a signal source propagating from angle \(\theta\) is: \cite{dacos1995estimating}
 
 \begin{equation}
-\vec{a}(\theta) = \vec{g}(\theta) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
+  \vec{a}(\theta) = \vec{g}(\theta) \odot \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
 \end{equation}
-
-Where:
+where
 \begin{itemize}
-  \item \(\vec{g}(\theta)\) is an \(M\)-dimensional vector of complex number expressing the gain and phase response  of each element in the direction \(\theta\). 
+  \item \(\vec{g}(\theta)\) is an \(M\)-dimensional vector of complex number expressing the gain and phase response  of each element in the direction \(\theta\).
+  \item \(\odot\) is the Hadamard product which performs an entrywise multiplication of two matrices of equal sizes.
 \item \(\mathbf{X}\TRANSPOSE\) is an \((M \times 2)\) matrix containing the \(x\) and \(y\) coordinates of each of the M elements of the form \(\begin{bmatrix} \vec{x} & \vec{y} \end{bmatrix}\TRANSPOSE\). The coordinates used here will be measured in wavelengths to avoid frequency and speed of propagation factors in the equations.
 \item \(\vec{k}(\theta)\) is the wavenumber vector given by \(\vec{k}(\theta) = \pi \begin{bmatrix} \cos\theta & \sin\theta \end{bmatrix}\TRANSPOSE \). Graphically, this equates to a vector pointing in the direction of the source. The model assumes that the direction is the same from each element to the source. This is approximately true when the distance from the array to the source is much greater than the array size.
 \end{itemize}
@@ -52,7 +50,7 @@ Furthermore, the \(\vec{g}(\theta)\) term may be excluded if we assume omnidirec
   \vec{a}(\theta) = \exp \left\{ -j \mathbf{X}\TRANSPOSE \vec{k}(\theta) \right\}
 \end{equation}
 
-Or, more expressively:
+or, more expressively:
 \begin{equation}
 \vec{a}(\theta) = \exp \left\{ -j \begin{bmatrix} x_1 & y_1 \\ x_2 & y_2 \\ .., .. \\ x_M & y_M \end{bmatrix} \begin{bmatrix} \cos(\theta) \\ \sin(\theta) \end{bmatrix} \right\}
 = \exp \left\{ -j \begin{bmatrix} x_1\cos(\theta) + y_1\sin(\theta) \\ x_2\cos(\theta) + y_2\sin(\theta)) \\ .. \\ x_M\cos(\theta) + y_M\sin(\theta) \end{bmatrix} \right\}
@@ -65,4 +63,4 @@ This array manifold completely characterises the array\cite{dacos1995estimating}
 For linear arrays there are additional details that allow simplification of the manifold vector as well as special properties possessed by the manifold of linear arrays.
 This will not be discussed here as the array used for this DF system is not likely to be linear. 
 
-An important takeaway from the array manifold is that it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time day at each element is a vector which can be easily calculated. This is the basis around which the direction-finding algorithm for this project will be designed. 
+An important takeaway from the array manifold is that it shows that for a known array with omnidirectional antennas at arbitrary \(x\) and \(y\) locations, receiving a signal from a certain direction, \(\theta\), the phase shift or equivalent time delay at each element is a vector which can be easily calculated. This is the basis around which the direction-finding algorithm for this project will be designed. 

@@ -1,8 +1,8 @@
 \section{Direction Finding Techniques}
 A direction finder is a passive device able to ascertain the angle of arrival of a source of electromagnetic radiation.
 The objective of direction-finding is generally to find the location of non-cooperative emitters\cite{poisel2012electronic}.
-This is one of the fundamental activities of electronic defense as well as RFI hunting.
-The general structure of a direction-finding system is an antenna array connected to a receiver connected to a processing module connected to a display providing output to operators.
+This is one of the fundamental activities of electronic defence as well as RFI hunting.
+The general structure of a direction-finding system is an antenna array connected to a receiver connected to a processing module connected to a display which then provides output to operators.
 Simple direction-finding systems were used as early as the start of the \nth{20} century and have been continually evolving since then along with developments in communications and electronic warfare systems.
 Direction finding systems have applications in a variety of disciplines ranging from radar, sonar, surveillance, radio astronomy and even medical. An optimal parameter estimator for angle of arrival is difficult to design and hence lots of research has been done into the topic over the last few decades\cite{van2004detection}.
 
@@ -42,7 +42,7 @@ Loop antenna DF systems are very sensitive to multipath errors, especially ionos
 The crossed loop technique is an amplitude comparison technique. 
 As is shown in \Cref{fig:lit_crossed_loop_antenna}, using two loop antennas perpendicular to one another produces two beam patterns: one being proportional to the sine of the angle and the other to the cosine of the angle. 
 By comparing the signal power from each antenna, it is possible to ascertain the \gls{aoa}. This system is instantaneous as only a single pulse is necessary to ascertain the ratio of antenna output power. However it has many ambiguities. Some ambiguities can be resolved with a sense antenna. 
-For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
+For optimal ambiguity resolution, the crossed loop should be rotated such that signal of interest is located in the null of one of the loops and in the peak of the other. This resolves ambiguity but at the expense of the system not being real-time.
 As with the scanned beam, the crossed loop suffers from significant performance degradation arising from multipath, specifically ionospheric reflection. 
 In the 1930's a marine radio direction-finder network using the crossed loop amplitude comparison technique was set up for marine navigation. Then, during World War II, rapid improvements to DF technology were made with the operating frequency of the systems being extended into the VHF and UHF band and with extensive DF networks being installed\cite{jenkins1991smallaperture}. The tactical advantage which DF systems provided prompted significant development into DF during the war.
 \begin{figure}
@@ -135,7 +135,7 @@ If an antenna is rotated around a central point (tracing out the circumference o
 \begin{equation} \label{eq:lit-review:doppler}
   \Delta f = \frac{B\omega}{c}f_c\sin(\Uppsi)
 \end{equation}
-Where \(B\) is the length of the antenna baseline, \(\omega\) is the angular velocity of the antenna, \(f_c\) is the carrier frequency of the signal source and \(\Uppsi\) is instantaneous difference between the angle towards the signal source and the angle of the rotating antenna (this is shown graphically in \Cref{fig:lit-review-doppler-switching}). By rotating one antenna around a reference antenna and measuring the received signal frequency difference, the Doppler shift can be measured and with \Cref{eq:lit-review:doppler} the AoA, \(\Uppsi\)  calculated.
+where \(B\) is the length of the antenna baseline, \(\omega\) is the angular velocity of the antenna, \(f_c\) is the carrier frequency of the signal source and \(\Uppsi\) is instantaneous difference between the angle towards the signal source and the angle of the rotating antenna (this is shown graphically in \Cref{fig:lit-review-doppler-switching}). By rotating one antenna around a reference antenna and measuring the received signal frequency difference, the Doppler shift can be measured and with \Cref{eq:lit-review:doppler} the AoA, \(\Uppsi\),  calculated.
 
 However, to DF a \SI{100}{\mega\hertz} tone with a Doppler shift of \SI{3}{\mega\hertz}, the antenna would need to be rotated with a tangential velocity of 10000 m/s\cite{jenkins1991smallaperture}. 
 It is not practical to rotate an antenna at such a high speed. 
@@ -158,7 +158,7 @@ For a two element array, the difference in time, \(\delta t\) in the arrival of 
 \begin{equation}
   \delta t = \frac{d \cos \theta}{c}
 \end{equation}
-Where \(d\) is the element spacing, \(\theta\) is the AoA and \(c\) is the speed of light.
+where \(d\) is the element spacing, \(\theta\) is the AoA and \(c\) is the speed of light.
 
 This technique requires the ability to measure the start of a pulse very accurately, or alternatively to be able to cross-correlate the whole pulse in the time domain. Additionally, it requires a comparatively large SNR. The primary advantages of it are that it is independent of frequency and does not suffer from ambiguity when receiving impulsive signals\cite{jenkins1991smallaperture}.
 
@@ -194,15 +194,15 @@ There are generally three subclasses of phase interferometry systems\cite{jenkin
   \item [Phase scanning correlation:] Here, a phase shifter and correlator are used. The phase shifter is varied until the correlator produces a peak output. Again, this is simple for two antennas but becomes complex when multiple phase shifters need to be varied. It is also slow as the phase shift needs to be swept to find the peak correlator output.
   \item [Fourier transform method:] The received signals are digitised and converted to frequency domain, where phase difference measurements are easily read from the spectrum. As this is a digital technique, spectral processing can be done; it provides 20 dB to 30 dB of additional sensitivity over the other techniques. Also, working with digital signals in the frequency domain means that phase mismatches in the signal path can easily be compensated for with digital filtering, and adjacent frequency signals can be ignored.
 \end{description}
-Should the antenna array contain more than two elements, the system either needs to switch between pairs of antennas if it wants to maintain a simple two-input receiver, or it needs a more advanced receiver to sample all antennas simultaneously. Since computation is done in the digital domain, the Fourier transform method is easiest for accomodating more antenna inputs. Having all antennas processed by the receiver simultaneously allows for a faster system as no switching is required and also provides better performance as it can average multiple inputs at once. However, more inputs requires more computation and algorithmic complexity.
+Should the antenna array contain more than two elements, the system either needs to switch between pairs of antennas if it wants to maintain a simple two-input receiver, or it needs a more advanced receiver to sample all antennas simultaneously. Since computation is done in the digital domain, the Fourier transform method is easiest for accommodating more antenna inputs. Having all antennas processed by the receiver simultaneously allows for a faster system as no switching is required and also provides better performance as it can average multiple inputs at once. However, more inputs necessitates more computation and algorithmic complexity.
 
 \subsection{Subspace and Statistical Techniques}
 This class of techniques attempts to perform eigen analysis, decomposing the spectral or covariance matrix into eigen subspaces for noise and subspaces for signal. In some sense this equates to a beamforming algorithm which attempts to find an angle resulting in the strongest signal. 
 Statistical methods generally involve taking snapshots of the signals received at each antenna and then calculating the covariance matrix of the received data\cite{poisel2012electronic}.
 
-The advantage of working with multiple subspaces for each signal is that it allows direction-finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrowband signal all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
+The advantage of working with multiple subspaces for each signal is that it allows direction-finding to take place when there are multiple overlapping signals arriving at the array. Assume there are \(D\) narrowband signals all with unknown AoA parameter arriving at an \(M\) element array in the presence of uncorrelated noise, the problem space can be reduced from \(M\)-dimensional to \(D\)-dimensional\cite{van2004detection}.
 
-It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources, and non-diagonal and singular if at least one of the sources are coherent\cite{poisel2012electronic}. 
+It can be shown that the covariance matrix is diagonal for incoherent sources, non-diagonal and non-singular\footnote{A singular matrix is one which is not invertible, meaning the determinant is 0} for partially coherent sources, and non-diagonal and singular if at least one of the sources is coherent\cite{poisel2012electronic}. 
 
 Examples of these techniques include\cite{van2004detection}:
 \begin{itemize}

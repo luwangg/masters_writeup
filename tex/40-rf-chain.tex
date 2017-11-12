@@ -3,15 +3,15 @@
 \setsvg{svgpath=./img/rf-front-end/}
 \graphicspath{{./img/rf-front-end/}}
 
-This chapter details the design and characterisation of the antennas and RF front end; the first sub-system in the direction finder. The RF front end consists of low noise amplifiers (LNA), lower pass filters, and cabling. As discussed in the previous chapters, the aspects of the array which needs to be optimised for are:
+This chapter details the design and characterisation of the first subsystem in the direction finder: the  antennas and RF front end. The RF front end consists of low noise amplifiers (LNA), lower pass filters, and cabling. As discussed in the previous chapters, the aspects of the array which need to be optimised for are:
 \begin{itemize}
-  \item Minimize the phase difference the RF path for each antenna. The DF algorithm is based on phase/time difference measurements and hence path mismatches will result in errors. Some phase difference can be calibrated out but the calibration routine will be most robust when the initial error is low.
-  \item The spacing of the elements in the circular array needs to trade off between too large an element spacing and too small a spacing. Too large will result in phase ambiguity, to small will result in coupling between the elements as well as difficulty in measure time difference. The compromise is to make the array as large as possible before phase ambiguity becomes a problem.
+  \item Minimizing the phase difference the RF path for each antenna. The DF algorithm is based on phase/time difference measurements and hence path mismatches will result in errors. Some phase difference can be calibrated out but the calibration routine will be most robust when the initial error is low.
+  \item Spacing of the elements in the circular array needs to trade off between too large an element spacing and too small a spacing. Too large will result in phase ambiguity, too small will result in difficulty measuring the impulse time difference as well as coupling between the. The compromise is to make the array as large as possible before phase ambiguity becomes a problem.
 \end{itemize}
 
-The ADCs which were available for use in this project influenced the antenna and operating frequency band choice. They're explored more in Chapter 5 but will be briefly noted here as justification for the decisions taken here. The ADCs were two dual-input cards which sample two inputs in phase. They were clocked up to \SI{800}{\mega\hertz}. This implies 4 simultaneous inputs with a Nyquist frequency of \SI{400}{\mega\hertz}.\\
+The ADCs which were available for use in this project influenced the antenna and operating frequency band choice. They're explored more in Chapter 5 but will be briefly noted here as justification for the decisions taken at this stage. The ADCs were two dual-input cards which sample two inputs in phase. They were clocked up to \SI{800}{\mega\hertz}. This implies 4 simultaneous inputs with a Nyquist frequency of \SI{400}{\mega\hertz}.\\
 
-The Chapter will first discuss the design and construction of the antenna array, then move on to the RF front end. Finally, characterisation of the amplitude and phase performance of the RF front end will then be done. 
+The Chapter will first discuss design and construction of the antenna array, then move on to the RF front end. Finally, characterisation of the amplitude and phase performance of the RF front end will then be done. 
 
 
 \input{./tex/42-antenna-array}

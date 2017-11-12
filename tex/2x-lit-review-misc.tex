@@ -6,21 +6,15 @@ The relevance to this work of the above note on geolocation is that it is not ne
 \section{Radiometer}
 A radiometer is a device which is able to provide high accuracy approximation of signal power by averaging a large number of samples over a long time period. Due to the high sensitivity measurements it can make, it is able to detect small changes in received power\cite{nraoradiometers}. \cite{casperradiometerequation}.
 
-This radiometer principal can be applied to locate signals below the noise floor. While typically an RFI signal below the noise floor would not be an issue, in the case of a radio astronomy reserve, that signal will likely still be a problem because the noise floor of the MeerKAT array is so much lower than the RFI DF instrument. In essence, a signal which will be very loud to the telescope may be difficult for the DF system to even detect. By accumulating many samples of the weak correlated RFI signal, the DF system is able to see the RFI signal below its own uncorrelated noise floor. For this application, a long observation period may be used to extract a weak signal so that it may be processed.
+This radiometer principal can be applied to locate signals below the noise floor. While typically an RFI signal below the noise floor would not be an issue, in the case of a radio astronomy reserve, that signal will likely still be a problem because the noise floor of the MeerKAT array is so much lower than that of the RFI DF instrument. In essence, a signal which will be very loud to the telescope may be difficult for the DF system to even detect. By accumulating many samples of the weak correlated RFI signal, the DF system would be able to see the RFI signal below its own uncorrelated noise floor. For this application, a long observation period may be used to extract a weak signal so that it may be processed.
 
 The relationship of the radiometer's Signal to Noise Ratio (SNR) input and output is: \cite{casperradiometerequation}
-
 \begin{equation}
   \text{SNR}_{\text{OUT}} = \text{SNR}_{\text{IN}}\sqrt{Bt}
 \end{equation}
-
-Where:
-\begin{itemize}
-  \item \(B\) is the bandwidth of the instrument
-  \item \(t\) is the accumulation time
-\end{itemize}
+where \(B\) is the bandwidth of the instrument and \(t\) is the accumulation (aka: integration) time.
 
 The gain factor, \(\sqrt{Bt}\) make sense for an analogue system. For a digital system, this is the same as \(\sqrt{N}\) where \(N\) is the number of samples. Hence, the digital gain is proportional to the square root of the number of observed samples.
 
 \section{Summary}
-This chapter began with building up the antenna array manifold vector, showing how it was a useful tool in quantifying the expected time/phase shift of an arbitrary array by a signal arriving from a given direction. The chapter then proceeded to examine various existing direction finding techniques, both amplitude and phase techniques. Note was made about specific characteristics of the techniques that would make them suitable or unsuitable for this system given the user requirements. Subspace DF techniques were also looked at. Finally, a brief note on the process of geolocation and the radiometer principal was made.
+This chapter began with building up the antenna array manifold vector, showing how it is a useful tool in quantifying the expected time/phase shift of an arbitrary array by a signal arriving from a given direction. The chapter then proceeded to examine various existing direction finding techniques, both amplitude and phase techniques. Note was made of specific characteristics about the techniques that would make them suitable or unsuitable for this system given the user requirements. Subspace DF techniques were also looked at. Finally, a brief note on the process of geolocation and the radiometer principal was made.
