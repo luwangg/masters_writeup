@@ -58,7 +58,7 @@ The yellow blocks on the left represent the two dual ADCs. These \(2 \times 2\) 
 \subsection{Frequency domain signal path}
 The frequency domain path starts with an FFT block, the first big green one,  which performs real time FFTs on the data from the ADCs. Although it's one block it does four distinct Fourier transforms under the hood, one for each of the ADC channels. It's an 11 stage FFT meaning that it does \(2^{11} = 2048\) points. It has an optimisation for real-valued signals in that it only output the positive half of the frequency spectrum to save bandwidth. The FFT has been configured to do full bit growth, meaning that every stage another bit of data is added to the bus size. This means that weak signals will be preserved as no bits are thrown away. This is at the expense of significant data growth: each channel outputs two 36-bit complex numbers every clock cycle.
 
-FFT output is fed into the second big green block, the Cross Multiplier. This does \({4 \choose 2} = 6\) cross multiplications, one for each visibility, as well as one additional for the autocorrelation of channel 0 to serve as a spectrum analyser. These are referred to as 0x0, 0x1, 0x2, 0x3, 1x2, 1x3 and 2x3. The cross multiplication involves breaking the signal up into its real and imaginary component, taking the complex conjugate of one of the signals by inverting the sign of its complex component and then doing complex multiplication. For each two signals \(A = (a + ib)\) and \(B = (c + id)\) the FPGA will do \(Z = X\overline{Y} = (ac + bd) + (bc - ad)i\). The cross multiplier does not throw any bits away meaning that the signals go from a \(2 \times 36 = 72\) bit complex numbers to 148 bits per channel.
+FFT output is fed into the second big green block, the Cross Multiplier. This does \({4 \choose 2} = 6\) cross multiplications, one for each visibility, as well as one additional for the autocorrelation of channel 0 to serve as a spectrum analyser. These are referred to as 0x0, 0x1, 0x2, 0x3, 1x2, 1x3 and 2x3. The cross multiplication involves breaking the signal up into its real and imaginary component, taking the complex conjugate of one of the signals by inverting the sign of its complex component and then doing complex multiplication. For each pair of signals signals \(A\) and \(B\) where \(A = (a + ib)\) and \(B = (c + id)\) the FPGA will do \(C = A\overline{B} = (ac + bd) + (bc - ad)i\). The cross multiplier does not throw any bits away meaning that the signals go from a \(2 \times 36 = 72\) bit complex numbers to 148 bits per channel.
 
 The cross correlation signals then go to the white Accumulators block. As discussed in Chapter 3, the cross correlations will be accumulated (aka: integrated) a number of times in order to allow weak signals to stand out of the noise. The accumulation length is runtime programmable via a control register which will be discussed more later. The accumulator works by using FPGA BRAM to produce a delay, and a DSP48E to add the new signal to the current one. The length of the BRAM is the number of points in the FFT spectrum, 2048. The accumulators allow signal growth from 74 bits per complex number to 96 bits. This implies a minimum of \(\approx 4\) million accumulations when the signals are full scale, although typically this can be orders of magnitude more as the system does not run with full scale input; it's too dangerous the keep the ADCs at max power.
 
@@ -70,24 +70,59 @@ This path is comparatively simpler than the frequency domain path, seeing as the
 There are two main blocks for the time domain path, which are at the bottom of the FPGA design. First is the impulse detector. This takes in the raw ADC data from channel 0 and runs a rolling sum filter which provides the sum of the last \(N\) samples where \(N\) is some runtime programmable number, typically between 10 and 1000 samples. If the rolling sum goes above a runtime programmable threshold the impulse detector considers an impulse to be present. It then records the raw time domain data of all 4 channels for as long as the impulse is present, plus some additional buffer at the start and end of the pulse.  The snapshot is stored by the green block at the bottom, the off-chip DRAM module. The starting buffer is attained by feeding a delayed version of the raw signal to the DRAM interface. The DRAM module was chosen as it can store a large amount of data, allowing multiple milliseconds of raw data to be stored if desired. Typically only a few microseconds of data is necessary to store an impulsive signal. As well as triggering the snapshot, the impulse detector will also store the length of the impulse which it detected so that the computer knows much data to read out from the DRAM module when it wants the data. The DRAM data is also accessible through the PowerPC over Ethernet.
 
 \subsection{Control and Monitoring}
-Foo.
+The FPGAs runtime configuration and status can be interacted with via shared memory read/writable on the PowerPC. This memory manifests as as words of data on the FPGA. Slices of this memory are wired to different parts of the FPGA logic to dynamically change its logic. The main control register is the big yellow block at the top. There are a few slices coming off it which perform the following functions: 
+\begin{itemize}
+  \item Arming the impulse detector. The impulse detector will only write a snapshot to DRAM if its threshold is breached while the arm latch is high. The latch is cleared when a snapshot is detected, and can be set again by the computer once the snapshot has been read out. The reason for this is to prevent the race condition where a new snapshot could partially overwrite an earlier one which is busy being read out by the computer.
+  \item Snapshot trigger gate. Similar to the reasoning behind the impulse detector arming, this gate to all of the snapshot trigger blocks exists to prevent a new accumulated spectrum from being written on top of one that is being read out. The computer will gate the trigger while it's busy reading the snapshot blocks, and clear the gate once the readout is complete.
+  \item Overflow reset. If the system overflows (discussed in more detail below) a latch will be set. Pulsing this control line will clear the latch.
+  \item Manual sync pulse. Data is streamed into the FFT block and frequency channels come out in order which eventually need to be stored in snapshot memory, lowest numbered channel at the start and highest channel at the end. As such, something needs to keep track of which channel is the first one. The sync pulse achieves this by resetting the FFT, and the FFT will then output the sync pulse at the same clock cycle as channel 0. This sync pulse is then propagated through the multipliers and in to the accumulators, which ensures that the start of an accumulation is in phase with the start of a spectrum. This sync pulse is toggled by the computer when it connects to initialize the data path.
+  \item FFT shift schedule. Sets which phases the FFT should shift data down by 1 bit and when it should allow bit growth. It ended up not being needed as it was possible to fit a full bit growth FFT on to the design. However, should a longer FFT or other additional logic be needed in future, it will be necessary to shrink the width of the data path and then use a shifting FFT.
+  \item Integers for accumulation length, impulse detector rolling filter length, impulse detector setpoint. These are all separate 32 bit registers for runtime configuration of these setpoints or intervals.
+\end{itemize}
 
+Monitoring is done by using shared memory which the FPGA writes to and the PowerPC reads from. The following monitoring blocks were built:
+\begin{itemize}
+  \item Accumulation counter. Every time an accumulation is completed and a new one started, this counter increments. The computer can use this to know when it's time to read out a new spectrum and also to ensure it's keeping up and reading out all snapshots.
+  \item Overflow status. The various parts of the system which can overflow feed latched version of their overflow status lines into a register. Then, whenever a snapshot is read out the overflow register is examined as well so see if the data should be treated as valid or not. There are multiple bits so it can be seen which part of the system overflowed and configuration can be adjusted to remediate this overflow. For ADC overflow this would be adding analogue attenuators. For accumulation overflow this would be reducing the accumulation length. For FFT overflow this would be changing the shift schedule. As well as going a register to be read out by the computer, this overflow latch is also fed to GPIO register which drives an LED mounted on the ROACH case so that should any overflow happen it will immediately light the LED to inform the operator.
+  \item Current impulse level. This is the current value of the rolling sum filter. By watching the value of the filter for some time, an informed decision can be made about where to put the setpoint for the impulse detector. Typically this would be a few standard deviations above the mean. Setting its value is a trade off between false positives and false negatives.
+  \item Impulse length. The impulse detector records how long the impulse goes on for. The computer can check this value to see how much data needs to be read from DRAM. By reading only the minimum data, the readout is faster and the time domain cross correlation is more accurate.
+\end{itemize}
 
+\section{Simulation}
+\begin{figure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{impulse}
+    \caption{Periodic \SI{1}{\micro\second} impulse at half of the power of the noise}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{noise}
+    \caption{Additive Gaussian white noise}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{impulse-plus-noise}
+    \caption{Sum of impulse and noise. Impulse is not distinguishable by eye.}
+  \end{subfigure}
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{filter}
+    \caption{Output of moving sum filter. Additional noise power now clearly visible}
+  \end{subfigure}
+  \caption{Simulink simulation of how filter can detect impulse even below noise floor.}
+  \label{fig:firmware:impulse-detection-simulation}
+\end{figure}
+As the design is created in Simulink, the extensive simulation capabilities it provides can be used to validate that the design should behave as intended. Simulation was used throughout the development process, for both the time and frequency domain signal path. For example, for the frequency domain path a repeating correlated chirp signal with a defined start and end frequency would be injected in the input, and the snapshot blocks would be examined to ensure that there was a flat power spectrum between those frequencies. For the time domain path, short impulses in the presence of noise were simulated, and the output of the rolling average filter monitored to ensure that it correctly detected a rise in power. An example of this is shown in \Cref{fig:firmware:impulse-detection-simulation}. This example has the extreme case where the impulse is actually smaller than the additive noise, yet the filter is able to detect it and could trigger a capture of it.
 
-\section{Compiling the design}
-This design was iterated on and compiled more than 100 times as functionality was added and experimentation was done.
-The design is very large, using over 95\% of the available logic on the Virtex 5 FPGA. This has meant that it is a difficult design to compile, often failing to meet timing requirements.
-Running at \SI{200}{\mega\hertz} means that a signal needs to get from the data source element to the data end element through any intermediate logic within \SI{5}{\nano\second}. 
-There are two components to the propogartion time of a signal inside the FPGA. First is propogation delay through logic and the second is propogation delay through routing. When the design is very large, routing delay goes up as logic gets spread further apart on the chip. When there are lots of gates which a signal has to go through, logic delay goes up. 
+\section{Design compilation}
+Over the course of this research, the design developed from being a simple two-antenna time domain data collector to the full four-antenna time and frequency domain DSP subsystem described here. The full design is very large, consuming more than 95\% of the available logic on the FPGA. Numerous optimisation were necessary to get it to fit which are detailed more in \Cref{appendix:roach-development}.
 
-The data signal needs to arrive at the data end element a short time before the clock signal, and it needs to remain valid for some short time after the clock edge. This first amount of time is known as setup time and the time after the edge is known as hold time. If the data propogration delay is too large, setup will not be met. If clock skew is too large, hold time will not be met.
-When timing fails, Xilinx Sysgen reports which net has failed, between which source and end elements timing has failed, which logic blocks the data line passed through, where they are physically located on the FPGA, how much of the delay was caused by logic propagation and how much routing propagation. 
+Part of the compilation process involves defining the clock speed at which the FPGA should operate. The Xilinx tools then move logic around to ensure that all signals can propagate and be valid in the necessary time. Hence faster speeds are more difficult to compile as it's more likely a path will not meet timing. The timing value that proved reliable for this design was \SI{200}{\mega\hertz}. This implies an ADC clock speed of \SI{800}{\mega\hertz}. The ADCs have a maximum clock speed of \SI{1000}{\mega\hertz} so this speed is fine for them. 
 
-If the source and destination elements are far apart, timing will be dominated by routing. The designed may attempt to use tools like FloorPlanner to move the elements around on the chip to get them close together. For a design like this using about 90\% of the logic, there is almost no room to adjust and this becomes very challenging. 
+The ADC's \SI{800}{\mega\hertz} sample rate implies a Nyquist frequency of \SI{400}{\mega\hertz} which explains why \SI{400}{\mega\hertz} has been used extensively in the previous sections for DF algorithm simulations and antenna design.
 
-Solution: inserting a dummy latch in the data path so that the data will be latched in somewhere between the original source and destination elements. This is essentially increasing the latency of the pipeline. This is not a easy solution though: often for logic constrained designed, adding a latch to a wide data pipeline will make even more data paths fail timing as there is not less logic available for optimizing logic placement. It's necessary to carefully consider exactly where and why timing is failing before attempting to fix. Trying to fix timing errors is painful and slow, considering that a compile can take over 2 hours before throwing a timing error. 
+\input{./tex/55-lab-tests}
 
-\input{./tex/52-firmware-frequency-correlations}
-\input{./tex/55-impulse-capture}
-\input{./tex/57-simulations}
-\input{./tex/58-firmware-performance-measurements}
+\section{Summary}
+I
