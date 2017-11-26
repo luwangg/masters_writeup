@@ -41,6 +41,7 @@
 \usepackage{afterpage}
 \usepackage{pdflscape}
 \usepackage{changepage,ifthen}
+\usepackage{mathtools}
 \usepackage[perpage]{footmisc}
 \usepackage[export]{adjustbox}[2011/08/13]
 \newcommand\skiptoevenpage{%
@@ -56,6 +57,8 @@
 % Some macros
 \newcommand{\TRANSPOSE}{^\intercal}
 \newcommand{\mtx}[1]{\ensuremath{\mathbf{#1}}}
+\DeclareMathOperator{\atantwo}{atan2}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 
 \usepackage{scrhack}
 

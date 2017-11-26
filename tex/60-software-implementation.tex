@@ -1,49 +1,32 @@
-\chapter{Software Interface}
+\chapter{Software}
 \label{ch:software-design}
 \setsvg{svgpath=./img/software/}
 \graphicspath{{./img/software/}}
-
+Software was written in Python to run on a computer which is connected to the ROACH via Ethernet. The software has two broad function: to interact with and provide an abstraction to the FPGA, and to perform angle of arrival estimation based on the received signals and antenna model. This Chapter looks at the structure of the software package and some results indicating it is working as expected.
 
 \section{Code Structure}
-It was necessary to write code to allow the computer to interface with the correlator running on the ROACH.
-The code had to be carefully designed in accordance with good object orientated design methodologies in order to provide a useful, well defined and easily extendible interface to other code which needs to interface with the correlator.
-As such, there was significant emphasis encapsulating logic into classes which mirrored the physical structure of the correlator in the sense of modularising the key components and writing reusable code.
-Following is a discussion of the software interface to the correlator with specific focus on the various classes and interfaces.
-
-Instance of a correlator is created.
-This then includes:
-\begin{enumerate}
-  \item An instance of a ControlRegister
-  \item Multiple instances of Snapshot classes. One will be created for each snapshot block on the FPGA.
-  \item Multiple instance of the Correlation clas, one for each of the cross correlation baselines.
-\end{enumerate}
-
-The direction finder code takes an instance of a correlator which can then be used for easy access to the data from the orrelator.
-
-\subsection{Control Register}
-The control register naturally lends itself to a class with interfaces to modify the different bit groups of the register in logical ways.
-A python module called software\_register was written with a single class: ControlRegister. This class contains a value parameter which mirrors the value programmed into the FPGA's control register. It then has the following interface methods:
-\begin{description}
-  \item[pulse\_sync] Toggles the syncronisation reset bit low to high and then high to low.
-  \item[block\_trigger ; allow\_trigger] These methods either set of clear bit the bit that controls the gate which blocks or allows the snapshot blocks being triggered by a complete accumulation. The idea is that this will be used to allow all of the snapshot blocks to be armed sequentially before they can be triggered all at once.
-  \item[reset\_accumulation\_counter] Pulses the bit which resets the counter which increments every time an accumulation completes and triggers the snap blocks. This counter lets us keep track of how many accumulations have been performed by the system.
-  \item[pulse\_overflow\_rst] Similar to the above, except this clears the latch which gets latched high whenever the FFT block overflows. This essentially allows us to 'acknowledge' that we have seen the occurrence of the overflow flag.
-  \item[select\_adc] Controls which of the four RF inputs is connected to the time domain snapshot block via a multiplexer. By multiplexing the steams, it saves the logic and BRAM of having to have four seperate snap blocks, at the expense of one multiplexer and not being able to synchronously sample the ADC streams in the time domain. This is considered an acceptable tradeoff due to the fact that the time domain snap is only designed to be used for getting an approximation of the signal strength arriving at an antenna and this does not need to be done in parallel for each antenna.
-  \item[set\_shift\_schedule] This methods takes a \SI{12}{\bit} number and sets the FFT shift schedule to that number. While this design only has a 10 stage FFT, 12 bits is kept in the register for future expansions.
-\end{description}
-
-All of the methods in this class log their actions as well as the new value of the control register when it is modified at the debug log level.
-
 \begin{figure}
   \centering
   \makebox[\textwidth][c] { 
     \includegraphics[width=1.1\textwidth, clip=true, trim = 80 365 80 80]{backend-arch}
     % left, bottom, right, top
   }
+  \caption{UML class diagram of software structure in \lstinline{DirectionFinder-backend}.}
+  \label{fig:software:df-backend-uml}
 \end{figure}
+The code had to be designed in accordance with good object orientated methodologies in order to provide a useful, well defined and easily extendible interface to the various software components which need to interface with one another and with the correlator. As such, there was significant emphasis encapsulating logic into classes which mirrored the physical structure of the correlator and antenna array, in the sense of modularising the key components and writing reusable code.
 
-\input{./tex/62-software-calibration.tex}
-\input{./tex/65-software-array-coordinate-calculator}
+The main package which containing the array modeling, ROACH interface and AoA estimation is \lstinline{DirectionFinder-backend}\footnote{\url{https://github.com/jgowans/directionFinder_backend}}. The structure of the classes in this package is shown as a UML diagram in \Cref{fig:software:df-backend-uml}. The root class, \lstinline{DirectionFinder} is composed of an \lstinline{AntennaArray} and a \lstinline{Correlator}. 
+
+The \lstinline{AntennaArray} is initialised from an array geometry file that has been produced from by the element coordinate calculator discussed in Chapter 3, and is able to return the expected baseline phase shifts or time delays for all antenna pairs at any angle. This is used to get the theoretical array response for a given angle. Due to the modular structure of the \lstinline{AntennArray} class, it can be used to simulate and provide information about an antenna array with any number of elements in any configuration. This is an example of the general purpose nature of the application which is being developed here.
+
+The \lstinline{Correlator} provides an interface to processed data from the FPGA. It is able to fetch both frequency domain cross correlations from the snapshot blocks as well as time domain snapshots which it gets by reading raw time domain data and doing in-memory time domain cross correlations. The \lstinline{Correlator} also contain a \lstinline{ControlRegister} which abstracts the raw bit or word read/writes necessary to interact with the status and configuration registers. Once again the software has been designed with generality in mind: any number of baselines can be read out, having spectrums with any number of points for arbitrary start/stop frequencies. These are initialisation configuration parameters of the classes providing the abstractions.\\
+
+The application is launched by a Python executable which takes command line arguments defining the IP of the ROACH, the path to the configuration file for the ROACH, the frequency domain start/stop frequencies, the frequency or frequency range which should be monitored for direction finding, impulse setpoint, accumulation length, and an comment string to label the observation which is being made. Once running it will monitor for impulses and continuously DF the narrow band signal. The raw baseline measurements as well as the calculated AoA are printed to the screen as well as written to a log file in a format which can easily be post-processed for plotting. Warnings such as overflow are printed to the screen.\\
+
+The following sections explain how the software goes about ascertaining angle of arrival for time and frequency domain signals.
+
 \input{./tex/66-frequency-domain-direction-finding.tex}
 \input{./tex/67-software-time-domain-direction-finding.tex}
+\input{./tex/62-software-calibration.tex}
 \input{./tex/68-software-logging.tex}
