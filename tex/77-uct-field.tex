@@ -1,30 +1,26 @@
-\section{Second deployment: Four element array}
-The final system with the four element deformed array was deployed to the UCT field.
-The DF system was placed in the center of the field. An operator walked around the field, at a radius of around \SI{35}{\meter} with a device emitting RFI as well as a GPS logger.
-The GPS logger was a mobile phone which took a timestamped GPS reading every 1 second and wrote it to a CSV file on the phone. 
-The position of the DF system was also logged. By having the coordinates of the DF system as well as the position of the person carrying the RFI emitting device, we were able to ascertain the "real" angle as measured by the GPS system.
-The DF system attempted to locate the RFI emitting device and logged a timestamped angle of arrival measured output to a file on the laptop. These files could then be compared to ascertain whether the DF system's output agreed with the GPS logger's output.
+\section{Second trial: Final DF system}
+Once the full system that has been describe in the previous Chapters had been completed, the second set of field trials took place. This was done at the University of Cape Town (UCT) sports field where we could more freely generate RFI. The tests involved setting the system up in the center of the field and walking various RFI sources around the field in a circle and measuring how well they were tracked. This section first explains how the system was made fully portable, then it proceeds to show the setup and discuss how the measurements were taken, and finally it looks at the results for each signal source that was trialed.
 
+\subsection{Portability}
 \begin{figure}
   \centering
-  \includegraphics[width=0.85\textwidth]{gps-tracks-all-with-measurement-zoomed-out}
-  \caption{Route taken according to GPS logger. The curve is actually a collection of timestamped lat/long pairs joined smoothly}
-  \label{fig:field-trails:gps-tracks-all}
+  \includegraphics[width=0.5\textwidth]{atx-psu}
+  \caption{Mini-Box PicoPSU which plugs into the ROACH motherboard allowing it to run directly from a battery}
+  \label{fig:field-trials:atx-psu}
 \end{figure}
+It was necessary to power the ROACH from a battery in order to allow it to be portable and taken out into the open field.
+Initially the plan was to power it from an inverter running off of a battery, however in order to reduce switching noise emissions, a batter powered ATX power supply was used instead. The ATX PSU was a Mini-Box PicoPSU-80-WI-32V which runs directly from a \SI{12}{\volt} battery. 
+It can output \SI{80}{\watt} which is more than enough to run the ROACH; testing in the lab showed that the ROACH pulled \SI{3.1}{\ampere} at \SI{12}{\volt} which is \SI{37}{\watt}.
+To connect it, the traditional mains-powered ATX powersupply is disconnected from the motherboard and this module is plugged into the motherboard. 
+This is shown in \cref{fig:field-trials:atx-psu}.
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.74\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{steve-with-setup-far-away}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.25\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{valon-on-a-stick}
-  \end{subfigure}
-  \caption{Photo of the setup, showing how the transmitter was carried around. Here you see Stephen Paine holding the transmitter mounted on a stick. The transmitter and receiving DF array are both at a hight of approximately \SI{2}{\meter}. The photo on the right is a zoomed in view of how the transmitter is mounter. The board in the middle is the Valon synthesiser. The shield of the USB cable going down to the battery back and the wire coming out of the SMA port pointing upwards act as a dipole. The wires are approximately quarter wavelength.}
-\end{figure}
+A ROYAL 1150K battery was used to power the ROACH and laptop in the field. 
+This is a \SI{105}{\ampere\hour} deep cycle calcium battery.
+As the ROACH draws \SI{3.1}{\ampere} at \SI{12}{\volt}, meaning a running time of \(\frac{105}{3.1} = \SI{34}{\hour}\).
+It is advised to not run down below \SI{70}{\percent} to maintain the battery lifespan. Even so, that's more than \SI{20}{\hour} of runtime in the field, which is significantly longer than needed.
 
+
+\subsection{Setup and Test Procedure}
 
 \begin{figure}
   \centering
@@ -32,4 +28,146 @@ The DF system attempted to locate the RFI emitting device and logged a timestamp
     \includegraphics[angle=-90,width=\textwidth]{steve-with-setup-close-up}
   \end{subfigure}
   \caption{Setup focused on receiver and front end. On the left from top to bottom: antenna array, SMA cables into RF front end, SMA into ROACH (shiny box under the laptop). Roach running directly off of \SI{12}{\volt} battery in the red and black box. Blue inverter for charting laptop between tests. Grey box on the left is R\&S spectrum analyser for checking the power level coming out of the LNAs before connecting to ROACH ADCs.  On the right is a zoom in of the RF front end located in top of the tripod under the antenna array.}
+  \label{fig:field-trials:setup-closeup}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.70\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{steve-with-setup-far-away}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.24\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{valon-on-a-stick}
+  \end{subfigure}
+  \caption{Photo showing how the transmitter was carried around, with both it and the receiving antennas at a height of approximately \SI{2}{\meter}. The PCB in the middle is the Valon synthesiser. The shield of the USB cable going down and the wire coming out of the SMA port pointing up act as a quarter-wave dipole.}
+  \label{fig:field-trials-transmitter-on-stick}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.80\textwidth]{gps-tracks-all-with-measurement-zoomed-out}
+  \caption{Route taken according to GPS logger. The curve is actually a collection of timestamped lat/long pairs joined smoothly}
+  \label{fig:field-trails:gps-tracks-all}
+\end{figure}
+
+These field trials would involve walking signal sources around the DF system. Calculations and simulations were done to model ground reflection multipath interference and error due to non-flat wave fronts, which showed that in order to achieve suitably low errors the radius which should be used when walking around the DF station should be \SI{35}{\metre} and the hight above ground of both the DF antennas and the transmitter should be \SI{2}{\meter}. 
+
+The antennas and LNAs were attached to a tripod and set up in the center of the field. Initial power measurements were done using a spectrum analyser to measure environmental noise and set attenuators appropriately. The ROACH and laptop were set up under the tripod, with a shielded Ethernet cable connecting them. This setup is shown in \Cref{fig:field-trials:setup-closeup}. Various transmitters (each has its own subsection following this) were attached to a wood pole so that they could easily be carried when walking around the field. One of these transmitters is shown in \Cref{fig:field-trials-transmitter-on-stick}. A person carried the transmitter, walking slowly and also keeping a GPS logger on them. The GPS logger was a mobile phone which took a timestamped GPS reading every 1 second and wrote it to a CSV file on the phone. The plot of the route walked over the course of the measurements is shown in \Cref{fig:field-trails:gps-tracks-all}.
+
+Before doing the trail for each transmitter, the spectrum analyser was used to figure out the transmit frequency, and then the DF system was configured to lock on to the strongest observed frequency in a small range (a few channels) around the peak of the transmitter.
+
+After the field trials for each transmitter were complete, the readings from the GPS logger were converted to angle measurements by running each time/coordinate reading, along with the fixed coordinates of the DF station through a Python library that converted the coordinate pair into an angle. This time/angle reading from the GPS logger was then plotted on top of the time/angle reading from the DF system to compare how well it tracked. This plot as well as a short discussion of it follow for each of the transmitters.
+
+
+\subsection{HAM radio}
+The first source which was trialed was a portable HAM radio, a Yaesu VX-7R, transmitting at \SI{223}{\mega\hertz} at \SI{17}{\dBm}. The track for this source is shown in \Cref{fig:field-trials:ham-source} indicating that in general it was tracked very well. Midway though the trials the person carrying the HAM radio accidentally released the transmit button, causing the DF system to lock on to the closest strongest signal which was a harmonic of a TV station transmitter. However, this was noticed immediately by the DF station operator as the results were being displayed real-time on screen. As such the operator could tell the carrier to re-walk the last few tens of meters of path.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.77\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{ham-radio-1-track-222-224}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{ham-source}
+  \end{subfigure}
+  \caption{DF results for HAM radio tracking. Red: GPS track of real angle. Blue and green: DF output for angle of frequency}
+  \label{fig:field-trials:ham-source}
+\end{figure}
+
+\subsection{Raspberry PI}
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.77\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{pi-narrow}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{pi-source}
+    \vspace{2em}
+  \end{subfigure}
+  \caption{DF results for Raspberry Pi tracking. Red: GPS track of real angle. Blue and green: DF system output.}
+  \label{fig:field-trials:ham-source}
+\end{figure}
+The HAM radio transmitted quite a strong signal, and a different device was necessary to contrast performance under weak signal conditions. For this, a Raspberry Pi had an application called \lstinline{fm-transmitter} installed on it that allows the Pi to broadcast an FM radio station by driving one of its GPIO pins. The application allows the carrier can be well above the usual FM band. For this test, the carrier was set to \SI{241.32}{\mega\hertz}, close to the maximum that the Pi could reliably generate. It was set to transmit a silent sound file to produce a continuous tone. A quarter wavelength wire \SI{0.3}{\metre} long was connected to the pin as one half of a dipole and the shielding of the USB power cable used as the other half, producing a fairly well defined antenna with vertical polarisation.
+
+With the GPIO pin toggling at such a high frequency, only about \SI{100}{\milli\volt} peak-to-peak voltage was present. This into the approximately \SI{75}{\ohm} of the half wave dipole means a EIRP of \SI{-18}{\dBm} and received power of \SI{-69}{\dBm}\footnote{\(P_r = P_t G_t G_r \left( \frac{\lambda}{4 \pi R} \right)^2 = \SI{16}{\micro\watt} \times 1 \times 1 \left( \frac{\SI{1.2}{\meter}}{4 \pi \times \SI{60}{\meter}} \right)^2 = \SI{119}{\pico\watt} = \SI{-69}{\dBm}\)}. Despite this much lower signal strength, the DF system was still able to track the Pi remarkably well, with an error only marginally higher than the HAM radio track.\\
+
+\subsection{Valon Synthesiser}
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.77\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{valon-track-narrow}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{vaylon-source}
+    \vspace{2em}
+  \end{subfigure}
+  \caption{DF results for Raspberry Pi tracking. Red: GPS track of real angle. Blue and green: DF system output.}
+  \label{fig:field-trials:valon-source}
+\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{valong-spectrum}
+  \caption{Valon spectrum}
+  \label{fig:field-trails-valon-spectrum}
+\end{figure}
+
+The final narrow-band transmitter which was tracked was a Valon synthesiser, the same device used in the ROACH to generate a clock signal. The plot is shown in \Cref{fig:field-trials:valon-source}. It was configured to generate at a higher frequency, \SI{257}{\mega\hertz}. The result is similar to that of the HAM radio and Pi in that it was tracked very well. One interesting thing to note was that this frequency was right next to another fixed transmitter (TV, perhaps?) and while the device was being walked around the field, when it got close to being in line with the fixed transmitter its angle was "pulled" to point to the fixed transmitter. This illustrates one of the risks of having multiple transmitters in or close to each other's frequency channel \Cref{fig:field-trails-valon-spectrum}.
+
+\subsection{Spark Generator}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.82\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{impulse-track-unfiltered}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.17\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{lighter-source}
+  \end{subfigure}
+  \caption{Spark Source}
+  \label{fig:field-trials:impulse-source}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{impulse-freq-unfiltered}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{impulse-freq-filtered}
+  \end{subfigure}
+  \caption{Spark Source}
+  \label{fig:field-trials:impulse-source-freq-filtering}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{impulse-time-untiltered}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{impulse-time-filtered}
+  \end{subfigure}
+  \caption{Spark Source}
+  \label{fig:field-trials:impulse-source-freq-filtering}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{impulse-track-filtered}
+  \caption{Valon spectrum}
+  \label{fig:field-trails:impulse-source-final-track}
 \end{figure}
