@@ -6,10 +6,10 @@ One difference important is that where the frequency domain cross correlations w
 
 The time domain cross correlation is implemented as defined, by multiplying each point of one antenna's signal \(\vec{a}\) by the corresponding points of a shifted version of another antenna's signal, \(\vec{b}\) for some shift \(k\), producing the correlation \(c_{ab}(k)\):
 \begin{equation}
-  c_{ab}(k) = \sum_{n = 0}^{N-1} a_{n} * b_{n+k}
+  c_{ab}(k) = \sum_{n = 0}^{N-1} a_{n} b_{n+k}
 \end{equation}
 
-he range of values for \(k\) will be picked to span an interval a bit larger than the propagation time of a signal over the whole array. For the array being used here this will correspond to \(k\in [-10, 10]\) and \(k\in \mathbb{Z}\). To make this possible, \(\vec{b}\) is zero-padded with \(k/2\) zeros on each end.
+The range of values for \(k\) will be picked to span an interval a bit larger than the propagation time of a signal over the whole array. For the array being used here this will correspond to \(k\in [-10, 10]\), \(k\in \mathbb{Z}\). To make this possible, \(\vec{b}\) is zero-padded with \(k/2\) zeros on each end.
 
 Once an array of \(c\) values for various \(k\) values has been generated, the \(c\) array is upsampled using the Fourier method discussed in Chapter 3.  Upsampling of large signals can consume lots of CPU cycles and slow down the DF system. However by upsampling after cross correlation we take advantage of the property that upsampling the raw time domain signals has the same effect as upsampling the output of the time domain cross correlation. Impulses of even a few microseconds will be tens of thousands of ADC samples which can be expensive to upsample. However the time domain cross correlation output will be only 20 samples as it's limited to only the correlation interval. 
 

@@ -1,37 +1,20 @@
 \section{Calibration}
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.49\textwidth}
-    \centering
-    \includegraphics[width=0.95\textwidth]{time-delay-through-full-rf-chain}
-    % left, bottom, right, top
-    \caption{Phases before calibration}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.49\textwidth}
-    \centering
-    \includegraphics[width=0.95\textwidth]{time-delay-in-phase}
-    % left, bottom, right, top
-    \caption{THIS IS WRONG. GENERATE AND USE CALIBRATED IMAGE HERE.}
-  \end{subfigure}
-  \caption{Bar}
-\end{figure}
-Different RF chains may have different propagation delays. 
-Inject broad band signal into each baseline. Should be zero delay between each. 
-If delay is non-zero, write it to calibration file.
-For future measurements, subtract this calibration offset from measured delay. 
 
-Here: image of cross correlations of all pre-cal baselines. Single plot. Use long signals for high and narrow peak.
-There is another cal section. Merge?
-
-The software needs to have provision to calibrate various aspects:
+Although efforts have been made to keep the RF chains for each antenna as matched as possible, it hasn't always been possible to do so, and small errors in measured phase/time shifts can throw off the measurement results. An example of where it hasn't been possible to match the RF chains was that the antennas shipped with different cable lengths coming out of them. Also, the ADC phase response wasn't totally linear, and was different across ADC cards and even cores. 
 \begin{itemize}
   \item RF front end: the LPF and LNA and cable from LNA to ROACH may have different delay or phase shift factors. Measurements in earlier chapters show not really different, but worth doing any way for future systems which may have RF front ends with more significant shifts. This can be calibrated very accurately using a known signal though the RF chain and measuring the response.
   \item Same as above but in time domain
   \item Antenna cables: the antennas which were purchased for this project do not have the same length cables. Table (following) shows various lengths. It would be difficult to imperically measure the phase shift caused by these cables. Rather, by knowing the velocity factor through the cable and measuring the length of the cable the difference can be deduced.
 \end{itemize}
 
-\subsection{Antenna Cable Length Compensation}
+\section{Antenna cable lengths}
+
+To cater for this in a generic way, the direction finding software allowed three calibration factors to be injected in. 
+The first was for cable length differences, where the calibration file contained a list of cable lengths fore each antenna and the velocity factor constant for the cables. For the RG214 \SI{50}{\ohm} cables used here the velocity factor is 0.6. These sort of calibration constants were necessary where it wasn't possible to inject in a signal and measure the actual delay. The cable lengths coming out of the antennas is listed in \Cref{tab:software-antenna-cable-lengths}.
+The second calibration file contained a list of observed time delay through each path. This was done by injecting broadband noise via a splitter into each RF chain. In theory this should produce a time difference of exactly. 0. To get the actual time difference, a snapshot of the signals seen by the ADC was taken, upsampled and cross correlated to find whether each path was time delayed or advanced compared to a reference.
+The third calibration file is similar to the second, but for frequency channels. For each frequency channel a tone was produced via a signal generator and injected into the RF chain via a splitter. The output of the frequency domain DSP path was read and phase delayed for each recorded.
+
 \begin{table}
   \centering
   \begin{tabu}{c|c}
@@ -46,17 +29,13 @@ The software needs to have provision to calibrate various aspects:
   \label{tab:software-antenna-cable-lengths}
 \end{table}
 
-According to the manufacturer, Magnavolt, the cables are all RG214 which has a velocity factor of 0.659. 
-
-Wrote JSON file with this information.
-
-For each baseline, software calculates difference in propagation times for each element of the baseline created by length and velocity factor. Calculates corresponding phase shift for each frequency bin based on this and then aplies this frequency shift to the cross correlation in there.
-
-Here: extract of JSON file.
-A bit of maths of what the software does?
-
-Discuss how this applies to both time and frequency domain.
-
+\subsection{Tests}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{two-cables-vna}
+  \caption{Two different length cables on VNA doing time measurement showing propagation delay difference of \SI{2.49}{\nano\second}}
+  \label{fig:software-two-cables-vna}
+\end{figure}
 Two cables: \SI{0.512}{\meter} and \SI{1.005}{\meter}. Both RG58. According to datasheet, velocity factor of 0.66.
 Theoretical delay:
 \begin{equation}
@@ -85,52 +64,48 @@ VNA shows Propagation delay difference of \(\frac{5.2532+5.1916}{2} - \frac{2.74
   \label{tab:software-cable-lenth-compensation}
 \end{table}
 
-It's clear that the system is able to correctly measure the cable length difference to within \SI{3}{\pico\second} accuracy which is below 1 hundredth of the ADC sample period.
-Also it's clear that the system can successfully apply the calibration factors from the JSON file specifying cable length and velocity factor and compensate for the cable length mismatch down to the same level of accuracy: below 1 hundredth of an ADC sample.
+\section{RF front end mismatches}
 
 \begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{two-cables-vna}
-  \caption{Two different length cables on VNA doing time measurement showing propagation delay difference of \SI{2.49}{\nano\second}}
-  \label{fig:software-two-cables-vna}
-\end{figure}
-
-
-\subsection{RF Chain Compensation (Calibration?) in Frequency Domain}
-The LPF + LNA + Long RG58 cable from the front end to the roach introduces difference phase and time shifts. 
-
-\begin{figure}
-  \centering
   \begin{subfigure}[b]{0.49\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{freq-shift-full-rf-chain}
-    % left, bottom, right, top
-    \caption{Phases before calibration}
+    \caption{Before calibration}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\textwidth}
     \centering
     \includegraphics[width=0.95\textwidth]{freq-shift-full-rf-chain-after-cal}
-    % left, bottom, right, top
     \caption{After cal}
   \end{subfigure}
-  \caption{Bar}
+  \caption{Phase shifts through full RF front end of signal being injected exactly in phase before and after calibration.}
 \end{figure}
-
-\subsection{RF Chain Compensation in Time Domain}
-
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.49\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{time-delay-through-full-rf-chain}
+    \includegraphics[width=0.95\textwidth, clip=true, trim = 20 0 40 0]{time-delay-through-full-rf-chain-pre-cal}
     % left, bottom, right, top
-    \caption{Phases before calibration}
+    \caption{Before calibration}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{time-delay-in-phase}
-    % left, bottom, right, top
-    \caption{THIS IS WRONG. GENERATE AND USE CALIBRATED IMAGE HERE.}
+    \includegraphics[width=0.95\textwidth, clip=true, trim = 20 0 40 0]{time-delay-through-full-rf-chain-post-cal}
+    \caption{After calibration}
   \end{subfigure}
-  \caption{Bar}
+  \caption{Time domain cross correlation plots of each baseline for broadband noise injected in phase before and after calibration.}
 \end{figure}
+
+\subsection{Tests}
+
+The software needs to have provision to calibrate various aspects:
+
+For each baseline, software calculates difference in propagation times for each element of the baseline created by length and velocity factor. Calculates corresponding phase shift for each frequency bin based on this and then aplies this frequency shift to the cross correlation in there.
+
+
+Discuss how this applies to both time and frequency domain.
+
+
+It's clear that the system is able to correctly measure the cable length difference to within \SI{3}{\pico\second} accuracy which is below 1 hundredth of the ADC sample period.
+Also it's clear that the system can successfully apply the calibration factors from the JSON file specifying cable length and velocity factor and compensate for the cable length mismatch down to the same level of accuracy: below 1 hundredth of an ADC sample.
+
+

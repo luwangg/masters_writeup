@@ -18,7 +18,7 @@ The code had to be designed in accordance with good object orientated methodolog
 
 The main package which containing the array modeling, ROACH interface and AoA estimation is \lstinline{DirectionFinder-backend}\footnote{\url{https://github.com/jgowans/directionFinder_backend}}. The structure of the classes in this package is shown as a UML diagram in \Cref{fig:software:df-backend-uml}. The root class, \lstinline{DirectionFinder} is composed of an \lstinline{AntennaArray} and a \lstinline{Correlator}. 
 
-The \lstinline{AntennaArray} is initialised from an array geometry file that has been produced from by the element coordinate calculator discussed in Chapter 3, and is able to return the expected baseline phase shifts or time delays for all antenna pairs at any angle. This is used to get the theoretical array response for a given angle. Due to the modular structure of the \lstinline{AntennArray} class, it can be used to simulate and provide information about an antenna array with any number of elements in any configuration. This is an example of the general purpose nature of the application which is being developed here.
+The \lstinline{AntennaArray} is initialised from an array geometry file that has been produced from by the element coordinate calculator discussed in Chapter 3. It is able to return the expected baseline phase shifts or time delays for all antenna pairs at any angle. This is used to get the theoretical array response for a given angle at a specific frequency. Due to the modular structure of the \lstinline{AntennArray} class, it can be used to simulate and provide information about an antenna array with any number of elements in any configuration. This is an example of the general purpose nature of the application which is being developed here.
 
 The \lstinline{Correlator} provides an interface to processed data from the FPGA. It is able to fetch both frequency domain cross correlations from the snapshot blocks as well as time domain snapshots which it gets by reading raw time domain data and doing in-memory time domain cross correlations. The \lstinline{Correlator} also contain a \lstinline{ControlRegister} which abstracts the raw bit or word read/writes necessary to interact with the status and configuration registers. Once again the software has been designed with generality in mind: any number of baselines can be read out, having spectrums with any number of points for arbitrary start/stop frequencies. These are initialisation configuration parameters of the classes providing the abstractions.\\
 
@@ -26,7 +26,6 @@ The application is launched by a Python executable which takes command line argu
 
 The following sections explain how the software goes about ascertaining angle of arrival for time and frequency domain signals.
 
-\input{./tex/66-frequency-domain-direction-finding.tex}
-\input{./tex/67-software-time-domain-direction-finding.tex}
-\input{./tex/62-software-calibration.tex}
-\input{./tex/68-software-logging.tex}
+\input{./tex/64-frequency-domain-direction-finding.tex}
+\input{./tex/65-software-time-domain-direction-finding.tex}
+\input{./tex/66-software-calibration.tex}
