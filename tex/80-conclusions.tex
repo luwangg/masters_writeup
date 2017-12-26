@@ -1,5 +1,11 @@
-\chapter{Conclusions}
+\chapter{Conclusions and Future Work}
 \label{ch:conclusions}
 \graphicspath{{./img/conclusions/}}
-Foobar
-That is all.
+
+This project has detailed the systematic design and construction of a direction finding system, able to locate both strong impulsive signals and weak narrow band signals. 
+
+The project began with gathering user requirements, with some notable ones being that it should have a \SI{360}{\degree}, need not concentrate on a specific frequency band but rather should prototype the system and DF algorithms, and should use hardware and software that fit into the SKA ecosystem. A review of DF techniques was then done, and it was found that the ones which wouldo, and then proceeded to do a review of different direction finding technologies. It emerged that the most suitable ones would be correlative phase interferometry for the narrow band signals and time difference of arrival for impulsive signals.\\
+
+A block level system design was done in XX. It showed how the system would be subdivided into distinct subsystems. First, an antenna array would be used to pick up RFI signals, which would go through a RF front end to do filtering an amplification. Next, digitisers would get the signal into the ROACH where the first stage of high-speed DSP would be done. Finally, the signals would be read out of the ROACH onto a computer where the final AoA estimation algorithms would run, and which would act as a user interface to the system.\\
+
+The antenna array was built fron four dipoles with a center frequency of \SI{250}{\mega\hertz}. Simulations were done to compare the ambiguity of circular arrays with various numbers of elements. It was found that the worst performance was from arrays with even numbers of elements. However, by deforming the four element circular array so that it was no longer a proper circle and hence removing lines of symmetry, the ambiguity issue was improved significantly, and the performance approached that of a five element array.

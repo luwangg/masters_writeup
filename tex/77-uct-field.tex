@@ -100,6 +100,7 @@ With the GPIO pin toggling at such a high frequency, only about \SI{100}{\milli\
 \subsection{Valon Synthesiser}
 \begin{figure}
   \centering
+  \vspace{4em}
   \begin{subfigure}[b]{0.77\textwidth}
     \centering
     \includegraphics[width=\textwidth]{valon-track-narrow}
@@ -109,14 +110,13 @@ With the GPIO pin toggling at such a high frequency, only about \SI{100}{\milli\
     \includegraphics[width=\textwidth]{vaylon-source}
     \vspace{2em}
   \end{subfigure}
-  \caption{DF results for Raspberry Pi tracking. Red: GPS track of real angle. Blue and green: DF system output.}
+  \vspace{4em}
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{valong-spectrum}
+  \end{subfigure}
+  \caption{Top: DF results for Raspberry Pi tracking. Red: GPS track of real angle. Blue and green: DF system output. Bottom: cross-correlation spectrum showing how the \SI{257}{\mega\hertz} valon Tx frequency was right on top of some other broad transmitter or set of transmitters.}
   \label{fig:field-trials:valon-source}
-\end{figure}
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{valong-spectrum}
-  \caption{Valon spectrum}
-  \label{fig:field-trails-valon-spectrum}
 \end{figure}
 
 The final narrow-band transmitter which was tracked was a Valon synthesiser, the same device used in the ROACH to generate a clock signal. The plot is shown in \Cref{fig:field-trials:valon-source}. It was configured to generate at a higher frequency, \SI{257}{\mega\hertz}. The result is similar to that of the HAM radio and Pi in that it was tracked very well. One interesting thing to note was that this frequency was right next to another fixed transmitter (TV, perhaps?) and while the device was being walked around the field, when it got close to being in line with the fixed transmitter its angle was "pulled" to point to the fixed transmitter. This illustrates one of the risks of having multiple transmitters in or close to each other's frequency channel \Cref{fig:field-trails-valon-spectrum}.
