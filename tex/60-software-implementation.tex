@@ -29,3 +29,10 @@ The following sections explain how the software goes about ascertaining angle of
 \input{./tex/64-frequency-domain-direction-finding.tex}
 \input{./tex/65-software-time-domain-direction-finding.tex}
 \input{./tex/66-software-calibration.tex}
+
+\section{Summary}
+This Chapter has discussed the structure of the direction finding software package, as well as how the angle of arrival estimation calculations were implemented. It started by showing how the class structure mirrors that of the physical system, providing abstractions around antenna array models, FPGA interactions and FPGA data outputs. Emphasis was placed on making the algorithms reconfigurable for any number of inputs or frequency range.
+
+The frequency domain and time domain angle of arrival estimations were both done in a similar way, by correlating the observed baseline time/phase differences with the theoretical time/phase differences for each possible angle of arrival and finding the one which most closely matches. 
+
+Finally, calibration section discussed potential sources of error in the analogue components of the system. It showed how those sources of error were measured and made available to the direction finding code so that they could be subtracted out to provide a more accurate calibrated measurement of the real signals.
