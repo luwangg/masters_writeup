@@ -1,7 +1,7 @@
 \section{Calibration}
 
 
-Although efforts have been made to keep the RF chains for each antenna as matched as possible, it hasn't always been possible to do so, and small errors in measured phase/time shifts can throw off the measurement results. An example of where it hasn't been possible to match the RF chains was that the antennas shipped with different cable lengths coming out of them. Also, the ADC phase response wasn't totally linear, and was different across ADC cards and even cores. 
+Although efforts have been made to keep the RF chains for each antenna time/phase delay matched, it hasn't always been possible to do so. Small errors in measured phase/time shifts can throw off the measurement results. An example of where it hasn't been possible to match the RF chains was that the antennas shipped with different cable lengths coming out of them. Also, the ADC phase response wasn't totally linear, and was different across ADC cards and even cores. 
 \begin{itemize}
   \item RF front end: the LPF and LNA and cable from LNA to ROACH may have different delay or phase shift factors. Measurements in earlier chapters show not really different, but worth doing any way for future systems which may have RF front ends with more significant shifts. This can be calibrated very accurately using a known signal though the RF chain and measuring the response.
   \item Same as above but in time domain

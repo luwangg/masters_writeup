@@ -1,16 +1,16 @@
 \section{Frequency Domain Direction Finding}
-The frequency domain DF algorithm assumes that the signal of interest may well be below the noise floor. As such, no detection is done; the direction finding is continuous. 
+The frequency domain DF algorithm assumes that the signal of interest may be below the noise floor. As such, no power detection is done; the direction finding process runs continuously.
 
 When the application starts up, it reads in the array configuration file and constructs an \lstinline{AntennaArray} object from it. It then samples the antenna array manifold vector at \SI{0.36}{\degree} intervals, corresponding to 1000 baseline phase shift vectors. These are stored in a hash in memory. 
 
-Next, the ROACH is initialised by writing to the accumulation length (\lstinline{acc_len}) register and pulsing the \lstinline{sync} line. The accumulation length value is set based on user input, typically it will be around 1 second. Next, it constructs instances of a \lstinline{Snapshot} class, one for each baseline cross correlation BRAM snapshot on the FGPA. These snapshot blocks are all armed, and once armed the snapshot trigger ungated. The system sits in a tight loop watching the accumulation counter. When the accumulation counter ticks, the snapshot trigger is gated and all snapshot values read out. Calibration factors (discussed more later) are then applied to the signals. The strongest signal in the frequency interval of interest is found, and the phase shifts as seen by each baseline correlation are fetched and stored in a map of baseline name (eg: ``1x3'')  to phase shift. Finally, the \lstinline{DirectionFinder} iterates through all 1000 simulated angles, comparing the simulated baseline phase shifts to the observed baseline phase shifts and selects the angle whose simulated values most closely match the observed values. In pseudo code:
+Next, the ROACH is initialised by writing to the accumulation length (\lstinline{acc_len}) register and pulsing the \lstinline{sync} line. The accumulation length value is set based on user input, typically it will be around 1 second. Next, it constructs instances of the \lstinline{Snapshot} class, one instance for each baseline cross-correlation BRAM snapshot on the FGPA. These snapshot blocks are all armed, and once armed the snapshot trigger ungated. The system sits in a tight loop watching the accumulation counter. When the accumulation counter ticks, the snapshot trigger is gated and all snapshot values read out. Calibration factors (discussed more later) are then applied to the signals. The strongest signal in the frequency interval of interest is found, and the phase shifts as seen by each baseline correlation are fetched and stored in a map of baseline name (eg: ``1x3'')  to phase shift. Finally, the \lstinline{DirectionFinder} iterates through all 1000 simulated angles, comparing the simulated baseline phase shifts to the observed baseline phase shifts and selects the angle whose simulated values most closely match the observed values. In pseudo code:
 
 \begin{lstlisting}
 AntennaArray antenna_array = new AntennaArray(config_file)
 Correlator correlator = new Correlator(...)
 
 while True:
-  Correlation correlation = correlator.get_correlation()
+  Correlation correlation = correlator.get_correlation() # blocking
   Float frequency = correlation.strongest_signal_in_range(f_start, f_stop)
   Map<Baseline, Float> observation = correlation.baseline_phase_shifts_at(frequency)
 
