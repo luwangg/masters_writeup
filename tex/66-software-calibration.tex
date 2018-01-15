@@ -1,24 +1,24 @@
 \section{Calibration}
 
 
-Although efforts have been made to keep the RF chains for each antenna's time/phase delay matched, it hasn't always been possible to do so. Small errors in measured phase/time shifts can throw off the measurement results. An examples of where mismatches can occur are:
+Although efforts have been made to keep the RF chains for each antenna's time/phase delay matched, it hasn't always been possible to do so. Small errors in measured phase/time shifts can throw off the measurement results. Examples of where mismatches can occur are:
 
 \begin{itemize}
-  \item Antenna cables: the antennas which were purchased for this project do not have the same length cable length coming out of them. This means that although the antennas may receive a signal with a certain phase difference, a different phase difference is emitted from the cables.
-  \item RF front end: the RF components and connecting cables from the antennas to the ADCs may have not be matched. Measurements in earlier chapters have shown that the difference in this setup is low, but it is worth catering for this mismatch anyway for future systems which may have RF front ends with more significant shifts.
+  \item Antenna cables: the antennas which were purchased for this project do not have the same length cable length coming out of them. This means that although the antennas may receive a signal with a certain phase difference, a different phase difference is emitted from the cables as the propagation delay is different.
+  \item RF front end: the RF components and the connecting cables from the antennas to the ADCs may not be matched. Measurements in earlier chapters have shown that the difference in this setup is low, but it is worth catering for this mismatch anyway for future systems which may have RF front ends with more significant mismatches.
   \item ADC cores: The ADCs should be clocked exactly in phase, but mismatches in clock distribution or internal ADC characteristics cause the actual samples not to be exactly in phase.
 \end{itemize}
 
 Following is a brief description of how these mismatches were measured and calibrated out in software.
 
 \subsection{Antenna cable lengths}
-It is difficult to empirically measure the differences in signal propagation delay through the antennas as delayed by their cables. To cater for cable length mismatches in a generic way, the direction finding system takes as input a file specifying the measured cable lengths coming out each of the antennas, as well as the velocity factors of the cable. The velocity factor is a property of the specific cable type in use. In this case, the RG214 \SI{50}{\ohm} cables used here have velocity factor of 0.6 as per their data sheet. \Cref{tab:software-antenna-cable-lengths} shows the measured length of cables from each antenna. The software then calculates the resultant time delay \(t\) as follows
+It is difficult to empirically measure the differences in signal propagation delay through the antennas as delayed by their cables. To cater for cable length mismatches in a generic way, the direction finding system takes as input a file specifying the measured cable lengths coming out each of the antennas as well as specifying the velocity factors of the cable. The velocity factor is a property of the specific cable type in use. In this case, the RG214 \SI{50}{\ohm} cables used here have velocity factor of 0.6 as per their data sheet. \Cref{tab:software-antenna-cable-lengths} shows the measured length of cables from each antenna. The software then calculates the resultant time delay \(t\) as follows:
 \begin{equation}
     t = \frac{l}{\text{vf} \times c}
 \end{equation}
-where \(l\) is the length of the cable, \(\text{vf}\) is the velocity factor and \(c\) the speed of light. Phase shift at a frequency can easily be deduced from time delay.
+where \(l\) is the length of the cable, \(\text{vf}\) is the velocity factor and \(c\) the speed of light. Phase shift at a particular frequency can easily be deduced from time delay.
 
-To verify this the implementation of this technique, all ADC channels were connected to the same noise source via equal length cables except channel 0 which had a longer cable. The difference in propagation delay between the longer and shorter cables was checked on a network analyser, shown in \Cref{tab:software-cable-lenth-compensation}, indicating that cable length response is flat and that the actual difference between the propagation delays is \SI{2.49}{\nano\second}. Next, the DF system was used to do a time domain cross correlation before and after calibration factors were applied. The results are shown in \Cref{tab:software-cable-lenth-compensation} indicating that the system correctly measured the actual time difference, and also correctly identified the signals are arriving in phase after applying cable length calibration factors.
+To verify the implementation of this technique in a laboratory test, all ADC channels were connected to the same noise source via equal-length cables except channel 0 which had a longer cable. The difference in propagation delay between the longer and shorter cables was checked on a network analyser. \Cref{fig:software-two-cables-vna} indicates that cable length response was flat and that the actual difference between the propagation delays is \SI{2.49}{\nano\second}. Next, the DF system was used to do a time domain cross correlation before and after calibration factors were applied. \Cref{tab:software-cable-lenth-compensation} indicates that after cable length calibration factors had been applied, the system's measurements accurately reflected actual time differences and it correctly identified that the signals were arriving in phase.
 
 \begin{table}
   \centering
@@ -53,15 +53,15 @@ To verify this the implementation of this technique, all ADC channels were conne
     1x3 & 0.001  & 0.000 \\
     2x3 & 0.005 & 0.005
   \end{tabu}
-  \caption{ADC sample period: \SI{1.25}{\nano\second}. Upsampled correlation step size: \SI{1}{\pico\second}}
+  \caption{Time domain correlation peak position for each baseline before and after cable length calibration factors were applied. Channel 0 had a longer cable length which was the network analyser showed was \SI{2.49}{\nano\second} and the correlator produced the same result. ADC sample period: \SI{1.25}{\nano\second}. Upsampled correlation step size: \SI{1}{\pico\second}}
   \label{tab:software-cable-lenth-compensation}
 \end{table}
 
 \subsection{RF front end mismatches}
-The next class of phase/time mismatches is from the rest of the RF front end: filters, amplifiers, connecting cables and ADCs. This is different to the antenna cables because the mismatches here can be measured by injecting signals into the system. This is exactly how the mismatches through the remainder of the RF chain were measured:
+The next class of time/phase mismatches is from the rest of the RF front end: filters, amplifiers, connecting cables and ADCs. This is different to the antenna cables because the mismatches here can be measured by injecting signals into the system. This is exactly how mismatches through the remainder of the RF chain were measured:
 \begin{itemize}
-  \item For the time domain, broadband noise was injected into the start of the RF chain, raw data captured from the ADC and cross correlated to find time differences introduced by each input path.
-  \item For the frequency domain, iterate through each frequency channel injecting a tone from a signal generator into that channel exactly in phase to all ADC inputs. Record the phase difference as seen by the output of the accumulator on the ROACH. This difference is the phase error in that channel.
+  \item For the time domain, broadband noise was injected into the start of the RF chain, raw data captured from the ADC and cross-correlated to find time differences introduced by each input path. The offset of the correlation peak from 0 is the time delay error for that baseline.
+  \item For the frequency domain, iteratively through each frequency channel, a tone centered in the frequency channel was injected from a signal generator exactly in phase to each signal path. The phase differences as seen by the output of the accumulator on the ROACH were recorded. These phase differences were the error for the baseline in that frequency channel.
 \end{itemize}
 
 These two experiments produced two calibration files, one for broadband time delay and one for phase shift at each specific channel. These two files are then used by direction finding code to subtract the time or phase offset introduced by the RF chain.
