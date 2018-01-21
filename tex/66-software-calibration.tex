@@ -58,7 +58,7 @@ To verify the implementation of this technique in a laboratory test, all ADC cha
 \end{table}
 
 \subsection{RF front end mismatches}
-The next class of time/phase mismatches is from the rest of the RF front end: filters, amplifiers, connecting cables and ADCs. This is different to the antenna cables because the mismatches here can be measured by injecting signals into the system. This is exactly how mismatches through the remainder of the RF chain were measured:
+The next class of time/phase mismatches is from the rest of the RF front end: filters, amplifiers, connecting cables and ADCs. This is different to the antenna cables because the mismatches here can be measured by injecting signals into the system. This is how mismatches through the remainder of the RF chain were measured:
 \begin{itemize}
   \item For the time domain, broadband noise was injected into the start of the RF chain, raw data captured from the ADC and cross-correlated to find time differences introduced by each input path. The offset of the correlation peak from 0 is the time delay error for that baseline.
   \item For the frequency domain, iteratively through each frequency channel, a tone centered in the frequency channel was injected from a signal generator exactly in phase to each signal path. The phase differences as seen by the output of the accumulator on the ROACH were recorded. These phase differences were the error for the baseline in that frequency channel.
