@@ -1,12 +1,11 @@
 \section{First trial: Sample Impulsive RFI}
 
-A few months after the start of the project, the system consisted of a simple two-element antenna array and a ROACH design able to capture data in time domain only from both channels to DRAM. The computer code was at this point only able to pull raw samples, save them and do time domain cross-correlation. 
+A few months after the start of the project, the system consisted of a simple two-element antenna array and a simple ROACH design. The ROACH streamed input from a single two-channel ADC, did threshold detection and stored a small snapshot of raw time domain ADC samples to FPGA Block RAM (BRAM). Computer code was at this point only able to pull raw samples, save them, and do in memory time domain cross-correlation. 
 
-This system was taken to the MeerKAT site in the Karoo with the objective of getting some snapshots of RFI to see what characteristics the impulses had as well as to attempt impulsive RFI hunting. Two types of antenna were used: printed LDPA antennas and omni-directional conical antennas.
+This system was taken to the SKA's MeerKAT site in the Karoo with the objective of getting some snapshots of RFI to see what characteristics the impulses had as well as to attempt impulsive RFI hunting. Two types of antenna were used: printed LPDA antennas and omni-directional conical antennas.
+The two antenna types and the setup and operation are shown in \Cref{fig:field-trials:first-system-setup}. Simple power detection was done by FPGA firmware which was designed to detect when the received signal amplitude went above a threshold,\footnote{Threshold was set by sampling the ambient signal amplitude for a few minutes and defining the threshold two standard deviations above ambient.} and then to capturing the pulse to DRAM. Once captured, detection was paused and the computer notified of the pulse. The computer would then read out the samples and re-enable detection when finished. Examples of captured signals of unknown origin are shown in \Cref{fig:field-trials:unknown-time-domain} and signals of known origin in \Cref{fig:field-trials:known-time-domain}. From this, we can see that there are almost no characteristics that all of the impulsive signals had in common. They varied in terms of all key pulse classification parameters: pulse length, shape, frequency content and repetition pattern. This fact contributed to the decision to do power detection for the impulsive signals. Since it would not be practical to attempt any form of matched filtering when hunting pulses that are of unknown origin, all that can be done is to look for a burst of energy in the time domain.
 
-The setup and operation are shown in \Cref{fig:field-trials:first-system-setup}. The FGPA firmware was set to detect when the received signal amplitude went above a threshold\footnote{Threshold was set by sampling the ambient signal amplitude for a few minutes and defining the threshold two standard deviations above ambient.} and capturing the pulse to DRAM. Detection was then paused and the computer notified of the pulse. Once the computer had read out the samples, detection was re-enabled. Examples of captured signals of unknown origin are shown in \Cref{fig:field-trials:unknown-time-domain} and signal of known origin in \Cref{fig:field-trials:known-time-domain}. From this, we can see that there are almost no characteristics that all of the impulsive signals have in common. They vary in terms of all of the key pulse classification parameters: pulse length, shape, frequency content and repetition pattern. This contributed to the decision to do power detection for the pulses; it is not practical to attempt some form of matched filtering when hunting pulses of unknown origin, all that can be done is to look for a burst of energy in the time domain.
-
-Direction finding from the raw time domain signals was attempted on the computer by doing the time domain cross-correlation process describe earlier. However, these attempts to hunt for RFI using the two-element system did not prove successful due to the \SI{180}{\degree} ambiguity inherent in a two-element design and the lack of calibration techniques developed at the early stage of the project. Also, at this stage the system needed to be plugged in to run and hence was constrained to be close to a power source.
+Direction finding from the raw time domain signals was attempted on the computer by doing the time domain cross-correlation process described earlier. However, these attempts to hunt for RFI using the two-element system did not prove successful due to the \SI{180}{\degree} ambiguity inherent in a two-element design and due to calibration techniques not having yet been developed at that early stage of the project. Also, at that stage the system needed to be plugged in to run and hence was constrained to be close to a power source.
 
 \afterpage{
   \thispagestyle{empty}
@@ -16,19 +15,19 @@ Direction finding from the raw time domain signals was attempted on the computer
     \begin{subfigure}{0.8\textwidth}
       \centering
       \includegraphics[width=\textwidth]{first-trip-yagi-antennas}
-      \caption{Compact printed FLPDA antennas}
+      \caption{Two element array of compact printed LPDA antennas.}
     \end{subfigure}
     \begin{subfigure}{0.9\textwidth}
       \centering
       \includegraphics[width=\textwidth]{first-trip-omni-antennas}
-      \caption{EM-6916 Omni-directional conical antennas}
+      \caption{Two element array of EM-6916 Omni-directional conical antennas.}
     \end{subfigure}
     \begin{subfigure}{0.9\textwidth}
       \centering
       \includegraphics[width=\textwidth]{first-trip-processing}
-      \caption{Processing collected data in real time}
+      \caption{Laptop linked via Ethernet to the ROACH, processing collected data in real time.}
     \end{subfigure}
-    \caption{Setup for first field tests on site. Early 2014}
+    \caption{Setup for first field tests at the SKA's MeerKAT site in the Karoo. Early 2014.}
     \label{fig:field-trials:first-system-setup}
   \end{figure}
   \clearpage
@@ -63,13 +62,13 @@ Direction finding from the raw time domain signals was attempted on the computer
   } \\[1ex]
   \makebox[\textwidth][c]{
     \begin{subfigure}{0.55\textwidth}
-      \includegraphics[width=\textwidth]{sample-rfi-site/unknown}
-    \end{subfigure}
-    \begin{subfigure}{0.55\textwidth}
       \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-08-11}
     \end{subfigure}
     \begin{subfigure}{0.55\textwidth}
       \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-12-19-14}
+    \end{subfigure}
+    \begin{subfigure}{0.55\textwidth}
+      \includegraphics[width=\textwidth]{sample-rfi-site/unknown}
     \end{subfigure}
   } \\[1ex]
   \makebox[\textwidth][c]{
@@ -83,7 +82,7 @@ Direction finding from the raw time domain signals was attempted on the computer
       \includegraphics[width=\textwidth]{sample-rfi-site/14-03-13-11-23-59.png}
     \end{subfigure}
   }
-  \caption{Selection of impulses collected on site with UNKNOWN origin. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
+  \caption{Selection of impulses collected at MeerKAT site with UNKNOWN origin. Construction was taking place on site at the time. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
   \label{fig:field-trials:unknown-time-domain}
   \end{figure}
 \end{landscape}
@@ -123,7 +122,7 @@ Direction finding from the raw time domain signals was attempted on the computer
       \caption{Refrigeration compressor turning on}
     \end{subfigure}
   }
-  \caption{Selection of impulses collected on site with KNOWN origin. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
+  \caption{Selection of impulses collected at MeerKAT site with KNOWN origin. Plots are time domain. X-axis is time in microseconds. Y-Axis is ADC output number of 8-bit ADC}
   \label{fig:field-trials:known-time-domain}
   \end{figure}
 \end{landscape}

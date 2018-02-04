@@ -1,23 +1,22 @@
 \section{Second trial: Final DF system}
-Once the full system that has been describe in the previous Chapters had been completed, the second set of field trials took place. This was done at the University of Cape Town (UCT) sports field where we could more freely generate RFI. The tests involved setting the system up in the center of the field and walking various RFI sources around the field in a circle and measuring how well they were tracked. This section first explains how the system was made fully portable, then it proceeds to show the setup and discuss how the measurements were taken, and finally it looks at the results for each signal source that was trialed.
+Once the full DF system described in the previous Chapters had been completed, the second set of field trials could take place. This was done at the University of Cape Town (UCT) sports field where we could more freely generate RFI. The tests involved setting the system up in the center of the field and walking various RFI sources around the field in a circle and measuring how well they were tracked. This section first explains how the system was made fully portable, then it proceeds to show the setup and discuss how the measurements were taken, and finally it looks at the results for each signal source that was trialed.
 
 \subsection{Portability}
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{atx-psu}
-  \caption{Mini-Box PicoPSU which plugs into the ROACH motherboard allowing it to run directly from a battery}
+  \caption{Mini-Box PicoPSU which plugs into the ROACH motherboard allowing the ROACH to run directly from a battery.}
   \label{fig:field-trials:atx-psu}
 \end{figure}
-It was necessary to power the ROACH from a battery in order to allow it to be portable and taken out into the open field.
-Initially the plan was to power it from an inverter running off of a battery, however in order to reduce switching noise emissions, a batter powered ATX power supply was used instead. The ATX PSU was a Mini-Box PicoPSU-80-WI-32V which runs directly from a \SI{12}{\volt} battery. 
+It was necessary to power the ROACH from a battery in order to allow it to be portable for taking out into the open field.
+Initially the plan was to power it from an inverter running off of a battery, however in order to reduce switching noise emissions, a battery powered ATX power supply was used instead. The ATX PSU is a Mini-Box PicoPSU-80-WI-32V which runs directly from a \SI{12}{\volt} battery. 
 It can output \SI{80}{\watt} which is more than enough to run the ROACH; testing in the lab showed that the ROACH pulled \SI{3.1}{\ampere} at \SI{12}{\volt} which is \SI{37}{\watt}.
-To connect it, the traditional mains-powered ATX powersupply is disconnected from the motherboard and this module is plugged into the motherboard. 
-This is shown in \cref{fig:field-trials:atx-psu}.
+To connect it, the traditional mains-powered ATX powersupply wasdisconnected from the motherboard and this module plugged into the motherboard. 
+This is shown in \Cref{fig:field-trials:atx-psu}.
 
-A ROYAL 1150K battery was used to power the ROACH and laptop in the field. 
-This is a \SI{105}{\ampere\hour} deep cycle calcium battery.
+The battery used to power the ROACH and laptop in the field was a ROYAL 1150K \SI{105}{\ampere\hour} deep cycle calcium battery.
 As the ROACH draws \SI{3.1}{\ampere} at \SI{12}{\volt}, meaning a running time of \(\frac{105}{3.1} = \SI{34}{\hour}\).
-It is advised to not run down below \SI{70}{\percent} to maintain the battery lifespan. Even so, that's more than \SI{20}{\hour} of runtime in the field, which is significantly longer than needed.
+To maintain battery lifespan it is advised to not run down below \SI{70}{\percent} Even so, that's more than \SI{20}{\hour} of runtime in the field, which is more than enough.
 
 
 \subsection{Setup and Test Procedure}
@@ -27,7 +26,7 @@ It is advised to not run down below \SI{70}{\percent} to maintain the battery li
   \begin{subfigure}{0.8\textwidth}
     \includegraphics[angle=-90,width=\textwidth]{steve-with-setup-close-up}
   \end{subfigure}
-  \caption{Setup focused on receiver and front end. From top to bottom: four element antenna array, SMA cables into RF front end board, cables into ROACH (shiny box under the laptop). Roach running directly off of \SI{12}{\volt} battery in the red and black box. Blue inverter for charting laptop between tests. Grey box on the left is R\&S spectrum analyser for checking the power level coming out of the LNAs before connecting to ROACH ADCs.  On the right is a zoom in of the RF front end located in top of the tripod under the antenna array.}
+  \caption{Setup on UCT sports field focused on receiver and front end. From top to bottom: four element antenna array, SMA cables into RF front end board, cables into ROACH (shiny box under the laptop). ROACH running directly off of \SI{12}{\volt} battery, with the battery in the red and black box (right). Blue inverter for charting laptop between tests. Grey box on the left is R\&S spectrum analyser for checking the power level coming out of the LNAs before connecting to ROACH ADCs.  On the right is a zoom in of the RF front end located on top of the tripod under the antenna array.}
   \label{fig:field-trials:setup-closeup}
 \end{figure}
 
@@ -41,28 +40,25 @@ It is advised to not run down below \SI{70}{\percent} to maintain the battery li
     \centering
     \includegraphics[width=\textwidth]{valon-on-a-stick}
   \end{subfigure}
-  \caption{Photo showing how the transmitter was carried around, with both it and the receiving antennas at a height of approximately \SI{2}{\meter}. The PCB in the middle is the Valon synthesiser. The shield of the USB cable going down and the wire coming out of the SMA port pointing up act as a quarter-wave dipole.}
+  \caption{Photo on UCT sports field (left) showing how the transmitter was carried around, with both it and the receiving antennas at a height of approximately \SI{2}{\meter}. The PCB in (right) is the Valon synthesiser. The shield of the USB cable going down and the wire coming out of the SMA port pointing up act as a quarter-wave dipole.}
   \label{fig:field-trials-transmitter-on-stick}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.80\textwidth]{gps-tracks-all-with-measurement-zoomed-out}
-  \caption{Route taken according to GPS logger. The curve is actually a collection of timestamped lat/long pairs joined smoothly}
+  \caption{Route of the person walking with the transmitters during the field trials, according to GPS logger. The curve is a smoothed collection of timestamped lat/long coordinates}
   \label{fig:field-trails:gps-tracks-all}
 \end{figure}
 
-These field trials would involve walking signal sources around the DF system. Calculations and simulations were done to model ground reflection multipath interference and error due to non-flat wave fronts, which showed that in order to achieve suitably low errors the radius which should be used when walking around the DF station should be \SI{35}{\metre} and the hight above ground of both the DF antennas and the transmitter should be \SI{2}{\meter}. The simulations which produced these dimensions are detailed in \Cref{appendix:field-trials-dimensions}.
+These field trials involved having a person walk various signal sources around the DF system. Calculations and simulations were done to model ground reflection multipath interference due to non-flat wave fronts and the resulting error. These simulations showed that in order to achieve suitably low errors, the radius which should be used when walking around the DF station should be \SI{35}{\metre} and the height above ground of both the DF antennas and the transmitter should be \SI{2}{\meter}. The simulations which produced these dimensions are detailed in \Cref{appendix:field-trials-dimensions}.
 
-The antennas and LNAs were attached to a tripod and set up in the center of the field. Initial power measurements were done using a spectrum analyser to measure environmental noise and set attenuators appropriately. The ROACH and laptop were set up under the tripod, with a shielded Ethernet cable connecting them. This setup is shown in \Cref{fig:field-trials:setup-closeup}. Various transmitters (each has its own subsection following this) were attached to a wood pole so that they could easily be carried when walking around the field. One of these transmitters is shown in \Cref{fig:field-trials-transmitter-on-stick}. A person carried the transmitter, walking slowly and also keeping a GPS logger on them. The GPS logger was a mobile phone which took a timestamped GPS reading every 1 second and wrote it to a CSV file on the phone. The plot of the route walked over the course of the measurements is shown in \Cref{fig:field-trails:gps-tracks-all}.
-
-Before doing the trail for each transmitter, the spectrum analyser was used to figure out the transmit frequency, and then the DF system was configured to lock on to the strongest observed frequency in a small range (a few channels) around the peak of the transmitter.
-
-After the field trials for each transmitter were complete, the readings from the GPS logger were converted to angle measurements by running each time/coordinate reading, along with the fixed coordinates of the DF station through a Python library that converted the coordinate pair into an angle. This time/angle reading from the GPS logger was then plotted on top of the time/angle reading from the DF system to compare how well it tracked. This plot as well as a short discussion of it follow for each of the transmitters.
+The antennas and LNAs were attached to a tripod and set up in the center of the field. Initial power measurements were done using a spectrum analyser to measure environmental noise and to set attenuators appropriately. The ROACH and laptop were set up under the tripod, with a shielded Ethernet cable connecting them as shown in \Cref{fig:field-trials:setup-closeup}. Various transmitters (each has its own subsection following this) were attached to a wood pole so that they could easily be carried when walking around the field. One of these transmitters is shown in \Cref{fig:field-trials-transmitter-on-stick}. A person carried the transmitter, walking slowly while keeping a GPS logger on him. The GPS logger was a mobile phone which took a timestamped GPS reading every 1 second and wrote it to a CSV file on the phone. The plot of the route walked over the course of the measurements is shown in \Cref{fig:field-trails:gps-tracks-all}.
+Before doing the field trial for each transmitter, the spectrum analyser was used to figure out the transmit frequency of each transmitter individually. In each instance the DF system was configured to lock on to the strongest observed frequency in a small range (a few channels) around the peak of the particular transmitter. The field trial for the transmitter could then be carried out as described above. Once complete, the readings from the GPS logger were converted to angle measurements by running each time/coordinate reading along with the fixed coordinates of the DF station through a Python library that converted the coordinate pair into an angle. Those time/angle readings from the GPS logger were then plotted on top of the corresponding time/angle reading from the DF system to compare how well the DF system tracked the transmitter. The plots of the track of each transmitter, as well as a short discussion about each plot now follow.
 
 
 \subsection{HAM radio}
-The first source which was trialed was a portable HAM radio, a Yaesu VX-7R, transmitting at \SI{223}{\mega\hertz} at \SI{17}{\dBm}. The track for this source is shown in \Cref{fig:field-trials:ham-source} indicating that in general it was tracked very well. Midway though the trials the person carrying the HAM radio accidentally released the transmit button, causing the DF system to lock on to the closest strongest signal which was a harmonic of a TV station transmitter. However, this was noticed immediately by the DF station operator as the results were being displayed real-time on screen. As such the operator could tell the carrier to re-walk the last few tens of meters of path.
+The first source which was trialed was a portable HAM radio, a Yaesu VX-7R, transmitting at \SI{223.0}{\mega\hertz} at \SI{17}{\dBm}. The track for this source is shown in \Cref{fig:field-trials:ham-source} indicating that in general the signal was tracked very well. Midway though the trials the person carrying the HAM radio accidentally released the transmit button, causing the DF system to lock on to a near-by strong signal at \SI{222.2}{\mega\hertz}. This loss of transmitter was noticed immediately by the DF station operator as the results were being displayed real-time on screen. As such the operator could tell the person carrying the transmitter to push the transmit button and re-walk the last few tens of meters. On the plot this manifests as a blip in the middle of the observation.
 
 \begin{figure}
   \centering
@@ -78,7 +74,7 @@ The first source which was trialed was a portable HAM radio, a Yaesu VX-7R, tran
   \label{fig:field-trials:ham-source}
 \end{figure}
 
-\subsection{Raspberry PI}
+\subsection{Raspberry Pi}
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.77\textwidth}
@@ -91,11 +87,10 @@ The first source which was trialed was a portable HAM radio, a Yaesu VX-7R, tran
     \vspace{2em}
   \end{subfigure}
   \caption{DF results for Raspberry Pi tracking. Red: GPS track of real angle. Blue and green: DF system output.}
-  \label{fig:field-trials:ham-source}
+  \label{fig:field-trials:pi-source}
 \end{figure}
-The HAM radio transmitted quite a strong signal, and a different device was necessary to contrast performance under weak signal conditions. For this, a Raspberry Pi had an application called \lstinline{fm-transmitter} installed on it that allows the Pi to broadcast an FM radio station by driving one of its GPIO pins. The application allows the carrier can be well above the usual FM band. For this test, the carrier was set to \SI{241.32}{\mega\hertz}, close to the maximum that the Pi could reliably generate. It was set to transmit a silent sound file to produce a continuous tone. A quarter wavelength wire \SI{0.3}{\metre} long was connected to the pin as one half of a dipole and the shielding of the USB power cable used as the other half, producing a fairly well defined antenna with vertical polarisation.
-
-With the GPIO pin toggling at such a high frequency, only about \SI{100}{\milli\volt} peak-to-peak voltage was present. This into the approximately \SI{75}{\ohm} of the half wave dipole means a EIRP of \SI{-18}{\dBm} and received power of \SI{-69}{\dBm}\footnote{\(P_r = P_t G_t G_r \left( \frac{\lambda}{4 \pi R} \right)^2 = \SI{16}{\micro\watt} \times 1 \times 1 \left( \frac{\SI{1.2}{\meter}}{4 \pi \times \SI{35}{\meter}} \right)^2 = \SI{119}{\pico\watt} = \SI{-69}{\dBm}\)}. Despite this much lower signal strength, the DF system was still able to track the Pi remarkably well, with an error only marginally higher than the HAM radio track.\\
+As the HAM radio transmitted a strong signal, a different device was necessary to contrast performance under weak signal conditions. For this, a Raspberry Pi had an application called \lstinline{fm-transmitter} installed on it that allows the Pi to broadcast an FM radio station by driving one of its GPIO pins. The FM carrier frequency can be set well above the usual FM band, and for this test the carrier was set to \SI{241.3}{\mega\hertz}, close to the maximum that the Pi could generate. The modulating source was a silent sound file, thus produce a continuous RF tone. To create a quarter wavelength antenna with vertical polarisation a \SI{0.3}{\metre} long wire was connected to the Pi's toggling pin, with the shielding of the USB power cable used as the other half of the dipole.
+With the GPIO pin toggling at such a high frequency, only about \SI{100}{\milli\volt} peak-to-peak voltage was present. This voltage driven into the approximately \SI{75}{\ohm} dipole means a EIRP of \SI{-18}{\dBm} and received power of \SI{-69}{\dBm}\footnote{\(P_r = P_t G_t G_r \left( \frac{\lambda}{4 \pi R} \right)^2 = \SI{16}{\micro\watt} \times 1 \times 1 \left( \frac{\SI{1.2}{\meter}}{4 \pi \times \SI{35}{\meter}} \right)^2 = \SI{119}{\pico\watt} = \SI{-69}{\dBm}\)}. Despite this much lower signal strength, the DF system was still able to track the Pi remarkably well, with an error only marginally higher than the HAM radio track.\\
 
 \subsection{Valon Synthesiser}
 \begin{figure}
